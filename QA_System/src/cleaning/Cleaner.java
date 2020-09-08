@@ -8,7 +8,8 @@ public class Cleaner {
     public static String nlqPrefixRemoval(String nlq) {
         String nlqSmall = nlq.toLowerCase();
         
-        //Remove prefixes: example, give me the president of USA ---> remove "give me"
+        //Faciliate Parser, Entity-Relationship components work by removing unnecessary words.
+        //Remove prefixes: example, give me the president of USA ---> remove "give me the"
         ArrayList<String> prefixes = QuestionPrefix.getPrefixes();
         for (String prefix : prefixes) {
             if (nlqSmall.startsWith(prefix)) {
@@ -16,6 +17,16 @@ public class Cleaner {
             }
         }
         return nlq;
+    }
+    
+    public static String[] nlqsPrefixRemoval(String[] nlqs)
+    {
+        String[] nlqs_ = new String[nlqs.length];
+        for (int i=0; i<nlqs.length; i++) {
+            System.out.println(
+                    nlqs_[i] = nlqPrefixRemoval(nlqs[i]));
+        }
+        return nlqs_;
     }
 
     public static void main(String[] args) {
@@ -50,10 +61,8 @@ public class Cleaner {
                 + "Give me the grandchildren of Elvis Presley.").split("\n");
         ;
 
-        for (String q : qs) {
-            System.out.println(
-                    nlqPrefixRemoval(q));
-        }
+        nlqsPrefixRemoval(qs);
+        System.out.println(qs);
 
     }
 
