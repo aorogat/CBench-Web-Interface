@@ -21,6 +21,11 @@ public class QuestionPrefix
         prefixes.add("give me all");
         prefixes.add("give all");
         prefixes.add("give all the");
+        prefixes.add("What is the");
+        prefixes.add("What are the");
+        prefixes.add("List all the");
+        prefixes.add("List all");
+         
         
         //Sort strings by length to ensure for eample that "give me all the" handeled before "give me"
         java.util.Collections.sort(prefixes, Collections.reverseOrder(comparator));

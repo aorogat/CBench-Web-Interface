@@ -8,7 +8,7 @@ public class Cleaner {
     public static String nlqPrefixRemoval(String nlq) {
         String nlqSmall = nlq.toLowerCase();
         
-        //Faciliate Parser, Entity-Relationship components work by removing unnecessary words.
+        //Facilate Parser and Entity-Relationship components work by removing unnecessary words.
         //Remove prefixes: example, give me the president of USA ---> remove "give me the"
         ArrayList<String> prefixes = QuestionPrefix.getPrefixes();
         for (String prefix : prefixes) {

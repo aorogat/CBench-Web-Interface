@@ -58,7 +58,7 @@ public class NLPTest {
                 + "Give me the capitals of all countries that the Himalayas run through.\n"
                 + "Give me the grandchildren of Bruce Lee.\n"
                 + "Give me the grandchildren of Elvis Presley.");
-        //Cleaning
+        //1- Cleaning the questions
         String[] qss = Cleaner.nlqsPrefixRemoval(text.split("\n"));
         text = "";
         for (String q : qss) {
