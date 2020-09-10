@@ -2,6 +2,7 @@ package characteristics;
 
 public class NLPCharacteristics 
 {
+    boolean requestExplicity = true; //Explicit ex(How many .....),, Implicit ex(TV shows with Neil Patrick Harris.)
     int requestMultiplicity = RequestMultiplicity.ONE_REQUEST;      //one or multiple
     int requestCategory = RequestCategory.LIST_OF_UNIQUE_ANSWERS;
     int expectedAnswer = ExpectedAnswer.NAME;

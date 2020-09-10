@@ -2,6 +2,7 @@ package characteristics;
 
 public class ExpectedAnswer 
 {
+    public static final int YES_NO = 0;
     public static final int NUMBER = 1;
     public static final int DATE = 2;
     public static final int DATE_PERIOD = 3;
