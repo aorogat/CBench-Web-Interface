@@ -191,7 +191,7 @@ public class CategorizedQuestions {
         shapes.set("Single-Edge", singleShape_Qs.size());
         shapes.set("Chain", chain_Qs.size()+singleShape_Qs.size());
         shapes.set("Chain-Set", chainSet_Qs.size()+chain_Qs.size()+singleShape_Qs.size());
-        shapes.set("Start", star_Qs.size());
+        shapes.set("Star", star_Qs.size());
         shapes.set("Tree", tree_Qs.size()+chain_Qs.size()+singleShape_Qs.size());
         shapes.set("Forest", forest_Qs.size()+tree_Qs.size()+chain_Qs.size()+singleShape_Qs.size()+chainSet_Qs.size());
         shapes.set("Flower", flower_Qs.size()+tree_Qs.size()+chain_Qs.size()+singleShape_Qs.size());
@@ -200,7 +200,7 @@ public class CategorizedQuestions {
         shapes.set("Cycle", cycle_Qs.size());
 
         barModel.addSeries(shapes);
-        barModel.setTitle("Cummulative Query Shapes");
+        barModel.setTitle("Cumulative Query Shapes");
         barModel.setLegendPosition("e");
         barModel.setShowPointLabels(true);
         barModel.getAxes().put(AxisType.X, new CategoryAxis("Modifier"));

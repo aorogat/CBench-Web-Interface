@@ -193,7 +193,7 @@ public class NoOfTriples {
 
         Axis yAxis2 = model2.getAxis(AxisType.Y);
         yAxis2.setMin(0);
-        yAxis2.setMax(qs.size() + (qs.size() / 5));
+        //yAxis2.setMax(qs.size() + (qs.size() / 5));
         
         
         modelNLQ.clear();
@@ -228,7 +228,7 @@ public class NoOfTriples {
 
         Axis yAxis3 = modelNLQ.getAxis(AxisType.Y);
         yAxis3.setMin(0);
-        yAxis3.setMax(max+max/10);
+        //yAxis3.setMax(max+max/10);
     }
 
     public static ArrayList<Query> getQs() {

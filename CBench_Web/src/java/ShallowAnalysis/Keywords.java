@@ -281,7 +281,7 @@ public class Keywords {
         xAxis.setTickAngle(-30);
         Axis yAxis = model.getAxis(AxisType.Y);
         yAxis.setMin(0);
-        yAxis.setMax(qs.size() + (qs.size() / 5));
+        //yAxis.setMax(qs.size() + (qs.size() / 5));
 
         ChartSeries patternKys = new ChartSeries();
         patternKys.setLabel("Pattern Keywords");
@@ -314,7 +314,7 @@ public class Keywords {
 
         Axis yAxis2 = model2.getAxis(AxisType.Y);
         yAxis2.setMin(0);
-        yAxis2.setMax(qs.size() + (qs.size() / 5));
+        //yAxis2.setMax(qs.size() + (qs.size() / 5));
     }
 
     public ArrayList<Keyword> getKws() {
