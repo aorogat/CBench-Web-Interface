@@ -25,6 +25,13 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import org.primefaces.model.SortMeta;
 import org.primefaces.model.SortOrder;
+import org.primefaces.model.*;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.PieChartModel;
  
 
 /**
@@ -35,24 +42,35 @@ import org.primefaces.model.SortOrder;
 @RequestScoped
 public class CategorizedQuestions {
 
-    ArrayList<Question> singleShape_Qs = new ArrayList<Question>();
-    ArrayList<Question> chain_Qs = new ArrayList<Question>();
-    ArrayList<Question> chainSet_Qs = new ArrayList<Question>();
-    ArrayList<Question> star_Qs = new ArrayList<Question>();
-    ArrayList<Question> tree_Qs = new ArrayList<Question>();
-    ArrayList<Question> forest_Qs = new ArrayList<Question>();
-    ArrayList<Question> cycle_Qs = new ArrayList<Question>();
-    ArrayList<Question> flower_Qs = new ArrayList<Question>();
-    ArrayList<Question> flowerSet_Qs = new ArrayList<Question>();
+    static ArrayList<Question> singleShape_Qs = new ArrayList<Question>();
+    static ArrayList<Question> chain_Qs = new ArrayList<Question>();
+    static ArrayList<Question> chainSet_Qs = new ArrayList<Question>();
+    static ArrayList<Question> star_Qs = new ArrayList<Question>();
+    static ArrayList<Question> tree_Qs = new ArrayList<Question>();
+    static ArrayList<Question> forest_Qs = new ArrayList<Question>();
+    static ArrayList<Question> cycle_Qs = new ArrayList<Question>();
+    static ArrayList<Question> flower_Qs = new ArrayList<Question>();
+    static ArrayList<Question> flowerSet_Qs = new ArrayList<Question>();
 
+    static PieChartModel pieModelSelect= new PieChartModel();
+    static BarChartModel barModel = new BarChartModel();
+    
     private List<SortMeta> sortBy;
 
     
     public CategorizedQuestions() throws IOException {
       
-   
+    singleShape_Qs = new ArrayList<Question>();
+    chain_Qs = new ArrayList<Question>();
+    chainSet_Qs = new ArrayList<Question>();
+    star_Qs = new ArrayList<Question>();
+    tree_Qs = new ArrayList<Question>();
+    forest_Qs = new ArrayList<Question>();
+    cycle_Qs = new ArrayList<Question>();
+    flower_Qs = new ArrayList<Question>();
+    flowerSet_Qs = new ArrayList<Question>();
         
-        DataSetPreprocessing.getQueriesWithoutDuplicates(9, false, false, false);
+        //DataSetPreprocessing.getQueriesWithoutDuplicates(9, false, false, false);
         for (Question q : DataSetPreprocessing.questionsWithoutDuplicates) {
             String queryString = q.getQuestionQuery();
             try {
@@ -98,57 +116,25 @@ public class CategorizedQuestions {
                 //System.out.println(queryString);
             }
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-
-        CategorizedQuestions categories = new CategorizedQuestions();
-        System.out.println();
         
-        PrintWriter writer;
-        try {
-            writer = new PrintWriter("1- Qald - 9-- Single Edge questions.xml", "UTF-8");
-            writer.println(categories.printQuestionsAsXML(categories.singleShape_Qs));
-            writer.close();
-            
-            writer = new PrintWriter("2- Qald - 9-- Chain questions.xml", "UTF-8");
-            writer.println(categories.printQuestionsAsXML(categories.chain_Qs));
-            writer.close();
-            
-            writer = new PrintWriter("3- Qald - 9-- Chain set questions.xml", "UTF-8");
-            writer.println(categories.printQuestionsAsXML(categories.chainSet_Qs));
-            writer.close();
-           
-            writer = new PrintWriter("4- Qald - 9-- Star questions.xml", "UTF-8");
-            writer.println(categories.printQuestionsAsXML(categories.star_Qs));
-            writer.close();
-            
-            writer = new PrintWriter("5- Qald - 9-- Tree questions.xml", "UTF-8");
-            writer.println(categories.printQuestionsAsXML(categories.tree_Qs));
-            writer.close();
-            
-            writer = new PrintWriter("6- Qald - 9-- Forest questions.xml", "UTF-8");
-            writer.println(categories.printQuestionsAsXML(categories.forest_Qs));
-            writer.close();
-            
-            writer = new PrintWriter("7- Qald - 9-- Cycle questions.xml", "UTF-8");
-            writer.println(categories.printQuestionsAsXML(categories.cycle_Qs));
-            writer.close();
-            
-             
-            writer = new PrintWriter("8- Qald - 9-- Flower questions.xml", "UTF-8");
-            writer.println(categories.printQuestionsAsXML(categories.flower_Qs));
-            writer.close();
-            
-            writer = new PrintWriter("9- Qald - 9-- Flowwerset questions.xml", "UTF-8");
-            writer.println(categories.printQuestionsAsXML(categories.flowerSet_Qs));
-            writer.close();
-            
-            
-        } catch (FileNotFoundException ex) {
-        } catch (UnsupportedEncodingException ex) {
-        }
+        pieModelSelect.clear();
+        pieModelSelect.set("Single-Edge("+singleShape_Qs.size()+")" , singleShape_Qs.size());
+        pieModelSelect.set("Chain("+chain_Qs.size()+")", chain_Qs.size());
+        pieModelSelect.set("Chain-Set("+chainSet_Qs.size()+")", chainSet_Qs.size());
+        pieModelSelect.set("Tree("+tree_Qs.size()+")", tree_Qs.size());
+        pieModelSelect.set("Star("+star_Qs.size()+")", star_Qs.size());
+        pieModelSelect.set("Forest("+forest_Qs.size()+")", forest_Qs.size());
+        pieModelSelect.set("Flower("+flower_Qs.size()+")", flower_Qs.size());
+        pieModelSelect.set("Flower-Set("+flowerSet_Qs.size()+")", flowerSet_Qs.size());
         
+
+        pieModelSelect.setTitle("Query Shape");
+        pieModelSelect.setLegendPosition("e");
+        pieModelSelect.setShowDataLabels(true);
+        pieModelSelect.setDiameter(150);
+        pieModelSelect.setShadow(false);
+        
+        createCharts();
     }
 
     String printQuestionsAsXML(ArrayList<Question> qs) {
@@ -194,6 +180,36 @@ public class CategorizedQuestions {
         return "";
     }
 
+    
+    private static void createCharts() {
+
+        barModel.clear();
+
+        //////////////////////////////////////////
+        ChartSeries shapes = new ChartSeries();
+        shapes.setLabel("Query Shape");
+        shapes.set("Single-Edge", singleShape_Qs.size());
+        shapes.set("Chain", chain_Qs.size()+singleShape_Qs.size());
+        shapes.set("Chain-Set", chainSet_Qs.size()+chain_Qs.size()+singleShape_Qs.size());
+        shapes.set("Start", star_Qs.size());
+        shapes.set("Tree", tree_Qs.size()+chain_Qs.size()+singleShape_Qs.size());
+        shapes.set("Forest", forest_Qs.size()+tree_Qs.size()+chain_Qs.size()+singleShape_Qs.size()+chainSet_Qs.size());
+        shapes.set("Flower", flower_Qs.size()+tree_Qs.size()+chain_Qs.size()+singleShape_Qs.size());
+        shapes.set("Flower-Set", flowerSet_Qs.size()+flower_Qs.size()+tree_Qs.size()+chain_Qs.size()+singleShape_Qs.size()+
+                chainSet_Qs.size()+forest_Qs.size());
+        shapes.set("Cycle", cycle_Qs.size());
+
+        barModel.addSeries(shapes);
+        barModel.setTitle("Cummulative Query Shapes");
+        barModel.setLegendPosition("e");
+        barModel.setShowPointLabels(true);
+        barModel.getAxes().put(AxisType.X, new CategoryAxis("Modifier"));
+        Axis xAxis = barModel.getAxis(AxisType.X);
+        xAxis.setTickAngle(-30);
+        Axis yAxis = barModel.getAxis(AxisType.Y);
+        yAxis.setMin(0);
+    }
+    
     public ArrayList<Question> getSingleShape_Qs() {
         return singleShape_Qs;
     }
@@ -265,8 +281,22 @@ public class CategorizedQuestions {
     public void setFlowerSet_Qs(ArrayList<Question> flowerSet_Qs) {
         this.flowerSet_Qs = flowerSet_Qs;
     }
-    
-    
+
+    public PieChartModel getPieModelSelect() {
+        return pieModelSelect;
+    }
+
+    public void setPieModelSelect(PieChartModel pieModelSelect) {
+        CategorizedQuestions.pieModelSelect = pieModelSelect;
+    }
+
+    public BarChartModel getBarModel() {
+        return barModel;
+    }
+
+    public void setBarModel(BarChartModel barModel) {
+        CategorizedQuestions.barModel = barModel;
+    }
     
     
     

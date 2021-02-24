@@ -34,8 +34,8 @@ public class PredicateCounter {
 
     public static void main(String[] args) {
 
-        PredicateCounter k = new PredicateCounter(DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.LC_QUAD));
-        k.count();
+        //PredicateCounter k = new PredicateCounter(DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.LC_QUAD));
+        //k.count();
     }
 
     private void count() {

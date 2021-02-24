@@ -216,7 +216,7 @@ public class NoOfTriples {
             if(s>=DataSetPreprocessing.questionsWithoutDuplicates.size())
                 break;
         }
-        tokens.set(29+"+", tokensNum[29]);
+        tokens.set("..+", tokensNum[29]);
 
         modelNLQ.addSeries(tokens);
         modelNLQ.setTitle("Number of Tokens");

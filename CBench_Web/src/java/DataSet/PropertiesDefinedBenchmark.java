@@ -247,7 +247,7 @@ public class PropertiesDefinedBenchmark {
     }
 
     public static void main(String[] args) {
-        DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.PropertiesDefined);
+        //DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.PropertiesDefined);
     }
 
 }

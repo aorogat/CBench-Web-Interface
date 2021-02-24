@@ -18,6 +18,7 @@ public class DataSetPreprocessing {
     public static ArrayList<Question> questions = new ArrayList<>();
     public static ArrayList<Question> questionsWithoutDuplicates = new ArrayList<>();
     public static ArrayList<Query> queries = new ArrayList<>();
+    public static String currentDirectory;
 
 
     public static ArrayList getQueriesWithoutDuplicates(int qald, boolean quad, boolean graph, boolean web) throws IOException {

@@ -1,8 +1,10 @@
 package model;
 
+import NLQAnalysis.NLQCategoraizer;
 import ShallowAnalysis.Keywords;
 import ShallowAnalysis.NoOfTriples;
 import ShallowAnalysis.OperatorDistribution;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -34,11 +36,12 @@ public class MainBean
         return "evalute.xhtml";
     }
     
-    public String analysis()
+    public String analysis() throws IOException
     {
         Keywords.keywordsAnalysis();
         NoOfTriples.triplesAnalysis();
         OperatorDistribution.analysis();
+        NLQCategoraizer a = new NLQCategoraizer();
         return "analysis.xhtml";
     }
     ////////////////////////////////////////////////////////////////////////////

@@ -44,7 +44,7 @@
                     <div>
                         <h1>
                             <img src="images/CarletonLogo.png" width="40%" style="max-width: 200px;"/>
-                        Question Answering Systems Deep Evaluator
+                            Question Answering Systems Deep Evaluator
                         </h1>
 
                     </div>
@@ -92,7 +92,7 @@
                                             <p:chart type="pie" model="#{keywords.pieModelSelect_Ask}" 
                                                      style="width:300px; height:250px;
                                                      display: inline-block; font-family: monospace;" />
-                                            
+
                                             <p:chart type="line" model="#{keywords.model}"  
                                                      style="width:300px; height:250px;
                                                      display: inline-block; font-family: monospace;"/>
@@ -109,14 +109,14 @@
                                 <p:tab title="Number of Triples Analysis">
                                     <div>
                                         <div style="display: inline-block; vertical-align: top;">
-                                            
+
                                             <p:chart type="line" model="#{noOfTriples.model2}"  
                                                      style="width:450px; height:300px;
                                                      display: inline-block; 
                                                      font-family: monospace;"/>
                                         </div>
                                         <div style="display: inline-block; vertical-align: top;">
-                                            
+
                                             <p:chart type="line" model="#{noOfTriples.modelNLQ}"  
                                                      style="width:450px; height:300px;
                                                      display: inline-block; 
@@ -125,7 +125,7 @@
                                     </div>
                                 </p:tab>
                             </p:accordionPanel>
-                            
+
                             <p:accordionPanel>
                                 <p:tab title="Operator Distribution">
                                     <div>
@@ -143,150 +143,318 @@
 
                                             <p:column headerText="#Absolute">
                                                 #{distribution.key eq 'CPF + O' or
-                                                    distribution.key eq 'CPF + U' or
-                                                    distribution.key eq 'CPF + G'
-                                                    ? '+' :
-                                                    null}
+                                                  distribution.key eq 'CPF + U' or
+                                                  distribution.key eq 'CPF + G'
+                                                  ? '+' :
+                                                  null}
                                                 <h:outputText value="#{distribution.occuurances}"   style="font-size: 12px;"/>
                                             </p:column>
                                             <p:column headerText="%Relative">
                                                 #{distribution.key eq 'CPF + O' or
-                                                    distribution.key eq 'CPF + U' or
-                                                    distribution.key eq 'CPF + G'
-                                                    ? '+' :
-                                                    null}
+                                                  distribution.key eq 'CPF + U' or
+                                                  distribution.key eq 'CPF + G'
+                                                  ? '+' :
+                                                  null}
                                                 <h:outputText value="#{distribution.relative}"  style="font-size: 12px;">
                                                     <f:convertNumber pattern="#00.00" />
                                                 </h:outputText>%
                                             </p:column>
                                         </p:dataTable>
                                         <div style="display: inline-block; vertical-align: top;">
-                                            
+
                                         </div>
                                     </div>
                                 </p:tab>
                             </p:accordionPanel>
-                            
+
                         </p:tab>
                         <p:tab title="Shape Analysis">
                             <h2>This analysis is for <span style="font-weight: bold; color: #00BCD4">#{mainBean.benchmark}</span></h2>
+                            <div style="display: inline-block; vertical-align: top;">
+                                <p:chart type="pie" model="#{categorizedQuestions.pieModelSelect}" 
+                                                     style="width:450px; height:350px;
+                                                     display: inline-block; font-family: monospace;" />
+
+                                        </div>
+                            <div style="display: inline-block; vertical-align: top;">
+                                <p:chart type="bar" model="#{categorizedQuestions.barModel}" 
+                                                     style="width:450px; height:350px;
+                                                     display: inline-block; font-family: monospace;" />
+
+                                        </div>
                             <div>
                                 <p:tabView>
-                                <p:tab title="Single-Edge">
-                                    Total questions: #{categorizedQuestions.singleShape_Qs.size()}.
-                                    <p:dataTable var="qs" value="#{categorizedQuestions.singleShape_Qs}"
-                                                   >
-                                        <p:column headerText="Question">
-                                            <h:outputText value="#{qs.questionString}" />
-                                        </p:column>
+                                    <p:tab title="Single-Edge">
+                                        Total questions: #{categorizedQuestions.singleShape_Qs.size()}.
+                                        <p:dataTable var="qs" value="#{categorizedQuestions.singleShape_Qs}"
+                                                     >
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
 
-                                        <p:column headerText="Query">
-                                            <h:outputText value="#{qs.questionQuery}" />
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:tab>
-                                <p:tab title="Chain">
-                                    Total questions: #{categorizedQuestions.chain_Qs.size()}.
-                                    Chain Shape subsumes Single-Edge. In this table Single-Edge Questions are excluded.
-                                    <p:dataTable var="qs" value="#{categorizedQuestions.chain_Qs}">
-                                        <p:column headerText="Question">
-                                            <h:outputText value="#{qs.questionString}" />
-                                        </p:column>
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="Chain">
+                                        Total questions: #{categorizedQuestions.chain_Qs.size()}.
+                                        Chain Shape subsumes Single-Edge. In this table Single-Edge Questions are excluded.
+                                        <p:dataTable var="qs" value="#{categorizedQuestions.chain_Qs}">
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
 
-                                        <p:column headerText="Query">
-                                            <h:outputText value="#{qs.questionQuery}" />
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:tab>
-                                <p:tab title="Chain-Set">
-                                    Total questions: #{categorizedQuestions.chainSet_Qs.size()}.
-                                    Chain-Set Shape subsumes Chain. In this table Chain Questions are excluded.
-                                    <p:dataTable var="qs" value="#{categorizedQuestions.chainSet_Qs}">
-                                        <p:column headerText="Question">
-                                            <h:outputText value="#{qs.questionString}" />
-                                        </p:column>
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="Chain-Set">
+                                        Total questions: #{categorizedQuestions.chainSet_Qs.size()}.
+                                        Chain-Set Shape subsumes Chain. In this table Chain Questions are excluded.
+                                        <p:dataTable var="qs" value="#{categorizedQuestions.chainSet_Qs}">
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
 
-                                        <p:column headerText="Query">
-                                            <h:outputText value="#{qs.questionQuery}" />
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:tab>
-                                <p:tab title="Tree">
-                                    Total questions: #{categorizedQuestions.tree_Qs.size()}.
-                                    Tree Shape subsumes Chain. In this table Chain Questions are excluded.
-                                    <p:dataTable var="qs" value="#{categorizedQuestions.tree_Qs}">
-                                        <p:column headerText="Question">
-                                            <h:outputText value="#{qs.questionString}" />
-                                        </p:column>
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="Tree">
+                                        Total questions: #{categorizedQuestions.tree_Qs.size()}.
+                                        Tree Shape subsumes Chain. In this table Chain Questions are excluded.
+                                        <p:dataTable var="qs" value="#{categorizedQuestions.tree_Qs}">
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
 
-                                        <p:column headerText="Query">
-                                            <h:outputText value="#{qs.questionQuery}" />
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:tab>
-                                <p:tab title="Star">
-                                    Total questions: #{categorizedQuestions.star_Qs.size()}.
-                                    <p:dataTable var="qs" value="#{categorizedQuestions.star_Qs}">
-                                        <p:column headerText="Question">
-                                            <h:outputText value="#{qs.questionString}" />
-                                        </p:column>
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="Star">
+                                        Total questions: #{categorizedQuestions.star_Qs.size()}.
+                                        <p:dataTable var="qs" value="#{categorizedQuestions.star_Qs}">
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
 
-                                        <p:column headerText="Query">
-                                            <h:outputText value="#{qs.questionQuery}" />
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:tab>
-                                <p:tab title="Forest">
-                                    Total questions: #{categorizedQuestions.forest_Qs.size()}.
-                                    Forest Shape subsumes Tree. In this table Tree Questions are excluded.
-                                    <p:dataTable var="qs" value="#{categorizedQuestions.forest_Qs}">
-                                        <p:column headerText="Question">
-                                            <h:outputText value="#{qs.questionString}" />
-                                        </p:column>
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="Forest">
+                                        Total questions: #{categorizedQuestions.forest_Qs.size()}.
+                                        Forest Shape subsumes Tree. In this table Tree Questions are excluded.
+                                        <p:dataTable var="qs" value="#{categorizedQuestions.forest_Qs}">
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
 
-                                        <p:column headerText="Query">
-                                            <h:outputText value="#{qs.questionQuery}" />
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:tab>
-                                <p:tab title="Cyle">
-                                    Total questions: #{categorizedQuestions.cycle_Qs.size()}.
-                                    <p:dataTable var="qs" value="#{categorizedQuestions.cycle_Qs}">
-                                        <p:column headerText="Question">
-                                            <h:outputText value="#{qs.questionString}" />
-                                        </p:column>
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="Cyle">
+                                        Total questions: #{categorizedQuestions.cycle_Qs.size()}.
+                                        <p:dataTable var="qs" value="#{categorizedQuestions.cycle_Qs}">
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
 
-                                        <p:column headerText="Query">
-                                            <h:outputText value="#{qs.questionQuery}" />
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:tab>
-                                <p:tab title="Flower">
-                                    Total questions: #{categorizedQuestions.flower_Qs.size()}.
-                                    Flower Shape subsumes Tree. In this table Tree Questions are excluded.
-                                    <p:dataTable var="qs" value="#{categorizedQuestions.flower_Qs}">
-                                        <p:column headerText="Question">
-                                            <h:outputText value="#{qs.questionString}" />
-                                        </p:column>
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="Flower">
+                                        Total questions: #{categorizedQuestions.flower_Qs.size()}.
+                                        Flower Shape subsumes Tree. In this table Tree Questions are excluded.
+                                        <p:dataTable var="qs" value="#{categorizedQuestions.flower_Qs}">
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
 
-                                        <p:column headerText="Query">
-                                            <h:outputText value="#{qs.questionQuery}" />
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:tab>
-                                 <p:tab title="Flower-Set">
-                                    Total questions: #{categorizedQuestions.flowerSet_Qs.size()}.
-                                    Flower-Set Shape subsumes Flower. In this table Flower Questions are excluded.
-                                    <p:dataTable var="qs" value="#{categorizedQuestions.flowerSet_Qs}">
-                                        <p:column headerText="Question">
-                                            <h:outputText value="#{qs.questionString}" />
-                                        </p:column>
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="Flower-Set">
+                                        Total questions: #{categorizedQuestions.flowerSet_Qs.size()}.
+                                        Flower-Set Shape subsumes Flower. In this table Flower Questions are excluded.
+                                        <p:dataTable var="qs" value="#{categorizedQuestions.flowerSet_Qs}">
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
 
-                                        <p:column headerText="Query">
-                                            <h:outputText value="#{qs.questionQuery}" />
-                                        </p:column>
-                                    </p:dataTable>
-                                </p:tab>
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                </p:tabView>
+                            </div>
+                        </p:tab>
+                        <p:tab title="NLQ Analysis">
+                            <h2>This analysis is for <span style="font-weight: bold; color: #00BCD4">#{mainBean.benchmark}</span></h2>
+                            <div style="display: inline-block; vertical-align: top;">
+                                <p:chart type="pie" model="#{nLQCategoraizer.pieModelSelect}" 
+                                                     style="width:450px; height:350px;
+                                                     display: inline-block; font-family: monospace;" />
+
+                                        </div>
+                            <div>
+                                <p:tabView>
+                                    <p:tab title="What">
+                                        Total questions: #{nLQCategoraizer.what_Qs.size()}.
+                                        <p:dataTable var="qs" value="#{nLQCategoraizer.what_Qs}"
+                                                     >
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
+
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="When">
+                                        Total questions: #{nLQCategoraizer.when_Qs.size()}.
+                                        <p:dataTable var="qs" value="#{nLQCategoraizer.when_Qs}"
+                                                     >
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
+
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="Where">
+                                        Total questions: #{nLQCategoraizer.where_Qs.size()}.
+                                        <p:dataTable var="qs" value="#{nLQCategoraizer.where_Qs}"
+                                                     >
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
+
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="Which">
+                                        Total questions: #{nLQCategoraizer.which_Qs.size()}.
+                                        <p:dataTable var="qs" value="#{nLQCategoraizer.which_Qs}"
+                                                     >
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
+
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="Who">
+                                        Total questions: #{nLQCategoraizer.who_Qs.size()}.
+                                        <p:dataTable var="qs" value="#{nLQCategoraizer.who_Qs}"
+                                                     >
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
+
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="Whom">
+                                        Total questions: #{nLQCategoraizer.whom_Qs.size()}.
+                                        <p:dataTable var="qs" value="#{nLQCategoraizer.whom_Qs}"
+                                                     >
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
+
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="Whose">
+                                        Total questions: #{nLQCategoraizer.whose_Qs.size()}.
+                                        <p:dataTable var="qs" value="#{nLQCategoraizer.whose_Qs}"
+                                                     >
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
+
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="How">
+                                        Total questions: #{nLQCategoraizer.how_Qs.size()}.
+                                        <p:dataTable var="qs" value="#{nLQCategoraizer.how_Qs}"
+                                                     >
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
+
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="Yes/No">
+                                        Total questions: #{nLQCategoraizer.yes_no_Qs.size()}.
+                                        <p:dataTable var="qs" value="#{nLQCategoraizer.yes_no_Qs}"
+                                                     >
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
+
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="Request">
+                                        Total questions: #{nLQCategoraizer.request_Qs.size()}.
+                                        <p:dataTable var="qs" value="#{nLQCategoraizer.request_Qs}"
+                                                     >
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
+
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="Topical">
+                                        Total questions: #{nLQCategoraizer.topical_Qs.size()}.
+                                        <p:dataTable var="qs" value="#{nLQCategoraizer.topical_Qs}"
+                                                     >
+                                            <p:column headerText="Question">
+                                                <h:outputText value="#{qs.questionString}" />
+                                            </p:column>
+
+                                            <p:column headerText="Query">
+                                                <h:outputText value="#{qs.questionQuery}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
                                 </p:tabView>
                             </div>
                         </p:tab>
@@ -296,8 +464,8 @@
                     <p  class="row third" style="color: gray;">
                         <img src="images/CarletonLogo.png" width="40%" style="max-width: 200px; float: next;"/>
                         <div>
-                        Developed at Data Science Institute, Carleton University, Canada<br/>
-                        Copyright 2020 by Carleton Data Science Institute
+                            Developed at Data Science Institute, Carleton University, Canada<br/>
+                            Copyright 2020 by Carleton Data Science Institute
                         </div>
                     </p>
                 </div>
