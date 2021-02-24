@@ -16,12 +16,15 @@ import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.Syntax;
 import qa.dataStructures.Question;
 import java.io.StringWriter;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
  
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import org.primefaces.model.SortMeta;
+import org.primefaces.model.SortOrder;
  
 
 /**
@@ -42,7 +45,13 @@ public class CategorizedQuestions {
     ArrayList<Question> flower_Qs = new ArrayList<Question>();
     ArrayList<Question> flowerSet_Qs = new ArrayList<Question>();
 
+    private List<SortMeta> sortBy;
+
+    
     public CategorizedQuestions() throws IOException {
+      
+   
+        
         DataSetPreprocessing.getQueriesWithoutDuplicates(9, false, false, false);
         for (Question q : DataSetPreprocessing.questionsWithoutDuplicates) {
             String queryString = q.getQuestionQuery();
@@ -80,7 +89,8 @@ public class CategorizedQuestions {
                         &&!QueryShapeType.isTree(current)) {
                     star_Qs.add(q);
                 }
-                if (QueryShapeType.isTree(current)) {
+                if (QueryShapeType.isTree(current)
+                        &&!QueryShapeType.isChain(current)) {
                     tree_Qs.add(q);
                 }
             } catch (Exception e) {

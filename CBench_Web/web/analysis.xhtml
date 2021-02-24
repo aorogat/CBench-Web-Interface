@@ -173,7 +173,9 @@
                             <div>
                                 <p:tabView>
                                 <p:tab title="Single-Edge">
-                                    <p:dataTable var="qs" value="#{categorizedQuestions.singleShape_Qs}">
+                                    Total questions: #{categorizedQuestions.singleShape_Qs.size()}.
+                                    <p:dataTable var="qs" value="#{categorizedQuestions.singleShape_Qs}"
+                                                   >
                                         <p:column headerText="Question">
                                             <h:outputText value="#{qs.questionString}" />
                                         </p:column>
@@ -184,6 +186,7 @@
                                     </p:dataTable>
                                 </p:tab>
                                 <p:tab title="Chain">
+                                    Total questions: #{categorizedQuestions.chain_Qs.size()}.
                                     Chain Shape subsumes Single-Edge. In this table Single-Edge Questions are excluded.
                                     <p:dataTable var="qs" value="#{categorizedQuestions.chain_Qs}">
                                         <p:column headerText="Question">
@@ -196,6 +199,7 @@
                                     </p:dataTable>
                                 </p:tab>
                                 <p:tab title="Chain-Set">
+                                    Total questions: #{categorizedQuestions.chainSet_Qs.size()}.
                                     Chain-Set Shape subsumes Chain. In this table Chain Questions are excluded.
                                     <p:dataTable var="qs" value="#{categorizedQuestions.chainSet_Qs}">
                                         <p:column headerText="Question">
@@ -208,6 +212,7 @@
                                     </p:dataTable>
                                 </p:tab>
                                 <p:tab title="Tree">
+                                    Total questions: #{categorizedQuestions.tree_Qs.size()}.
                                     Tree Shape subsumes Chain. In this table Chain Questions are excluded.
                                     <p:dataTable var="qs" value="#{categorizedQuestions.tree_Qs}">
                                         <p:column headerText="Question">
@@ -220,6 +225,7 @@
                                     </p:dataTable>
                                 </p:tab>
                                 <p:tab title="Star">
+                                    Total questions: #{categorizedQuestions.star_Qs.size()}.
                                     <p:dataTable var="qs" value="#{categorizedQuestions.star_Qs}">
                                         <p:column headerText="Question">
                                             <h:outputText value="#{qs.questionString}" />
@@ -231,6 +237,7 @@
                                     </p:dataTable>
                                 </p:tab>
                                 <p:tab title="Forest">
+                                    Total questions: #{categorizedQuestions.forest_Qs.size()}.
                                     Forest Shape subsumes Tree. In this table Tree Questions are excluded.
                                     <p:dataTable var="qs" value="#{categorizedQuestions.forest_Qs}">
                                         <p:column headerText="Question">
@@ -243,6 +250,7 @@
                                     </p:dataTable>
                                 </p:tab>
                                 <p:tab title="Cyle">
+                                    Total questions: #{categorizedQuestions.cycle_Qs.size()}.
                                     <p:dataTable var="qs" value="#{categorizedQuestions.cycle_Qs}">
                                         <p:column headerText="Question">
                                             <h:outputText value="#{qs.questionString}" />
@@ -254,6 +262,7 @@
                                     </p:dataTable>
                                 </p:tab>
                                 <p:tab title="Flower">
+                                    Total questions: #{categorizedQuestions.flower_Qs.size()}.
                                     Flower Shape subsumes Tree. In this table Tree Questions are excluded.
                                     <p:dataTable var="qs" value="#{categorizedQuestions.flower_Qs}">
                                         <p:column headerText="Question">
@@ -265,7 +274,8 @@
                                         </p:column>
                                     </p:dataTable>
                                 </p:tab>
-                                <p:tab title="Flower-Set">
+                                 <p:tab title="Flower-Set">
+                                    Total questions: #{categorizedQuestions.flowerSet_Qs.size()}.
                                     Flower-Set Shape subsumes Flower. In this table Flower Questions are excluded.
                                     <p:dataTable var="qs" value="#{categorizedQuestions.flowerSet_Qs}">
                                         <p:column headerText="Question">
