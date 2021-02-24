@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pa="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>QA Evaluator - Carleton</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="author" content="colorlib.com"/>
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,600,700" rel="stylesheet" />
+        <link href="css/main.css" rel="stylesheet" />
+
+    </h:head>
+    <h:body>
+        <div class="s009">
+            <div style="width: 35%; display: inline-block;">
+                <img src="images/CarletonLogo.png" width="40%" style="display: block;"/><br/>
+                <h1>Question Answering Systems Deep Evaluator</h1>
+                <hr/>
+                <p  class="row third" style="color: gray;">
+                    Developed at Data Science Institute, Carleton University, Canada<br/>
+                    Copyright 2020 by Carleton Data Science Institute
+                </p>
+            </div>
+            <h:form style="display: inline-block;">
+                <div class="inner-form">
+                    <div class="basic-search">
+                        <div class="input-field">
+                            
+                        <h3><span>Your QA System Evaluation</span></h3>
+                            <h:inputText id="search" pa:type="text" pa:placeholder="Type QA System URL"
+                                         style="border-color: gray; border-style: solid;"/>
+                            <div class="icon-wrap">
+                                <svg class="svg-inline--fa fa-search fa-w-16" fill="#ccc" aria-hidden="true" data-prefix="fas" data-icon="url" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path d=" 128-128 128z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="advance-search">
+                        <span class="desc">Evaluation Configuration</span>
+                        <div class="row">
+                            <div class="input-field">
+                                <div class="input-select">
+                                    <h:selectOneListbox value="#{mainBean.knowledgebase}" pa:data-trigger="" pa:name="choices-single-defaul"  pa:placeholder="Accessories">
+                                        <f:selectItems value = "#{mainBean.knowledgebases}" var="c"
+                                                       itemValue="#{c}" itemLabel="#{c}"/>
+                                    </h:selectOneListbox>
+                                </div>
+                            </div>
+                            <div class="input-field">
+                                <div class="input-select">
+                                    <h:selectOneListbox value="#{mainBean.benchmark}" pa:data-trigger="" pa:name="choices-single-defaul"  pa:placeholder="Accessories">
+                                        <f:selectItems value = "#{mainBean.benchmarks}" var="c"
+                                                       itemValue="#{c}" itemLabel="#{c}"/>
+                                    </h:selectOneListbox>
+                                </div>
+                            </div>
+                            <div class="input-field">
+                                <div class="input-select">
+                                    <h:selectOneListbox value="#{mainBean.analysisType}" pa:data-trigger="" pa:name="choices-single-defaul"  pa:placeholder="Accessories">
+                                        <f:selectItems value = "#{mainBean.analysisTypes}" var="c"
+                                                       itemValue="#{c}" itemLabel="#{c}"/>
+                                    </h:selectOneListbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row second">
+                        </div>
+                        <div class="row third">
+                            <div class="input-field">
+                                <div class="result-count">
+                                    <span>0 </span>Questions
+                                </div>
+                                <div class="group-btn">
+                                    <h:commandButton class="btn-search" value="Evaluate"
+                                                     action="#{mainBean.evaluate()}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+
+            <h:form>
+                <div class="inner-form">
+                    <h3><span>Benchmark Analysis</span></h3>
+                    <div class="advance-search">
+                        
+                        <div class="row">
+                            <div class="input-field">
+                                <div class="input-select">
+                                    <h:selectOneListbox value="#{mainBean.benchmark}" pa:data-trigger="" pa:name="choices-single-defaul"  pa:placeholder="Accessories">
+                                        <f:selectItems value = "#{mainBean.benchmarks}" var="c"
+                                                       itemValue="#{c}" itemLabel="#{c}"/>
+                                    </h:selectOneListbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row third">
+                            <div class="input-field">
+                                <div class="result-count">
+                                    <span>0 </span>Questions
+                                </div>
+                                <div class="group-btn">
+                                    <h:commandButton class="btn-search" value="Analyze"
+                                                     action="#{mainBean.analysis()}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </div>
+        <script src="js/extention/choices.js"></script>
+        <script type="text/javascript">
+            /* <![CDATA[ */
+            const customSelects = document.querySelectorAll("select");
+                    const deleteBtn = document.getElementById('delete')
+                    const choices = new Choices('select',
+                    {
+                    searchEnabled: false,
+                            itemSelectText: '',
+                            removeItemButton: true,
+                    });
+                    deleteBtn.addEventListener("click", function (e)
+                    {
+                        e.preventDefault();
+                                const deleteAll = document.querySelectorAll('.choices__button')
+                                for (let i = 0; i < deleteAll.length;
+                                i++
+                                );
+                        {
+                            deleteAll[i].click();
+                        }
+                    });
+
+            /* ]]> */
+        </script>
+    </h:body>
+
+</html>
+

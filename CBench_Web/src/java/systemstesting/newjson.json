@@ -1,0 +1,73 @@
+{
+    "subquestion_1_updated_sparql": "PREFIX fb: <http://rdf.freebase.com/ns/> SELECT DISTINCT ?0 ?0name ?1 ?2 where { fb:m.09pmkv fb:location.country.form_of_government ?0 . OPTIONAL {?0 fb:type.object.name ?0name} . OPTIONAL {?0 ?1 ?2 . FILTER (dataType(?2) = 'http://www.w3.org/2001/XMLSchema#datetime') } . FILTER (?0 != fb:m.09pmkv) } LIMIT 500",
+    "subquestion_1_sparql": "PREFIX fb: <http://rdf.freebase.com/ns/> SELECT DISTINCT ?0 where { fb:m.09pmkv fb:location.country.form_of_government ?0 . FILTER (?0 != fb:m.09pmkv) } LIMIT 300",
+    "subquestion_1_answer_and_date": [],
+    "subquestion_1_best_date_predicate": "",
+    "subquestion_2_updated_sparql": "PREFIX fb: <http://rdf.freebase.com/ns/> SELECT DISTINCT ?0 ?0name dataType(?0) where { fb:m.03rjj fb:location.dated_location.date_founded ?0 . OPTIONAL {?0 fb:type.object.name ?0name} . FILTER (?0 != fb:m.03rjj) } LIMIT 300",
+    "subquestion_2_sparql": "PREFIX fb: <http://rdf.freebase.com/ns/> SELECT DISTINCT ?0 where { fb:m.03rjj fb:location.dated_location.date_founded ?0 . FILTER (?0 != fb:m.03rjj) } LIMIT 300",
+    "temporal_relation_signal_word": "when",
+    "subquestion_2_relation": "location.dated_location.date_founded",
+    "subquestion_1_predicate": "location.country.form_of_government",
+    "gold_answer": "",
+    "rank": "1",
+    "Ordinals": "[]",
+    "subquestion_2": "When italy unified?",
+    "ExplicitTemporalText": "[]",
+    "subquestion_1": "what type of government was formed?",
+    "question": "what type of government was formed when italy unified?",
+    "question_type": "Implicit;",
+    "IsTempoQuestion": "true",
+    "WhenTagsText": "[]",
+    "subquestion_1_entity": [{
+            "name": "Malaysia",
+            "mid": "m.09pmkv"
+        }],
+    "subquestion_1_relation": "location.country.form_of_government",
+    "tempo_answer": [{
+            "wiki": "<http://en.wikipedia.org/wiki/index.html?curid=5649>",
+            "name": "Constitutional monarchy",
+            "mid": "m.01q20",
+            "description": "A constitutional monarchy, limited monarchy, parliamentary monarchy, is a form of monarchy where the governing powers of the monarch are restricted by the terms of a constitution.\\nA constitutional monarchy may refer to a system in which the monarch acts as a non-party political head of state under the constitution, whether written or unwritten. While the monarch may hold formal reserve powers and government may officially take place in the monarch's name, they do not set public policy or choose political leaders. Political scientist Vernon Bogdanor, paraphrasing Thomas Macaulay, has defined a constitutional monarch as \\a sovereign who reigns but does not rule.\\ In addition to acting as a visible symbol of national unity, a constitutional monarch may hold formal powers such as dissolving parliament or giving Royal Assent to legislation. However, the exercise of such powers is generally a formality rather than an opportunity for the sovereign to enact personal political preference."
+        }, {
+            "wiki": "<http://en.wikipedia.org/wiki/Democracy>",
+            "name": "Democracy",
+            "mid": "m.026wp",
+            "description": "Democracy is \\a system of government in which all the people of a state or polity ... are involved in making decisions about its affairs, typically by voting to elect representatives to a parliament or similar assembly,\\ as defined by the Oxford English Dictionary. Democracy is further defined as \\government by the people; especially : rule of the majority \\ a government in which the supreme power is vested in the people and exercised by them directly or indirectly through a system of representation usually involving periodically held free elections.\\\\nAccording to political scientist Larry Diamond, it consists of four key elements:\\nA political system for choosing and replacing the government through free and fair elections.\\nThe active participation of the people, as citizens, in politics and civic life.\\nProtection of the human rights of all citizens.\\nA rule of law, in which the laws and procedures apply equally to all citizens."
+        }, {
+            "wiki": "<http://en.wikipedia.org/wiki/Elective_monarchy>",
+            "name": "Elective monarchy",
+            "mid": "m.01m4w_",
+            "description": "An elective monarchy is a monarchy ruled by an elected monarch, in contrast to a hereditary monarchy in which the office is automatically passed down as a family inheritance. The manner of election, the nature of candidate qualifications, and the electors vary from case to case. Historically it is not uncommon for elective monarchies to transform into hereditary ones over time, or for hereditary ones to acquire at least occasional elective aspects."
+        }, {
+            "wiki": "<http://en.wikipedia.org/wiki/Parliamentary_system>",
+            "name": "Parliamentary system",
+            "mid": "m.018wl5",
+            "description": "A parliamentary system is a system of government in which the ministers of the executive branch are drawn from the legislature and are accountable to that body, such that the executive and legislative branches are intertwined. In such a system, the head of government is both de facto chief executive and chief legislator.\\r\\n\\r\\nParliamentary systems are characterized by no clear-cut separation of powers between the executive and legislative branches, leading to a different set of checks and balances compared to those found in presidential systems. Parliamentary systems usually have a clear differentiation between the head of government and the head of state, with the head of government being the prime minister or premier, and the head of state often being a figurehead, often either a president (elected either popularly or by the parliament) or a hereditary monarch (often in a constitutional monarchy)."
+        }],
+    "subquestion_1_answer": [{
+            "wiki": "<http://en.wikipedia.org/wiki/index.html?curid=5649>",
+            "name": "Constitutional monarchy",
+            "mid": "m.01q20"
+        }, {
+            "wiki": "<http://en.wikipedia.org/wiki/Democracy>",
+            "name": "Democracy",
+            "mid": "m.026wp"
+        }, {
+            "wiki": "<http://en.wikipedia.org/wiki/Elective_monarchy>",
+            "name": "Elective monarchy",
+            "mid": "m.01m4w_"
+        }, {
+            "wiki": "<http://en.wikipedia.org/wiki/Parliamentary_system>",
+            "name": "Parliamentary system",
+            "mid": "m.018wl5"
+        }],
+    "subquestion_2_entity": [{
+            "name": "Italy",
+            "mid": "m.03rjj"
+        }],
+    "subquestion_2_answer": "1861-03-17",
+    "HasSubQuestion": "true",
+    "normalized_temporal_constraint": "1861-03-17",
+    "reasoning_rules": "Time rule: 1861-03-17 (when) ;",
+    "subquestion_2_predicate": "location.dated_location.date_founded"
+}

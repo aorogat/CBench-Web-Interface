@@ -1,0 +1,129 @@
+{
+    "subquestion_1_updated_sparql": "PREFIX fb: <http://rdf.freebase.com/ns/> SELECT DISTINCT ?0 ?0name ?1 ?2 where { fb:m.01skz_ fb:music.artist.album ?0 . OPTIONAL {?0 fb:type.object.name ?0name} . OPTIONAL {?0 ?1 ?2 . FILTER (dataType(?2) = 'http://www.w3.org/2001/XMLSchema#datetime') } . FILTER (?0 != fb:m.01skz_) } LIMIT 500",
+    "subquestion_1_sparql": "PREFIX fb: <http://rdf.freebase.com/ns/> SELECT DISTINCT ?0 where { fb:m.01skz_ fb:music.artist.album ?0 . FILTER (?0 != fb:m.01skz_) } LIMIT 300",
+    "subquestion_1_answer_and_date": [{
+            "date": "2009-03-03",
+            "best_date_predicate": "music.album.release_date",
+            "name": "Middle Cyclone",
+            "mid": "m.051z_3s"
+        }, {
+            "date": "from 1996-01-01 to 1996-12-31",
+            "best_date_predicate": "music.album.release_date",
+            "name": "The Unforgiving Sounds of Maow",
+            "mid": "m.04j6f7"
+        }, {
+            "date": "from 2000-01-01 to 2000-12-31",
+            "best_date_predicate": "music.album.release_date",
+            "name": "Furnace Room Lullaby",
+            "mid": "m.01k4gw2"
+        }, {
+            "date": "2004-11-04",
+            "best_date_predicate": "music.album.release_date",
+            "name": "The Tigers Have Spoken",
+            "mid": "m.01mkpkv"
+        }, {
+            "date": "2006-03-07",
+            "best_date_predicate": "music.album.release_date",
+            "name": "Fox Confessor Brings the Flood",
+            "mid": "m.01mkpjq"
+        }, {
+            "date": "2002-08-20",
+            "best_date_predicate": "music.album.release_date",
+            "name": "Blacklisted",
+            "mid": "m.01mkphh"
+        }, {
+            "date": "from 1998-01-01 to 1998-12-31",
+            "best_date_predicate": "music.album.release_date",
+            "name": "The Virginian",
+            "mid": "m.01k4gt_"
+        }, {
+            "date": "2006-04-09",
+            "best_date_predicate": "music.album.release_date",
+            "name": "2006-04-09: 9:30 Club, Washington, DC, USA",
+            "mid": "m.01mkpfv"
+        }, {
+            "date": "from 2001-01-01 to 2001-12-31",
+            "best_date_predicate": "music.album.release_date",
+            "name": "Canadian Amp",
+            "mid": "m.01mkpl_"
+        }, {
+            "date": "2007-01-09",
+            "best_date_predicate": "music.album.release_date",
+            "name": "Live from Austin, TX",
+            "mid": "m.02qx62v"
+        }],
+    "subquestion_1_best_date_predicate": "music.album.release_date(0.7783979773521423)",
+    "subquestion_2_updated_sparql": "NULL",
+    "subquestion_2_sparql": "NULL",
+    "temporal_relation_signal_word": "",
+    "subquestion_2_relation": "NULL",
+    "subquestion_1_predicate": "music.artist.album",
+    "gold_answer": "",
+    "rank": "1",
+    "Ordinals": "[]",
+    "subquestion_2": "NULL",
+    "ExplicitTemporalText": "[march 2006]",
+    "subquestion_1": "which album did neko case release ?",
+    "question": "which album did neko case release in march 2006?",
+    "question_type": "Explicit;",
+    "IsTempoQuestion": "true",
+    "WhenTagsText": "[]",
+    "subquestion_1_entity": [{
+            "name": "Neko Case",
+            "mid": "m.01skz_"
+        }],
+    "subquestion_1_relation": "music.artist.album",
+    "tempo_answer": [{
+            "wiki": "<http://en.wikipedia.org/wiki/index.html?curid=4331439>",
+            "name": "Fox Confessor Brings the Flood",
+            "mid": "m.01mkpjq",
+            "description": "Fox Confessor Brings the Flood is the fourth solo album by American alt-country musician, Neko Case, released March 7, 2006 by ANTI- Records. The album was found on many \u201cBest of\u201d lists that year and had a bonus disc released by ANTI- in November of the following year."
+        }],
+    "subquestion_1_answer": [{
+            "wiki": "<http://en.wikipedia.org/wiki/index.html?curid=20538636>",
+            "name": "Middle Cyclone",
+            "mid": "m.051z_3s"
+        }, {
+            "wiki": "<http://en.wikipedia.org/wiki/index.html?curid=1217659>",
+            "name": "The Unforgiving Sounds of Maow",
+            "mid": "m.04j6f7"
+        }, {
+            "wiki": "<http://en.wikipedia.org/wiki/index.html?curid=1217665>",
+            "name": "Furnace Room Lullaby",
+            "mid": "m.01k4gw2"
+        }, {
+            "wiki": "<http://en.wikipedia.org/wiki/index.html?curid=1217670>",
+            "name": "The Tigers Have Spoken",
+            "mid": "m.01mkpkv"
+        }, {
+            "wiki": "<http://en.wikipedia.org/wiki/index.html?curid=4331439>",
+            "name": "Fox Confessor Brings the Flood",
+            "mid": "m.01mkpjq"
+        }, {
+            "wiki": "<http://en.wikipedia.org/wiki/index.html?curid=1217668>",
+            "name": "Blacklisted",
+            "mid": "m.01mkphh"
+        }, {
+            "wiki": "<http://en.wikipedia.org/wiki/The_Virginian_(album)>",
+            "name": "The Virginian",
+            "mid": "m.01k4gt_"
+        }, {
+            "wiki": "",
+            "name": "2006-04-09: 9:30 Club, Washington, DC, USA",
+            "mid": "m.01mkpfv"
+        }, {
+            "wiki": "<http://en.wikipedia.org/wiki/Canadian_Amp>",
+            "name": "Canadian Amp",
+            "mid": "m.01mkpl_"
+        }, {
+            "wiki": "<http://en.wikipedia.org/wiki/Live_from_Austin,_TX_(Neko_Case_album)>",
+            "name": "Live from Austin, TX",
+            "mid": "m.02qx62v"
+        }],
+    "subquestion_2_entity": "NULL",
+    "subquestion_2_answer": "NULL",
+    "HasSubQuestion": "false",
+    "normalized_temporal_constraint": "from 2006-03-01 to 2006-03-31",
+    "reasoning_rules": "Time rule: from 2006-03-01 to 2006-03-31 (in) ;",
+    "subquestion_2_predicate": "NULL"
+}
