@@ -171,6 +171,7 @@
                         <p:tab title="Shape Analysis">
                             <h2>This analysis is for <span style="font-weight: bold; color: #00BCD4">#{mainBean.benchmark}</span></h2>
                             <div>
+                                <p:tabView>
                                 <p:tab title="Single-Edge">
                                     <p:dataTable var="qs" value="#{categorizedQuestions.singleShape_Qs}">
                                         <p:column headerText="Question">
@@ -183,6 +184,7 @@
                                     </p:dataTable>
                                 </p:tab>
                                 <p:tab title="Chain">
+                                    Chain Shape subsumes Single-Edge. In this table Single-Edge Questions are excluded.
                                     <p:dataTable var="qs" value="#{categorizedQuestions.chain_Qs}">
                                         <p:column headerText="Question">
                                             <h:outputText value="#{qs.questionString}" />
@@ -194,6 +196,7 @@
                                     </p:dataTable>
                                 </p:tab>
                                 <p:tab title="Chain-Set">
+                                    Chain-Set Shape subsumes Chain. In this table Chain Questions are excluded.
                                     <p:dataTable var="qs" value="#{categorizedQuestions.chainSet_Qs}">
                                         <p:column headerText="Question">
                                             <h:outputText value="#{qs.questionString}" />
@@ -205,6 +208,7 @@
                                     </p:dataTable>
                                 </p:tab>
                                 <p:tab title="Tree">
+                                    Tree Shape subsumes Chain. In this table Chain Questions are excluded.
                                     <p:dataTable var="qs" value="#{categorizedQuestions.tree_Qs}">
                                         <p:column headerText="Question">
                                             <h:outputText value="#{qs.questionString}" />
@@ -227,6 +231,7 @@
                                     </p:dataTable>
                                 </p:tab>
                                 <p:tab title="Forest">
+                                    Forest Shape subsumes Tree. In this table Tree Questions are excluded.
                                     <p:dataTable var="qs" value="#{categorizedQuestions.forest_Qs}">
                                         <p:column headerText="Question">
                                             <h:outputText value="#{qs.questionString}" />
@@ -249,6 +254,7 @@
                                     </p:dataTable>
                                 </p:tab>
                                 <p:tab title="Flower">
+                                    Flower Shape subsumes Tree. In this table Tree Questions are excluded.
                                     <p:dataTable var="qs" value="#{categorizedQuestions.flower_Qs}">
                                         <p:column headerText="Question">
                                             <h:outputText value="#{qs.questionString}" />
@@ -260,6 +266,7 @@
                                     </p:dataTable>
                                 </p:tab>
                                 <p:tab title="Flower-Set">
+                                    Flower-Set Shape subsumes Flower. In this table Flower Questions are excluded.
                                     <p:dataTable var="qs" value="#{categorizedQuestions.flowerSet_Qs}">
                                         <p:column headerText="Question">
                                             <h:outputText value="#{qs.questionString}" />
@@ -270,7 +277,7 @@
                                         </p:column>
                                     </p:dataTable>
                                 </p:tab>
-                                
+                                </p:tabView>
                             </div>
                         </p:tab>
                     </p:tabView>

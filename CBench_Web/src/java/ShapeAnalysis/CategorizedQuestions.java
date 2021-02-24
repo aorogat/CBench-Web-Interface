@@ -48,30 +48,36 @@ public class CategorizedQuestions {
             String queryString = q.getQuestionQuery();
             try {
                 Query query = QueryFactory.create(queryString, Syntax.syntaxARQ);
-                q.setQuestionQuery(query.toString());
+                //q.setQuestionQuery(query.toString());
                 String current = query.toString();
                 if (QueryShapeType.isSingleEdge(current)) {
                     singleShape_Qs.add(q);
                 }
-                if (QueryShapeType.isChain(current)) {
+                if (QueryShapeType.isChain(current)
+                    &&!QueryShapeType.isSingleEdge(current)) {
                     chain_Qs.add(q);
                 }
-                if (QueryShapeType.isChainSet(current)) {
+                if (QueryShapeType.isChainSet(current)
+                        &&!QueryShapeType.isChain(current)) {
                     chainSet_Qs.add(q);
                 }
                 if (QueryShapeType.isCycle(current)) {
                     cycle_Qs.add(q);
                 }
-                if (QueryShapeType.isFlower(current)) {
+                if (QueryShapeType.isFlower(current)
+                    &&!QueryShapeType.isTree(current)) {
                     flower_Qs.add(q);
                 }
-                if (QueryShapeType.isFlowerSet(current)) {
+                if (QueryShapeType.isFlowerSet(current)
+                   &&!QueryShapeType.isFlower(current)) {
                     flowerSet_Qs.add(q);
                 }
-                if (QueryShapeType.isForest(current)) {
+                if (QueryShapeType.isForest(current)
+                        &&!QueryShapeType.isTree(current)) {
                     forest_Qs.add(q);
                 }
-                if (QueryShapeType.isStar(current)) {
+                if (QueryShapeType.isStar(current)
+                        &&!QueryShapeType.isTree(current)) {
                     star_Qs.add(q);
                 }
                 if (QueryShapeType.isTree(current)) {
