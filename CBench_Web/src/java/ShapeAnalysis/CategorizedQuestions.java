@@ -75,7 +75,7 @@ public class CategorizedQuestions {
             String queryString = q.getQuestionQuery();
             try {
                 Query query = QueryFactory.create(queryString, Syntax.syntaxARQ);
-                //q.setQuestionQuery(query.toString());
+                q.setQuestionQuery(query.toString(Syntax.syntaxSPARQL));
                 String current = query.toString();
                 if (QueryShapeType.isSingleEdge(current)) {
                     singleShape_Qs.add(q);

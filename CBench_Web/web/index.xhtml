@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:pa="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pp="http://java.sun.com/jsf/passthrough">
     <h:head>
         <title>QA Evaluator - Carleton</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -13,13 +14,67 @@
         <meta name="author" content="colorlib.com"/>
         <link href="https://fonts.googleapis.com/css?family=Lato:400,600,700" rel="stylesheet" />
         <link href="css/main.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+            
+        <style type="text/css">
+
+            .disabled:disabled{
+                background-color:#ddd !important;
+                font-size: 10px !important;
+            }
+
+            .inputfile {
+                width: 0.1px;
+                height: 0.1px;
+                opacity: 0;
+                overflow: hidden;
+                position: absolute;
+                z-index: -1;
+            }
+
+            .inputfile + label {
+                font-size: 0.75em;
+                padding: 11px;
+                font-weight: 700;
+                color: white;
+                background-color: black;
+                display: inline-block;
+            }
+
+            .inputfile:focus + label,
+            .inputfile + label:hover {
+                background-color: red;
+            }
+
+            .inputfile + label {
+                cursor: pointer; /* "hand" cursor */
+            }
+
+            .inputfile:focus + label {
+                outline: 1px dotted #000;
+                outline: -webkit-focus-ring-color auto 5px;
+            }
+
+            .js .inputfile {
+                width: 0.1px;
+                height: 0.1px;
+                opacity: 0;
+                overflow: hidden;
+                position: absolute;
+                z-index: -1;
+            }
+
+            .no-js .inputfile + label {
+                display: none;
+            }
+        </style>
 
     </h:head>
     <h:body>
         <div class="s009">
             <div style="width: 35%; display: inline-block;">
                 <img src="images/CarletonLogo.png" width="40%" style="display: block;"/><br/>
-                <h1>Question Answering Systems Deep Evaluator</h1>
+                <h1>CBench, QA over KG Systems Evaluator.</h1>
                 <hr/>
                 <p  class="row third" style="color: gray;">
                     Developed at Data Science Institute, Carleton University, Canada<br/>
@@ -31,9 +86,10 @@
                     <div class="basic-search">
                         <div class="input-field">
 
-                            <h3><span>Your QA System Evaluation</span></h3>
+                            <h2><span>QA System Evaluation</span></h2>
                             <h:inputText id="search" pa:type="text" pa:placeholder="Type QA System URL"
-                                         style="border-color: gray; border-style: solid;"/>
+                                         style="border-color: #DDDDDD; border-style: solid;
+                                         border-width: 1px; margin: 5px; width: 98.5%"/>
                             <div class="icon-wrap">
                                 <svg class="svg-inline--fa fa-search fa-w-16" fill="#ccc" aria-hidden="true" data-prefix="fas" data-icon="url" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                     <path d=" 128-128 128z"></path>
@@ -41,14 +97,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="advance-search">
-                        <span class="desc">Evaluation Configuration</span>
+                    <div class="advance-search" style="margin: 5px;">
+                        <span class="desc" >Evaluation Configuration</span>
                         <div class="row">
                             <div class="input-field">
                                 <div class="input-select">
                                     <h:selectOneListbox value="#{mainBean.knowledgebase}"  pa:placeholder="Knowledgebase">
                                         <f:selectItems value = "#{mainBean.knowledgebases}" var="c"
                                                        itemValue="#{c}" itemLabel="#{c}"/>
+                                        
                                     </h:selectOneListbox>
                                 </div>
                             </div>
@@ -58,25 +115,45 @@
                                         <f:selectItems value = "#{mainBean.benchmarks}" var="c"
                                                        itemValue="#{c}" itemLabel="#{c}"/>
                                     </h:selectOneListbox>
-                                </div>
+                                </div> 
                             </div>
+                            <span style="font-size: 20px;"> OR </span>
                             <div class="input-field">
                                 <div class="input-select">
-                                    <h:selectOneListbox value="#{mainBean.analysisType}"  pa:placeholder="Analysis Type">
-                                        <f:selectItems value = "#{mainBean.analysisTypes}" var="c"
-                                                       itemValue="#{c}" itemLabel="#{c}"/>
-                                    </h:selectOneListbox>
+                                    <input type="file" name="file" id="file" class="inputfile" />
+                                    <label for="file"><i class="fa fa-upload"  aria-hidden="true"></i>
+Upload a benchmark.</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row second">
+                            <div class="desc" id="updateAns">
+                                <h:selectBooleanCheckbox value="#{mainBean.update}">
+                                    <p:ajax event="change" update="delete" process="@this"/>
+                                </h:selectBooleanCheckbox>Update Answers from a SPARQL endpoint. 
+
+                                <h:inputText id="delete" class="disabled" pa:type="text" pa:placeholder="What SPARQL URL your QA system is using?"
+                                             disabled="#{not mainBean.update}"
+                                             style="border-color: #DDDDDD; border-style: solid;
+                                             border-width: 0.5px; margin: 2px; width: 98.5%;
+                                             padding: 10px;" 
+                                             />
+
+
+                            </div>
+                            <div class="desc">
+                                <h:outputText id="output" value="Set F1-Global threshold to #{sliderView.number2}"/>
+                                <h:inputHidden id="txt2"/>
+                                <p:slider for="txt2" display="output" step="1" maxValue="10" style="width: 200px" displayTemplate="Set F1-Global threshold to {value}/10"/>
+
+                            </div>
                         </div>
                         <div class="row third">
                             <div class="input-field">
                                 <div class="result-count">
-                                    <span>0 </span>Questions
+
                                 </div>
-                                <div class="group-btn">
+                                <div class="group-btn">                                    
                                     <h:commandButton class="btn-search" value="Evaluate"
                                                      action="#{mainBean.evaluate()}"/>
                                 </div>
@@ -88,9 +165,9 @@
 
             <h:form>
                 <div class="inner-form">
-                    <h3><span>Benchmark Analysis</span></h3>
+                    <h2><span>Benchmark Analysis</span></h2>
 
-                    
+
                     <div class="advance-search">
 
                         <div class="row">
@@ -102,11 +179,19 @@
                                     </h:selectOneListbox>
                                 </div>
                             </div>
+                            <span style="font-size: 20px;"> OR </span>
+                            <div class="input-field">
+                                <div class="input-select">
+                                    <input type="file" name="file" id="file" class="inputfile" />
+                                    <label for="file"><i class="fa fa-upload"  aria-hidden="true"></i>
+Upload a benchmark.</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="row third">
                             <div class="input-field">
                                 <div class="result-count">
-                                    <span>0 </span>Questions
+
                                 </div>
                                 <div class="group-btn">
                                     <h:commandButton class="btn-search" value="Analyze"
@@ -115,33 +200,34 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </h:form>
         </div>
         <script src="js/extention/choices.js"></script>
         <script type="text/javascript">
             /* <![CDATA[ */
-            const customSelects = document.querySelectorAll("select");
-                    const deleteBtn = document.getElementById('delete')
+                    const customSelects = document.querySelectorAll("select");
+                            const deleteBtn = document.getElementById('delete')
                     const choices = new Choices('select',
                     {
                     searchEnabled: false,
-                            itemSelectText: '',
+                    itemSelectText: '',
                             removeItemButton: true,
                     });
-                    deleteBtn.addEventListener("click", function (e)
+                            deleteBtn.addEventListener("click", function (e)
                     {
-                        e.preventDefault();
-                                const deleteAll = document.querySelectorAll('.choices__button')
-                                for (let i = 0; i < deleteAll.length;
+                                    e.preventDefault();
+                    const deleteAll = document.querySelectorAll('.choices__button')
+                    for (let i = 0; i < deleteAll.length;
                                 i++
-                                        );
+                    );
                         {
-                            deleteAll[i].click();
-                        }
+                    deleteAll[i].click();
+                    }
                     });
 
-            /* ]]> */
+                            /* ]]> */
         </script>
     </h:body>
 

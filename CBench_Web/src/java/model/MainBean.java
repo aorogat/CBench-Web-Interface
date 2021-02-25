@@ -21,6 +21,7 @@ public class MainBean
     public static String benchmarkAnalysis = "-- Benchmark --";
     public static String benchmark = "-- Benchmark --";
     public static String analysisType = "-- Analysis Type --";
+    public static boolean update=false;
     
     public ArrayList knowledgebases = new ArrayList();
     public ArrayList benchmarks = new ArrayList();
@@ -72,7 +73,7 @@ public class MainBean
 
     public ArrayList<String> getKnowledgebases() {
         knowledgebases.clear();
-        knowledgebases.add("-- Knowledgebase --");
+        knowledgebases.add("-- Select KG --");
         knowledgebases.add("DBpedia");
         knowledgebases.add("Wikidata");
         knowledgebases.add("Freebase");
@@ -86,7 +87,7 @@ public class MainBean
 
     public ArrayList<String> getBenchmarks() {
         benchmarks.clear();
-        benchmarks.add("-- Benchmark --");
+        benchmarks.add("-- Select Benchmark --");
         benchmarks.add("QALD-1");
         benchmarks.add("QALD-2");
         benchmarks.add("QALD-3");
@@ -139,6 +140,14 @@ public class MainBean
 
     public void setAnalysisTypes(ArrayList analysisTypes) {
         this.analysisTypes = analysisTypes;
+    }
+
+    public boolean isUpdate() {
+        return update;
+    }
+
+    public void setUpdate(boolean update) {
+        MainBean.update = update;
     }
     
     

@@ -64,7 +64,8 @@ public class OneNLQAnalysis {
     
     public static boolean howQuestion(String question) {
         question = question.toLowerCase();
-        return question.trim().matches("how.*$");
+        return question.trim().matches("^(.{0,8})\\show.*$")
+             ||question.trim().matches("how.*$");
     }
 
     public static void main(String[] args) {
