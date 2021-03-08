@@ -5,9 +5,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import static systemstesting.Evaluator_WebServiceBased.in;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import visualization.FineGrained;
+import model.MainBean;
 
+@ManagedBean
+@SessionScoped
 public class BenchmarkEval {
 
     //Benchmark related data
@@ -32,6 +37,10 @@ public class BenchmarkEval {
     private ArrayList<QuestionEval> flowerEvaluatedQuestions = new ArrayList<>();
     private ArrayList<QuestionEval> flowerSetEvaluatedQuestions = new ArrayList<>();
 
+    public BenchmarkEval() {
+        benchmarkName = MainBean.eval_benchmark;
+    }
+    
     public BenchmarkEval(String benchmarkName) {
         this.benchmarkName = benchmarkName;
     }
@@ -409,4 +418,62 @@ public class BenchmarkEval {
         }
     }
 
+    public ArrayList<QuestionEval> getEvaluatedQuestions() {
+        return evaluatedQuestions;
+    }
+
+    public void setEvaluatedQuestions(ArrayList<QuestionEval> evaluatedQuestions) {
+        this.evaluatedQuestions = evaluatedQuestions;
+    }
+
+    public String getBenchmarkName() {
+        return benchmarkName;
+    }
+
+    public void setBenchmarkName(String benchmarkName) {
+        this.benchmarkName = benchmarkName;
+    }
+
+    public int getAllQuestions() {
+        return allQuestions;
+    }
+
+    public void setAllQuestions(int allQuestions) {
+        this.allQuestions = allQuestions;
+    }
+
+    public int getQuestionsWithCorrectAnswers() {
+        return questionsWithCorrectAnswers;
+    }
+
+    public void setQuestionsWithCorrectAnswers(int questionsWithCorrectAnswers) {
+        this.questionsWithCorrectAnswers = questionsWithCorrectAnswers;
+    }
+
+    public int getAnsweredWithThetaThreshold() {
+        return answeredWithThetaThreshold;
+    }
+
+    public void setAnsweredWithThetaThreshold(int answeredWithThetaThreshold) {
+        this.answeredWithThetaThreshold = answeredWithThetaThreshold;
+    }
+
+    public int getAnswered() {
+        return answered;
+    }
+
+    public void setAnswered(int answered) {
+        this.answered = answered;
+    }
+
+    public double getThreshold() {
+        return threshold;
+    }
+
+    public void setThreshold(double threshold) {
+        BenchmarkEval.threshold = threshold;
+    }
+
+    
+    
 }

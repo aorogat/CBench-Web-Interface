@@ -6,6 +6,9 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.Syntax;
 
 /**
  * The data structure for the question
@@ -78,7 +81,14 @@ public class Question {
     }
 
     public String getQuestionQuery() {
-        return questionQuery;
+        try{
+        Query q = QueryFactory.create(questionQuery);
+        return q.toString(Syntax.syntaxARQ);
+        }
+        catch(Exception e)
+        {
+            return questionQuery;
+        }
     }
 
     public void setQuestionQuery(String questionQuery) {

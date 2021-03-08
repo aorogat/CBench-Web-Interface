@@ -35,6 +35,27 @@ public class NLQCategoraizer {
     
     
     public NLQCategoraizer() throws IOException {
+    what_Qs = new ArrayList<Question>();
+    when_Qs = new ArrayList<Question>();
+    where_Qs = new ArrayList<Question>();
+    which_Qs = new ArrayList<Question>();
+    who_Qs = new ArrayList<Question>();
+    whom_Qs = new ArrayList<Question>();
+    whose_Qs = new ArrayList<Question>();
+    how_Qs = new ArrayList<Question>();
+    yes_no_Qs = new ArrayList<Question>();
+    request_Qs = new ArrayList<Question>();
+    Topical_Qs = new ArrayList<Question>();
+
+    pieModelSelect= new PieChartModel();
+        
+        
+        for (Question q : DataSetPreprocessing.questionsWithoutDuplicates) {
+            q.setQuestionString(q.getQuestionString().replaceAll("<b><u>", "").
+                    replaceAll("<b><u>", "</u></b>"));
+        }
+        
+        
         for (Question q : DataSetPreprocessing.questionsWithoutDuplicates) {
             String queryString = q.getQuestionQuery();
             try {
@@ -42,27 +63,43 @@ public class NLQCategoraizer {
                 //q.setQuestionQuery(query.toString());
                 String current = query.toString();
                 if (OneNLQAnalysis.whatQuestion(q.getQuestionString())) {
+                    q.setQuestionString(q.getQuestionString().toLowerCase().
+                            replaceFirst("what", "<b><u>What</u></b>"));
                     what_Qs.add(q);
                 }
                 else if (OneNLQAnalysis.whenQuestion(q.getQuestionString())) {
+                    q.setQuestionString(q.getQuestionString().toLowerCase().
+                            replaceFirst("when", "<b><u>When</u></b>"));
                     when_Qs.add(q);
                 }
                 else if (OneNLQAnalysis.whereQuestion(q.getQuestionString())) {
+                    q.setQuestionString(q.getQuestionString().toLowerCase().
+                            replaceFirst("where", "<b><u>Where</u></b>"));
                     where_Qs.add(q);
                 }
                 else if (OneNLQAnalysis.whichQuestion(q.getQuestionString())) {
+                    q.setQuestionString(q.getQuestionString().toLowerCase().
+                            replaceFirst("which", "<b><u>Which</u></b>"));
                     which_Qs.add(q);
                 }
                 else if (OneNLQAnalysis.whoQuestion(q.getQuestionString())) {
+                    q.setQuestionString(q.getQuestionString().toLowerCase().
+                            replaceFirst("who", "<b><u>Who</u></b>"));
                     who_Qs.add(q);
                 }
                 else if (OneNLQAnalysis.whomQuestion(q.getQuestionString())) {
+                    q.setQuestionString(q.getQuestionString().toLowerCase().
+                            replaceFirst("whom", "<b><u>Whom</u></b>"));
                     whom_Qs.add(q);
                 }
                 else if (OneNLQAnalysis.whoseQuestion(q.getQuestionString())) {
+                    q.setQuestionString(q.getQuestionString().toLowerCase().
+                            replaceFirst("whose", "<b><u>Whose</u></b>"));
                     whose_Qs.add(q);
                 }
                 else if (OneNLQAnalysis.howQuestion(q.getQuestionString())) {
+                    q.setQuestionString(q.getQuestionString().toLowerCase().
+                            replaceFirst("how", "<b><u>How</u></b>"));
                     how_Qs.add(q);
                 }
                 else if (OneNLQAnalysis.yesNoQuestion(q.getQuestionString())) {

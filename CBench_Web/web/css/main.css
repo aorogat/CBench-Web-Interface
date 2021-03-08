@@ -493,7 +493,7 @@ legend {
 }
 
 .choices[data-type*="select-one"] .choices__input {
-  display: block;
+  display: inline-block;
   width: 100%;
   padding: 10px;
   border-bottom: 1px solid #DDDDDD;

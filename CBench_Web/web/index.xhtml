@@ -15,7 +15,7 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:400,600,700" rel="stylesheet" />
         <link href="css/main.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-            
+
         <style type="text/css">
 
             .disabled:disabled{
@@ -100,18 +100,20 @@
                     <div class="advance-search" style="margin: 5px;">
                         <span class="desc" >Evaluation Configuration</span>
                         <div class="row">
-                            <div class="input-field">
+                            <div>
                                 <div class="input-select">
-                                    <h:selectOneListbox value="#{mainBean.knowledgebase}"  pa:placeholder="Knowledgebase">
+                                    <h:selectOneListbox value="#{mainBean.eval_knowledgebase}"  pa:placeholder="Knowledgebase">
                                         <f:selectItems value = "#{mainBean.knowledgebases}" var="c"
                                                        itemValue="#{c}" itemLabel="#{c}"/>
-                                        
+
                                     </h:selectOneListbox>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="input-field">
                                 <div class="input-select">
-                                    <h:selectOneListbox value="#{mainBean.benchmarkAnalysis}"  pa:placeholder="Benchmark">
+                                    <h:selectOneListbox value="#{mainBean.eval_benchmark}"  pa:placeholder="Benchmark">
                                         <f:selectItems value = "#{mainBean.benchmarks}" var="c"
                                                        itemValue="#{c}" itemLabel="#{c}"/>
                                     </h:selectOneListbox>
@@ -121,19 +123,24 @@
                             <div class="input-field">
                                 <div class="input-select">
                                     <input type="file" name="file" id="file" class="inputfile" />
-                                    <label for="file"><i class="fa fa-upload"  aria-hidden="true"></i>
-Upload a benchmark.</label>
+                                    <label for="file">Upload a benchmark.</label>
                                 </div>
+                            </div>
+                            <span style="font-size: 20px;"> OR </span>
+                            <div class="input-field">
+                                <h:selectBooleanCheckbox value="#{mainBean.eval_Properties_defined}">
+                                    <p:ajax event="change" update="properties" process="@this"/>
+                                </h:selectBooleanCheckbox> Properties Defined.
                             </div>
                         </div>
                         <div class="row second">
                             <div class="desc" id="updateAns">
-                                <h:selectBooleanCheckbox value="#{mainBean.update}">
+                                <h:selectBooleanCheckbox value="#{mainBean.eval_update_answers}">
                                     <p:ajax event="change" update="delete" process="@this"/>
                                 </h:selectBooleanCheckbox>Update Answers from a SPARQL endpoint. 
 
                                 <h:inputText id="delete" class="disabled" pa:type="text" pa:placeholder="What SPARQL URL your QA system is using?"
-                                             disabled="#{not mainBean.update}"
+                                             disabled="#{not mainBean.eval_update_answers}"
                                              style="border-color: #DDDDDD; border-style: solid;
                                              border-width: 0.5px; margin: 2px; width: 98.5%;
                                              padding: 10px;" 
@@ -142,12 +149,47 @@ Upload a benchmark.</label>
 
                             </div>
                             <div class="desc">
-                                <h:outputText id="output" value="Set F1-Global threshold to #{sliderView.number2}"/>
+                                <h:outputText id="output" value="Set F1-Global threshold to #{mainBean.eval_thresould}"/>
                                 <h:inputHidden id="txt2"/>
-                                <p:slider for="txt2" display="output" step="1" maxValue="10" style="width: 200px" displayTemplate="Set F1-Global threshold to {value}/10"/>
+                                <p:slider for="txt2" display="output" step="1" maxValue="10" style="width: 200px" displayTemplate="Set F1-Global threshold to 0.{value}"/>
 
                             </div>
                         </div>
+                        <h:panelGroup id="properties" class="row second"
+                                      rendered="#{mainBean.propertiesDefined}">
+                            <div class="desc" id="prop">
+                                What properties you would like to include?<br/>
+                                
+                                <table>
+                                    <tr style="color: black;">
+                                        <td>
+                                            NLQ Type
+                                        </td>
+                                        <td>
+                                            Query Type
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:selectManyCheckbox value="#{mainBean.propertiesNLQTypes}"
+                                                                  layout="pageDirection" style="display: inline-block;">
+                                                <f:selectItems value="#{mainBean.propertiesNLQTypesValues}"/>
+                                            </h:selectManyCheckbox> 
+                                        </td>
+                                        <td>
+                                            <h:selectManyCheckbox value="#{mainBean.propertiesQueryShapes}"
+                                                                  layout="pageDirection" style="display: inline-block;">
+                                                <f:selectItems value="#{mainBean.propertiesQueryShapesValues}"/>
+                                            </h:selectManyCheckbox> <br/><br/><br/><br/>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                
+
+
+                            </div>
+                        </h:panelGroup>
                         <div class="row third">
                             <div class="input-field">
                                 <div class="result-count">
@@ -184,11 +226,9 @@ Upload a benchmark.</label>
                                 <div class="input-select">
                                     <input type="file" name="file" id="file" class="inputfile" />
                                     <label for="file"><i class="fa fa-upload"  aria-hidden="true"></i>
-Upload a benchmark.</label>
+                                        Upload a benchmark.</label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row third">
                             <div class="input-field">
                                 <div class="result-count">
 
@@ -200,34 +240,34 @@ Upload a benchmark.</label>
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </h:form>
         </div>
         <script src="js/extention/choices.js"></script>
         <script type="text/javascript">
             /* <![CDATA[ */
-                    const customSelects = document.querySelectorAll("select");
-                            const deleteBtn = document.getElementById('delete')
+            const customSelects = document.querySelectorAll("select");
+                    const deleteBtn = document.getElementById('delete')
                     const choices = new Choices('select',
                     {
                     searchEnabled: false,
-                    itemSelectText: '',
+                            itemSelectText: '',
                             removeItemButton: true,
                     });
-                            deleteBtn.addEventListener("click", function (e)
+                    deleteBtn.addEventListener("click", function (e)
                     {
-                                    e.preventDefault();
-                    const deleteAll = document.querySelectorAll('.choices__button')
-                    for (let i = 0; i < deleteAll.length;
+                        e.preventDefault();
+                                const deleteAll = document.querySelectorAll('.choices__button')
+                                for (let i = 0; i < deleteAll.length;
                                 i++
-                    );
+                                        );
                         {
-                    deleteAll[i].click();
-                    }
+                            deleteAll[i].click();
+                        }
                     });
 
-                            /* ]]> */
+            /* ]]> */
         </script>
     </h:body>
 

@@ -13,6 +13,9 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import model.MainBean;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
@@ -24,7 +27,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import qa.dataStructures.Question;
 
+@ManagedBean
+@SessionScoped
 public class Evaluator_WDAqua {
+
+    static BenchmarkEval evaluatedBenchmark;
+    static int currentQuestion;
 
     static ArrayList<Query> qs;
     static ArrayList<Question> questions = DataSetPreprocessing.questions;
@@ -36,100 +44,141 @@ public class Evaluator_WDAqua {
 
     static ArrayList<QuestionEval> evaluatedQuestions;
 
-    //Question has array of answers. each has vars(keywords)
-    public static void main(String[] args) throws IOException, JSONException, Exception {
-        KB = "dbpedia";
-//        performance(Benchmark.LC_QUAD, "LC_QUAD", true);
-        performance(Benchmark.QALD_1, "QALD_1",false);
-//        performance(Benchmark.QALD_2, "QALD_2");
-//        performance(Benchmark.QALD_3, "QALD_3");
-//        performance(Benchmark.QALD_4, "QALD_4");
-//        performance(Benchmark.QALD_5, "QALD_5");
-//        performance(Benchmark.QALD_6, "QALD_6");
-//        performance(Benchmark.QALD_7, "QALD_7");
-//        performance(Benchmark.QALD_8, "QALD_8");
-//        performance(Benchmark.TempQuestions, "TempQuestions", false);
+    static int counter = 0;
+    static int qsWithAnswers = 0;
+
+    public Evaluator_WDAqua() throws IOException {
+
     }
 
-    public static void performance(int benchmark, String benchmarkName, boolean curated) throws IOException {
-        systemAnswersList = new ArrayList<>();
-        corectAnswersList = new ArrayList<>();
+    public static void evaluate() throws IOException {
+        KB = MainBean.eval_knowledgebase;
+        evaluatedBenchmark = new BenchmarkEval(MainBean.eval_benchmark);
+        currentQuestion = 0;
+        
         evaluatedQuestions = new ArrayList<>();
 
-        //KB = "freebase";
-        qs = DataSetPreprocessing.getQueriesWithoutDuplicates(benchmark);
-        BenchmarkEval evaluatedBenchmark = new BenchmarkEval(benchmarkName);
-        evaluatedBenchmark.allQuestions = questions.size();
+        String benchmark = MainBean.eval_benchmark;
+        try {
 
-        int counter = 0;
-        int qsWithAnswers = 0;
-        for (Question question : questions) {
-            corectAnswersList = new ArrayList<>();
-            counter++;
-            //1- Determine CorectAnswerList
-            if (curated) {
-                corectAnswersList = CuratedAnswer.upToDateAnswer(question.getQuestionQuery(), KB);
-            } else {
-                corectAnswersList = question.getAnswers();
-
-                for (int i = 0; i < corectAnswersList.size(); i++) {
-                    if (corectAnswersList.get(i) != null) {
-                        corectAnswersList.set(i, corectAnswersList.get(i).trim().replace('_', ' ')
-                                .replaceAll("\n", "").replaceAll("\t", "")
-                                .replace("http://dbpedia.org/resource/", "")
-                                .replace("https://en.wikipedia.org/wiki/", "")
-                                .replace("http://www.wikidata.org/entity/", ""));
-                    }
-
-                }
-                try {
-                    if (corectAnswersList != null) {
-                        if (corectAnswersList.size() > 0) {
-                            qsWithAnswers++;
-                        } else {
-                            continue;
-                        }
-
-                        if (corectAnswersList.size() == 1 && corectAnswersList.get(0).equals("null")) {
-                            continue;
-                        }
-                    }
-                } catch (Exception e) {
-                    corectAnswersList = new ArrayList<>();
-                }
+            if (benchmark.equals("QALD-1")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_1, false, false, false);
+            } else if (benchmark.equals("QALD-2")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_2, false, false, false);
+            } else if (benchmark.equals("QALD-3")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_3, false, false, false);
+            } else if (benchmark.equals("QALD-4")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_4, false, false, false);
+            } else if (benchmark.equals("QALD-5")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_5, false, false, false);
+            } else if (benchmark.equals("QALD-6")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_6, false, false, false);
+            } else if (benchmark.equals("QALD-7")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_7, false, false, false);
+            } else if (benchmark.equals("QALD-8")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_8, false, false, false);
+            } else if (benchmark.equals("QALD-9")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_9, false, false, false);
+            } else if (benchmark.equals("QALD-ALL")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_ALL, false, false, false);
+            } else if (benchmark.equals("LC-QUAD")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.LC_QUAD, true, false, false);
+            } else if (benchmark.equals("WebQuestions")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.WebQuestions, false, true, true);
+            } else if (benchmark.equals("GraphQuestions")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.GraphQuestions, false, true, true);
+            } else if (benchmark.equals("SimpleDBpediaQA")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.SimpleDBpediaQA, false, true, true);
+            } else if (benchmark.equals("SimpleQuestions")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.SimpleQuestions, false, true, true);
+            } else if (benchmark.equals("ComplexQuestions")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.ComplexQuestions, false, true, true);
+            } else if (benchmark.equals("ComQA")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.ComQA, false, true, true);
+            } else if (benchmark.equals("TempQuestions")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.TempQuestions, false, true, true);
+            } else if (benchmark.equals("UserDefined")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.UserDefined, false, true, true);
+            } else if (benchmark.equals("PropertiesDefined")) {
+                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.PropertiesDefined, false, true, true);
             }
-            //2- Determine systemAnswersList
-            //for (int i = 0; i < 3; i++) {
-            String q = question.getQuestionString().replace('?', ' ').replace(" ", "%20");
-            System.out.println();
-            System.out.println(question.getDatabase() + "\t" + counter);
-            System.out.println(q);
-            System.out.println("Correct Answer = " + corectAnswersList.toString());
-
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////
-            KB = question.getDatabase(); /////Use for muultiple endpoints////////////////////dbpedia, freebase, wikidata
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////
-            answer(q);
-            //  if(systemAnswersList.size() == 0)
-            //    continue;
-            //else
-            //  break;
-            //  }
-            //Loading indicator
-            System.out.println("System Answer = " + systemAnswersList.toString());
-
-            //3- List of Questions and their (R, P, F1)
-            evaluatedBenchmark.evaluatedQuestions.add(new QuestionEval(question.getQuestionString(), question, corectAnswersList, systemAnswersList));
-            
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        //4- Calculate parameters
-        evaluatedBenchmark.calculateParameters();
+        questions = DataSetPreprocessing.questions;
+        evaluatedBenchmark.allQuestions = questions.size();
 
-        //5- At the End, Print Results
-        evaluatedBenchmark.printScores();
+        counter = 0;
+        qsWithAnswers = 0;
 
-        System.out.println("\n\n\n\n\n\n\n");
+        performance(MainBean.eval_benchmark, MainBean.eval_update_answers);
+    }
+
+    public void periodicPoll() throws IOException
+    {
+        performance(MainBean.eval_benchmark, MainBean.eval_update_answers);
+    }
+    
+    public static void performance(String benchmarkName, boolean curated) throws IOException {
+
+        systemAnswersList = new ArrayList<>();
+        corectAnswersList = new ArrayList<>();
+        
+        //for (Question question : questions) {
+        Question question = questions.get(currentQuestion);
+        currentQuestion++;
+        corectAnswersList = new ArrayList<>();
+        counter++;
+        //1- Determine CorectAnswerList
+        if (curated) {
+            corectAnswersList = CuratedAnswer.upToDateAnswer(question.getQuestionQuery(), KB);
+        } else {
+            corectAnswersList = question.getAnswers();
+
+            for (int i = 0; i < corectAnswersList.size(); i++) {
+                if (corectAnswersList.get(i) != null) {
+                    corectAnswersList.set(i, corectAnswersList.get(i).trim().replace('_', ' ')
+                            .replaceAll("\n", "").replaceAll("\t", "")
+                            .replace("http://dbpedia.org/resource/", "")
+                            .replace("https://en.wikipedia.org/wiki/", "")
+                            .replace("http://www.wikidata.org/entity/", ""));
+                }
+
+            }
+            try {
+                if (corectAnswersList != null) {
+                    if (corectAnswersList.size() > 0) {
+                        qsWithAnswers++;
+                    } else {
+                        return;
+                    }
+
+                    if (corectAnswersList.size() == 1 && corectAnswersList.get(0).equals("null")) {
+                        return;
+                    }
+                }
+            } catch (Exception e) {
+                corectAnswersList = new ArrayList<>();
+            }
+        }
+            //2- Determine systemAnswersList
+        //for (int i = 0; i < 3; i++) {
+        String q = question.getQuestionString().replace('?', ' ').replace(" ", "%20");
+
+        answer(q);
+
+        //3- List of Questions and their (R, P, F1)
+        evaluatedBenchmark.evaluatedQuestions.add(new QuestionEval(question.getQuestionString(), question, corectAnswersList, systemAnswersList));
+
+        //}
+        if (currentQuestion >= questions.size()) {
+            //4- Calculate parameters
+            evaluatedBenchmark.calculateParameters();
+
+            //5- At the End, Print Results
+            evaluatedBenchmark.printScores();
+        }
 
     }
 
@@ -221,4 +270,14 @@ public class Evaluator_WDAqua {
         }
     }
 
+    public BenchmarkEval getEvaluatedBenchmark() {
+        return evaluatedBenchmark;
+    }
+
+    public void setEvaluatedBenchmark(BenchmarkEval evaluatedBenchmark) {
+        Evaluator_WDAqua.evaluatedBenchmark = evaluatedBenchmark;
+    }
+
+    
+    
 }

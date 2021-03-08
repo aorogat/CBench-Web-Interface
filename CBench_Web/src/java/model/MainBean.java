@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import systemstesting.Evaluator_WDAqua;
 
 /**
  *
@@ -26,23 +27,46 @@ public class MainBean
     public ArrayList knowledgebases = new ArrayList();
     public ArrayList benchmarks = new ArrayList();
     public ArrayList analysisTypes = new ArrayList();
+    
+    public static boolean propertiesDefined=false;
+    public boolean[] propertiesNLQTypes = new boolean[10];
+    public boolean[] propertiesQueryShapes = new boolean[10];
+    
+    public ArrayList propertiesNLQTypesValues = new ArrayList();
+    public ArrayList propertiesQueryShapesValues = new ArrayList();
 
+    
+    public static String eval_knowledgebase = "-- Knowledgebase --";
+    public static String eval_benchmarkAnalysis = "-- Benchmark --";
+    public static String eval_benchmark = "-- Benchmark --";
+    public static boolean eval_Properties_defined=false;
+    public static boolean eval_update_answers=false;
+    public static String eval_SPARQL_URL;
+    public static int eval_thresould=0;
+    
+    
+    
+    
     public MainBean() 
     {
+        for (int i = 0; i < propertiesNLQTypes.length; i++)
+            propertiesNLQTypes[i]=false;
+        for (int i = 0; i < propertiesQueryShapes.length; i++)
+            propertiesQueryShapes[i]=false;
     }
     
-    public String evaluate()
+    public String evaluate() throws IOException
     {
-        
+        Evaluator_WDAqua.evaluate();
         return "evalute.xhtml";
     }
     
     public String analysis() throws IOException
     {
         Keywords.keywordsAnalysis();
+        NLQCategoraizer a = new NLQCategoraizer();
         NoOfTriples.triplesAnalysis();
         OperatorDistribution.analysis();
-        NLQCategoraizer a = new NLQCategoraizer();
         return "analysis.xhtml";
     }
     ////////////////////////////////////////////////////////////////////////////
@@ -148,6 +172,126 @@ public class MainBean
 
     public void setUpdate(boolean update) {
         MainBean.update = update;
+    }
+
+    public boolean[] getPropertiesNLQTypes() {
+        return propertiesNLQTypes;
+    }
+
+    public void setPropertiesNLQTypes(boolean[] propertiesNLQTypes) {
+        this.propertiesNLQTypes = propertiesNLQTypes;
+    }
+
+    public boolean[] getPropertiesQueryShapes() {
+        return propertiesQueryShapes;
+    }
+
+    public void setPropertiesQueryShapes(boolean[] propertiesQueryShapes) {
+        this.propertiesQueryShapes = propertiesQueryShapes;
+    }
+
+    public ArrayList getPropertiesNLQTypesValues() {
+        propertiesNLQTypesValues.clear();
+        propertiesNLQTypesValues.add("What");
+        propertiesNLQTypesValues.add("When");
+        propertiesNLQTypesValues.add("Where");
+        propertiesNLQTypesValues.add("Who");
+        propertiesNLQTypesValues.add("Whom");
+        propertiesNLQTypesValues.add("Whose");
+        propertiesNLQTypesValues.add("Which");
+        propertiesNLQTypesValues.add("How-Adj");
+        propertiesNLQTypesValues.add("Yes-No");
+        propertiesNLQTypesValues.add("Request");
+        propertiesNLQTypesValues.add("Topical");
+        
+        return propertiesNLQTypesValues;
+    }
+
+    public void setPropertiesNLQTypesValues(ArrayList propertiesNLQTypesValues) {
+        this.propertiesNLQTypesValues = propertiesNLQTypesValues;
+    }
+
+    public ArrayList getPropertiesQueryShapesValues() {
+        propertiesQueryShapesValues.clear();
+        propertiesQueryShapesValues.add("Single-Edge");
+        propertiesQueryShapesValues.add("Chain");
+        propertiesQueryShapesValues.add("Chain-Set");
+        propertiesQueryShapesValues.add("Tree");
+        propertiesQueryShapesValues.add("Star");
+        propertiesQueryShapesValues.add("Forest");
+        propertiesQueryShapesValues.add("Flower");
+        propertiesQueryShapesValues.add("Flower-Set");
+        propertiesQueryShapesValues.add("Cycle");
+        
+        return propertiesQueryShapesValues;
+    }
+
+    public void setPropertiesQueryShapesValues(ArrayList propertiesQueryShapesValues) {
+        this.propertiesQueryShapesValues = propertiesQueryShapesValues;
+    }
+
+    public boolean isPropertiesDefined() {
+        return propertiesDefined;
+    }
+
+    public void setPropertiesDefined(boolean propertiesDefined) {
+        MainBean.propertiesDefined = propertiesDefined;
+    }
+
+    public String getEval_knowledgebase() {
+        return eval_knowledgebase;
+    }
+
+    public void setEval_knowledgebase(String eval_knowledgebase) {
+        MainBean.eval_knowledgebase = eval_knowledgebase;
+    }
+
+    public String getEval_benchmarkAnalysis() {
+        return eval_benchmarkAnalysis;
+    }
+
+    public void setEval_benchmarkAnalysis(String eval_benchmarkAnalysis) {
+        MainBean.eval_benchmarkAnalysis = eval_benchmarkAnalysis;
+    }
+
+    public String getEval_benchmark() {
+        return eval_benchmark;
+    }
+
+    public void setEval_benchmark(String eval_benchmark) {
+        MainBean.eval_benchmark = eval_benchmark;
+    }
+
+    public boolean isEval_Properties_defined() {
+        return eval_Properties_defined;
+    }
+
+    public void setEval_Properties_defined(boolean eval_Properties_defined) {
+        MainBean.eval_Properties_defined = eval_Properties_defined;
+    }
+
+    public boolean isEval_update_answers() {
+        return eval_update_answers;
+    }
+
+    public void setEval_update_answers(boolean eval_update_answers) {
+        MainBean.eval_update_answers = eval_update_answers;
+    }
+
+    public String getEval_SPARQL_URL() {
+        return eval_SPARQL_URL;
+    }
+
+    public void setEval_SPARQL_URL(String eval_SPARQL_URL) {
+        MainBean.eval_SPARQL_URL = eval_SPARQL_URL;
+    }
+
+    public int getEval_thresould() {
+        return eval_thresould;
+    }
+
+    public void setEval_thresould(int eval_thresould) {
+        MainBean.eval_thresould = eval_thresould;
     }
     
     

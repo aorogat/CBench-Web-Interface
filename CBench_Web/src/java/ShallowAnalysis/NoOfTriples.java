@@ -184,10 +184,10 @@ public class NoOfTriples {
         triples.set("11+", elevenOrMore);
 
         model2.addSeries(triples);
-        model2.setTitle("Number of Triples");
+        model2.setTitle("Number of Triple Patterns");
         model2.setLegendPosition("e");
         model2.setShowPointLabels(true);
-        model2.getAxes().put(AxisType.X, new CategoryAxis("Triples"));
+        model2.getAxes().put(AxisType.X, new CategoryAxis("Triple Patterns"));
         Axis xAxis2 = model2.getAxis(AxisType.X);
         //xAxis2.setTickAngle(-30);
 
