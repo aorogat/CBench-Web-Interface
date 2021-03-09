@@ -110,7 +110,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row second">
                             <div class="input-field">
                                 <div class="input-select">
                                     <h:selectOneListbox value="#{mainBean.eval_benchmark}"  pa:placeholder="Benchmark">
@@ -127,7 +127,7 @@
                                 </div>
                             </div>
                             <span style="font-size: 20px;"> OR </span>
-                            <div class="input-field">
+                            <div class="desc">
                                 <h:selectBooleanCheckbox value="#{mainBean.eval_Properties_defined}">
                                     <p:ajax event="change" update="properties" process="@this"/>
                                 </h:selectBooleanCheckbox> Properties Defined.
@@ -137,9 +137,10 @@
                             <div class="desc" id="updateAns">
                                 <h:selectBooleanCheckbox value="#{mainBean.eval_update_answers}">
                                     <p:ajax event="change" update="delete" process="@this"/>
-                                </h:selectBooleanCheckbox>Update Answers from a SPARQL endpoint. 
+                                </h:selectBooleanCheckbox> Update Answers from a SPARQL endpoint. 
 
                                 <h:inputText id="delete" class="disabled" pa:type="text" pa:placeholder="What SPARQL URL your QA system is using?"
+                                             value="#{mainBean.eval_SPARQL_URL}"
                                              disabled="#{not mainBean.eval_update_answers}"
                                              style="border-color: #DDDDDD; border-style: solid;
                                              border-width: 0.5px; margin: 2px; width: 98.5%;

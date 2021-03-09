@@ -17,8 +17,21 @@ import org.json.JSONObject;
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
 import java.io.*;
+import java.net.HttpURLConnection;
+import model.MainBean;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import java.io.OutputStream; 
+import java.security.SecureRandom;
+import java.security.Security;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
 
 public class CuratedAnswer {
 
@@ -107,8 +120,8 @@ public class CuratedAnswer {
 
     public static ArrayList upToDateAnswerDBpedia(String query, String kg) throws UnsupportedEncodingException {
         ArrayList<String> answersList = new ArrayList<>();
-        String url = endpoint
-                + "default-graph-uri=http%3A%2F%2Fdbpedia.org&"
+        String url = MainBean.eval_SPARQL_URL
+                + "?default-graph-uri=http%3A%2F%2Fdbpedia.org&"
                 + "query=" + URLEncoder.encode(query, StandardCharsets.UTF_8.toString()) + "&"
                 + "format=application%2Fsparql-results%2Bjson&"
                 + "timeout=0&"
@@ -148,9 +161,7 @@ public class CuratedAnswer {
                 }
             }
         } catch (Exception ee) {
-        }
-        try {
-        } catch (Exception e) {
+            ee.printStackTrace();
         }
         return answersList;
     }
@@ -164,7 +175,32 @@ public class CuratedAnswer {
         return sb.toString();
     }
 
-    public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+    public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException, Exception {
+
+        doTrustToCertificates();
+        URL obj = new URL(url);
+        HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+
+        boolean redirect = false;
+
+// normally, 3xx is redirect
+        int status = conn.getResponseCode();
+        if (status != HttpURLConnection.HTTP_OK) {
+            if (status == HttpURLConnection.HTTP_MOVED_TEMP
+                    || status == HttpURLConnection.HTTP_MOVED_PERM
+                    || status == HttpURLConnection.HTTP_SEE_OTHER) {
+                redirect = true;
+            }
+        }
+
+        System.out.println("Response Code ... " + status);
+
+        if (redirect) {
+
+            // get redirect url from "location" header field
+            url = conn.getHeaderField("Location");
+        }
+
         InputStream is = new URL(url).openStream();
         try {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
@@ -181,6 +217,42 @@ public class CuratedAnswer {
         DocumentBuilder builder = factory.newDocumentBuilder();
         InputSource is = new InputSource(new StringReader(xml));
         return builder.parse(is);
+    }
+
+    // trusting all certificate 
+    public static void doTrustToCertificates() throws Exception {
+        Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+        TrustManager[] trustAllCerts = new TrustManager[]{
+            new X509TrustManager() {
+                @Override
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+
+                public void checkServerTrusted(X509Certificate[] certs, String authType) throws CertificateException {
+                    return;
+                }
+
+                public void checkClientTrusted(X509Certificate[] certs, String authType) throws CertificateException {
+                    return;
+                }
+
+            
+            }
+        };
+
+        SSLContext sc = SSLContext.getInstance("SSL");
+        sc.init(null, trustAllCerts, new SecureRandom());
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        HostnameVerifier hv = new HostnameVerifier() {
+            public boolean verify(String urlHostName, SSLSession session) {
+                if (!urlHostName.equalsIgnoreCase(session.getPeerHost())) {
+                    System.out.println("Warning: URL host '" + urlHostName + "' is different to SSLSession host '" + session.getPeerHost() + "'.");
+                }
+                return true;
+            }
+        };
+        HttpsURLConnection.setDefaultHostnameVerifier(hv);
     }
 
 }

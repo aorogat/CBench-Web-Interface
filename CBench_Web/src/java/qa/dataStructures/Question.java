@@ -83,7 +83,7 @@ public class Question {
     public String getQuestionQuery() {
         try{
         Query q = QueryFactory.create(questionQuery);
-        return q.toString(Syntax.syntaxARQ);
+        return q.toString(Syntax.syntaxSPARQL);
         }
         catch(Exception e)
         {

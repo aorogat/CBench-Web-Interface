@@ -2,8 +2,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:pa="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>QA Evaluator - Carleton</title>
@@ -34,13 +32,40 @@
             }
         </style>
 
+        <script type="text/javascript">
+            //<![CDATA[
+            function start() {
+                PF('startButton1').disable();
+
+                window['progress'] = setInterval(function () {
+                    var pbClient = PF('pbClient'),
+                            oldValue = pbClient.getValue(),
+                            newValue = oldValue + 10;
+
+                    pbClient.setValue(pbClient.getValue() + 10);
+
+                    if (newValue === 100) {
+                        clearInterval(window['progress']);
+                    }
+
+
+                }, 1000);
+            }
+
+            function cancel() {
+                clearInterval(window['progress']);
+                PF('pbClient').setValue(0);
+                PF('startButton1').enable();
+            }
+
+            //]]>
+        </script>
+
     </h:head>
     <h:body>
         <div class="s009">
-
             <div class="inner-form">
                 <div class="inner-form">
-
                     <div>
                         <h1>
                             <img src="images/CarletonLogo.png" width="40%" style="max-width: 200px;"/>
@@ -53,19 +78,28 @@
                     <h2>QA Evaluation over  
                         <span style="font-weight: bold; color: #00BCD4">#{mainBean.eval_benchmark}</span>
                         that has
-                        <span style="font-weight: bold; color: #00BCD4">#{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions.size()}</span> 
-                        queries.
+                        <span style="font-weight: bold; color: #00BCD4">#{evaluator_WDAqua.evaluatedBenchmark.allQuestions}</span> 
+                        questions.
                     </h2>
+
                     <p:tabView>
                         <p:tab title="Questions Analysis">
-                            <h2>This analysis is for <span style="font-weight: bold; color: #00BCD4">#{mainBean.benchmark}</span></h2>
                             <div style="display: inline-block; vertical-align: top;">
 
 
                             </div>
                             <div style="display: inline-block; vertical-align: top;">
-
-
+                                <h:form>
+                                    <p:growl id="growl"/>
+                                    Communication in Progress 
+                                    <p:progressBar widgetVar="pbAjax" ajax="true" value="#{evaluator_WDAqua.progress}"
+                                                   labelTemplate="{value}%" styleClass="p-mt-3" global="false"
+                                                   id="progressbar">
+                                        <p:ajax event="complete" listener="#{evaluator_WDAqua.onComplete}" update="growl"
+                                                oncomplete="PF('startButton3').enable()" />
+                                    </p:progressBar>
+                                    <p:poll interval="3" update="progressbar" process="@this"/>
+                                </h:form>
                             </div>
                             <div>
 
@@ -81,20 +115,12 @@
                                             <p:dataTable var="qs" value="#{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions}" 
                                                          id="allQuestions">
                                                 <p:column headerText="Question" width="50%">
-                                                    <h:outputText  style="font-size: 14px;" value="#{qs.question.questionString}" escape="false"/>
-                                                    <br/>
-                                                    Query
-                                                    <br/>
-                                                    <div style="overflow-x: scroll; background-color: #f3d3da;">
-                                                    <pre>
-                                                        <h:outputText  style="font-size: 12px;" 
-                                                            value="#{qs.question.questionQuery}" escape="false"/>
-                                                    </pre>
-                                                    </div>
-                                                    <br/>
-                                                    Query Properties
-                                                    <br/>
-                                                    <span style="font-size: 12px;" >
+                                                    <h:outputText  style="font-size: 12px; font-style: italic; font-weight: bold;" 
+                                                                   value="#{qs.question.questionString}" escape="false"/>
+                                                    <pre style="font-size: 10px;"><h:outputText value="#{qs.question.questionQuery}}" /></pre>
+                                                     
+                                                    <span style="font-size: 12px; color: #008fa1;" >
+                                                        <b>Properties: </b>
                                                         (<h:outputText value="#{qs.properties.type}" /> - 
                                                         <h:outputText value="#{qs.properties.keywords}" /> - 
                                                         T=<h:outputText value="#{qs.properties.triples}" />  
@@ -103,11 +129,15 @@
                                                 </p:column>
 
                                                 <p:column headerText="Gold Answer" width="15%">
-                                                    <h:outputText  style="font-size: 14px;" value="#{qs.g}" escape="false"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <h:outputText  style="font-size: 12px;" value="#{qs.g}" escape="false"/>
+                                                    </div>
                                                 </p:column>
 
                                                 <p:column headerText="System Answer" width="15%">
-                                                    <h:outputText  style="font-size: 14px;" value="#{qs.a}" escape="false"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <h:outputText  style="font-size: 12px;" value="#{qs.a}" escape="false"/>
+                                                    </div>
                                                 </p:column>
 
                                                 <p:column headerText="F1">

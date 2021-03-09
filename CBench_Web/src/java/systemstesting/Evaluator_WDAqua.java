@@ -13,8 +13,11 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashSet;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import model.MainBean;
 import org.apache.commons.io.IOUtils;
 import org.apache.jena.query.Query;
@@ -46,6 +49,8 @@ public class Evaluator_WDAqua {
 
     static int counter = 0;
     static int qsWithAnswers = 0;
+    
+    int progress=0;
 
     public Evaluator_WDAqua() throws IOException {
 
@@ -168,6 +173,9 @@ public class Evaluator_WDAqua {
 
         answer(q);
 
+        systemAnswersList = new ArrayList<String>(new HashSet<String>(systemAnswersList));
+        corectAnswersList = new ArrayList<String>(new HashSet<String>(corectAnswersList));
+        
         //3- List of Questions and their (R, P, F1)
         evaluatedBenchmark.evaluatedQuestions.add(new QuestionEval(question.getQuestionString(), question, corectAnswersList, systemAnswersList));
 
@@ -226,10 +234,10 @@ public class Evaluator_WDAqua {
                     value = e.text();
                     systemAnswersList.add(value.replace('_', ' '));
                 }
-//                systemAnswersList.add(value.replace('_', ' ')
-//                        .replace("http://dbpedia.org/resource/", "")
-//                        .replace("https://en.wikipedia.org/wiki/", "")
-//                        .replace("http://www.wikidata.org/entity/", ""));
+                systemAnswersList.add(value.replace('_', ' ')
+                        .replace("http://dbpedia.org/resource/", "")
+                        .replace("https://en.wikipedia.org/wiki/", "")
+                        .replace("http://www.wikidata.org/entity/", ""));
             }
         } catch (Exception e) {
             try {
@@ -278,6 +286,21 @@ public class Evaluator_WDAqua {
         Evaluator_WDAqua.evaluatedBenchmark = evaluatedBenchmark;
     }
 
+    public int getProgress() {
+        progress = (int)(100*((double)currentQuestion/questions.size()));
+        if (currentQuestion >= questions.size()) {
+            progress=100;
+        }
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+    
+    public void onComplete() {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("CBench Collected All System Answers."));
+    }
     
     
 }

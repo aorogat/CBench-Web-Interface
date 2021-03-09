@@ -819,7 +819,6 @@ legend {
 .s009 {
   min-height: 100vh;
   display: -ms-flexbox;
-  display: flex;
   -ms-flex-pack: center;
       justify-content: center;
   -ms-flex-align: center;
@@ -831,7 +830,6 @@ legend {
 
 .s009 form {
   width: 100%;
-  max-width: 790px;
   margin: 0;
 }
 
@@ -962,7 +960,6 @@ legend {
   font-size: 14px;
   color: #999;
   display: block;
-  margin-bottom: 26px;
   font-weight: bold;
 }
 
