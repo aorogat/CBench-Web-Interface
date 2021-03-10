@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>QA Evaluator - Carleton</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -29,6 +31,26 @@
                 background-color: #ffffff !important;
                 background-image: none !important;
                 color: #000000 !important;
+            }
+
+            /* width */
+            ::-webkit-scrollbar {
+                width: 5px;
+            }
+
+            /* Track */
+            ::-webkit-scrollbar-track {
+                background: #f1f1f1; 
+            }
+
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+                background: #888; 
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: #555; 
             }
         </style>
 
@@ -83,19 +105,133 @@
                     </h2>
 
                     <p:tabView>
-                        <p:tab title="Questions Analysis">
+                        <p:tab title="QA over KG Evaluation">
                             <div style="display: inline-block; vertical-align: top;">
 
 
                             </div>
-                            <div style="display: inline-block; vertical-align: top;">
-                                <h:form>
-                                    <p:growl id="growl"/>
-                                    Communication in Progress 
+                            <div style="display: inline-block; vertical-align: top;
+                                 width: 100%;">
+                                <h:form style="width: 100%;">
+                                    <p:panel id="scores" style="width: 100%;">
+                                        <div style="display: inline-block; width: 30%; margin: 10px; padding: 10px;
+                                             background-color: #e1e1ee;">
+                                            <div style="font-size: 30px; margin: 10px; text-align: center;">
+                                                F1-Global 
+                                                    (&Theta; = 
+                                                    <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.threshold}">
+                                                        <f:convertNumber pattern="#0.0" /> 
+                                                    </h:outputText>)
+                                            </div>
+                                            <div  style="font-size: 30px; text-align: center;
+                                                  color: darkviolet;">
+                                                <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.F_G(evaluator_WDAqua.evaluatedBenchmark.threshold)}">
+                                                    <f:convertNumber pattern="#0.000" /> 
+                                                </h:outputText>
+                                            </div>
+                                            <div style="display: inline-block; width: 45%; margin: 2%; padding: 3%;
+                                                 background-color: #c1c1cc;">
+                                                <div style="font-size: 16px; margin: 10px; text-align: center;">
+                                                    R-Global
+                                                </div>
+                                                <div  style="font-size: 16px; text-align: center;
+                                                      color: darkviolet;">
+                                                    <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.R_G(evaluator_WDAqua.evaluatedBenchmark.threshold)}">
+                                                        <f:convertNumber pattern="#0.000" /> 
+                                                    </h:outputText>
+                                                </div>
+                                            </div>
+                                            <div style="display: inline-block; width: 45%; margin: 2%; padding: 3%;
+                                                 background-color: #c1c1cc;">
+                                                <div style="font-size: 16px; margin: 10px; text-align: center;">
+                                                    P-Global
+                                                </div>
+                                                <div  style="font-size: 16px; text-align: center;
+                                                      color: darkviolet;">
+                                                    <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.P_G(evaluator_WDAqua.evaluatedBenchmark.threshold)}">
+                                                        <f:convertNumber pattern="#0.000" /> 
+                                                    </h:outputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="display: inline-block; width: 30%; margin: 10px; padding: 10px;
+                                             background-color: #e1e1ee;">
+                                            <div style="font-size: 30px; margin: 10px; text-align: center;">
+                                                F1-Micro
+                                            </div>
+                                            <div  style="font-size: 30px; text-align: center;
+                                                  color: darkviolet;">
+                                                <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.F_Mi()}">
+                                                    <f:convertNumber pattern="#0.000" /> 
+                                                </h:outputText>
+                                            </div>
+                                            <div style="display: inline-block; width: 45%; margin: 2%; padding: 3%;
+                                                 background-color: #c1c1cc;">
+                                                <div style="font-size: 16px; margin: 10px; text-align: center;">
+                                                    R-Micro
+                                                </div>
+                                                <div  style="font-size: 16px; text-align: center;
+                                                      color: darkviolet;">
+                                                    <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.R_Mi()}">
+                                                        <f:convertNumber pattern="#0.000" /> 
+                                                    </h:outputText>
+                                                </div>
+                                            </div>
+                                            <div style="display: inline-block; width: 45%; margin: 2%; padding: 3%;
+                                                 background-color: #c1c1cc;">
+                                                <div style="font-size: 16px; margin: 10px; text-align: center;">
+                                                    P-Micro
+                                                </div>
+                                                <div  style="font-size: 16px; text-align: center;
+                                                      color: darkviolet;">
+                                                    <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.P_Mi()}">
+                                                        <f:convertNumber pattern="#0.000" /> 
+                                                    </h:outputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="display: inline-block; width: 30%; margin: 10px; padding: 10px;
+                                             background-color: #e1e1ee;">
+                                            <div style="font-size: 30px; margin: 10px; text-align: center;">
+                                                F1-Macro
+                                            </div>
+                                            <div  style="font-size: 30px; text-align: center;
+                                                  color: darkviolet;">
+                                                <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.F_Ma()}">
+                                                    <f:convertNumber pattern="#0.000" /> 
+                                                </h:outputText>
+                                            </div>
+                                            <div style="display: inline-block; width: 45%; margin: 2%; padding: 3%;
+                                                 background-color: #c1c1cc;">
+                                                <div style="font-size: 16px; margin: 10px; text-align: center;">
+                                                    R-Macro
+                                                </div>
+                                                <div  style="font-size: 16px; text-align: center;
+                                                      color: darkviolet;">
+                                                    <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.R_Ma()}">
+                                                        <f:convertNumber pattern="#0.000" /> 
+                                                    </h:outputText>
+                                                </div>
+                                            </div>
+                                            <div style="display: inline-block; width: 45%; margin: 2%; padding: 3%;
+                                                 background-color: #c1c1cc;">
+                                                <div style="font-size: 16px; margin: 10px; text-align: center;">
+                                                    P-Macro
+                                                </div>
+                                                <div  style="font-size: 16px; text-align: center;
+                                                      color: darkviolet;">
+                                                    <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.P_Ma()}">
+                                                        <f:convertNumber pattern="#0.000" /> 
+                                                    </h:outputText>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </p:panel>
+                                    <p:poll interval="3" update="scores" process="@this"/>
                                     <p:progressBar widgetVar="pbAjax" ajax="true" value="#{evaluator_WDAqua.progress}"
                                                    labelTemplate="{value}%" styleClass="p-mt-3" global="false"
-                                                   id="progressbar">
-                                        <p:ajax event="complete" listener="#{evaluator_WDAqua.onComplete}" update="growl"
+                                                   id="progressbar" style="display: inline-block; width: 100%;">
+                                        <p:ajax event="complete" listener="#{evaluator_WDAqua.onComplete}" update="progressbar"
                                                 oncomplete="PF('startButton3').enable()" />
                                     </p:progressBar>
                                     <p:poll interval="3" update="progressbar" process="@this"/>
@@ -104,21 +240,18 @@
                             <div>
 
                                 <p:tabView>
-
-
-
                                     <p:tab title="All Questions">
                                         <h:form>
                                             <p:poll interval="3" listener="#{evaluator_WDAqua.periodicPoll()}" 
                                                     update="allQuestions" process="@this"/>
-                                            Total questions: #{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions.size()}.
+                                            
                                             <p:dataTable var="qs" value="#{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions}" 
                                                          id="allQuestions">
                                                 <p:column headerText="Question" width="50%">
                                                     <h:outputText  style="font-size: 12px; font-style: italic; font-weight: bold;" 
                                                                    value="#{qs.question.questionString}" escape="false"/>
-                                                    <pre style="font-size: 10px;"><h:outputText value="#{qs.question.questionQuery}}" /></pre>
-                                                     
+                                                    <pre style="font-size: 10px;"><h:outputText value="#{qs.question.questionQuery}" /></pre>
+
                                                     <span style="font-size: 12px; color: #008fa1;" >
                                                         <b>Properties: </b>
                                                         (<h:outputText value="#{qs.properties.type}" /> - 
@@ -128,33 +261,825 @@
                                                     </span>
                                                 </p:column>
 
-                                                <p:column headerText="Gold Answer" width="15%">
+                                                <p:column headerText="Golden Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.g.size()}"/>
                                                     <div style="overflow-y: scroll; max-height: 200px;">
-                                                        <h:outputText  style="font-size: 12px;" value="#{qs.g}" escape="false"/>
+                                                        <ui:repeat value="#{qs.g}" var="g">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{g}"/>
+                                                        </ui:repeat>
                                                     </div>
                                                 </p:column>
 
                                                 <p:column headerText="System Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.a.size()}"/>
                                                     <div style="overflow-y: scroll; max-height: 200px;">
-                                                        <h:outputText  style="font-size: 12px;" value="#{qs.a}" escape="false"/>
+                                                        <ui:repeat value="#{qs.a}" var="a">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{a}"/>
+                                                        </ui:repeat>
                                                     </div>
                                                 </p:column>
 
                                                 <p:column headerText="F1">
-                                                    <pre style="font-size: 12px;"><h:outputText value="#{qs.f_q}" /></pre>
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.f_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
                                                 </p:column>
 
                                                 <p:column headerText="R">
-                                                    <pre style="font-size: 12px;"><h:outputText value="#{qs.r_q}" /></pre>
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.r_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
                                                 </p:column>
 
                                                 <p:column headerText="P">
-                                                    <pre style="font-size: 12px;"><h:outputText value="#{qs.p_q}" /></pre>
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.p_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
                                                 </p:column>
                                             </p:dataTable>
                                         </h:form>
                                     </p:tab>
 
+                                    <p:tab title="Single-Edge">
+                                        <h:form>
+                                            <p:poll interval="10" listener="#{evaluator_WDAqua.periodicPoll()}" 
+                                                    update="allQuestions" process="@this"/>
+                                            
+                                            <p:dataTable var="qs" value="#{evaluator_WDAqua.evaluatedBenchmark.singleEdgeEvaluatedQuestions}" 
+                                                         id="allQuestions">
+                                                <p:column headerText="Question" width="50%">
+                                                    <h:outputText  style="font-size: 12px; font-style: italic; font-weight: bold;" 
+                                                                   value="#{qs.question.questionString}" escape="false"/>
+                                                    <pre style="font-size: 10px;"><h:outputText value="#{qs.question.questionQuery}" /></pre>
+
+                                                    <span style="font-size: 12px; color: #008fa1;" >
+                                                        <b>Properties: </b>
+                                                        (<h:outputText value="#{qs.properties.type}" /> - 
+                                                        <h:outputText value="#{qs.properties.keywords}" /> - 
+                                                        T=<h:outputText value="#{qs.properties.triples}" />  
+                                                        )
+                                                    </span>
+                                                </p:column>
+
+                                                <p:column headerText="Golden Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.g.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.g}" var="g">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{g}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="System Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.a.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.a}" var="a">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{a}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="F1">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.f_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="R">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.r_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="P">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.p_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </h:form>
+                                    </p:tab>
+                                    
+                                    <p:tab title="Chain">
+                                        <h:form>
+                                            <p:poll interval="10" listener="#{evaluator_WDAqua.periodicPoll()}" 
+                                                    update="allQuestions" process="@this"/>
+                                            
+                                            <p:dataTable var="qs" value="#{evaluator_WDAqua.evaluatedBenchmark.chainEvaluatedQuestions}" 
+                                                         id="allQuestions">
+                                                <p:column headerText="Question" width="50%">
+                                                    <h:outputText  style="font-size: 12px; font-style: italic; font-weight: bold;" 
+                                                                   value="#{qs.question.questionString}" escape="false"/>
+                                                    <pre style="font-size: 10px;"><h:outputText value="#{qs.question.questionQuery}" /></pre>
+
+                                                    <span style="font-size: 12px; color: #008fa1;" >
+                                                        <b>Properties: </b>
+                                                        (<h:outputText value="#{qs.properties.type}" /> - 
+                                                        <h:outputText value="#{qs.properties.keywords}" /> - 
+                                                        T=<h:outputText value="#{qs.properties.triples}" />  
+                                                        )
+                                                    </span>
+                                                </p:column>
+
+                                                <p:column headerText="Golden Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.g.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.g}" var="g">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{g}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="System Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.a.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.a}" var="a">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{a}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="F1">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.f_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="R">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.r_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="P">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.p_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </h:form>
+                                    </p:tab>
+                                    
+                                    <p:tab title="Chain-Set">
+                                        <h:form>
+                                            <p:poll interval="10" listener="#{evaluator_WDAqua.periodicPoll()}" 
+                                                    update="allQuestions" process="@this"/>
+                                            
+                                            <p:dataTable var="qs" value="#{evaluator_WDAqua.evaluatedBenchmark.chainSetEvaluatedQuestions}" 
+                                                         id="allQuestions">
+                                                <p:column headerText="Question" width="50%">
+                                                    <h:outputText  style="font-size: 12px; font-style: italic; font-weight: bold;" 
+                                                                   value="#{qs.question.questionString}" escape="false"/>
+                                                    <pre style="font-size: 10px;"><h:outputText value="#{qs.question.questionQuery}" /></pre>
+
+                                                    <span style="font-size: 12px; color: #008fa1;" >
+                                                        <b>Properties: </b>
+                                                        (<h:outputText value="#{qs.properties.type}" /> - 
+                                                        <h:outputText value="#{qs.properties.keywords}" /> - 
+                                                        T=<h:outputText value="#{qs.properties.triples}" />  
+                                                        )
+                                                    </span>
+                                                </p:column>
+
+                                                <p:column headerText="Golden Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.g.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.g}" var="g">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{g}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="System Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.a.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.a}" var="a">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{a}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="F1">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.f_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="R">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.r_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="P">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.p_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </h:form>
+                                    </p:tab>
+                                    
+                                    <p:tab title="Star">
+                                        <h:form>
+                                            <p:poll interval="10" listener="#{evaluator_WDAqua.periodicPoll()}" 
+                                                    update="allQuestions" process="@this"/>
+                                            
+                                            <p:dataTable var="qs" value="#{evaluator_WDAqua.evaluatedBenchmark.starEvaluatedQuestions}" 
+                                                         id="allQuestions">
+                                                <p:column headerText="Question" width="50%">
+                                                    <h:outputText  style="font-size: 12px; font-style: italic; font-weight: bold;" 
+                                                                   value="#{qs.question.questionString}" escape="false"/>
+                                                    <pre style="font-size: 10px;"><h:outputText value="#{qs.question.questionQuery}" /></pre>
+
+                                                    <span style="font-size: 12px; color: #008fa1;" >
+                                                        <b>Properties: </b>
+                                                        (<h:outputText value="#{qs.properties.type}" /> - 
+                                                        <h:outputText value="#{qs.properties.keywords}" /> - 
+                                                        T=<h:outputText value="#{qs.properties.triples}" />  
+                                                        )
+                                                    </span>
+                                                </p:column>
+
+                                                <p:column headerText="Golden Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.g.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.g}" var="g">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{g}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="System Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.a.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.a}" var="a">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{a}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="F1">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.f_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="R">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.r_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="P">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.p_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </h:form>
+                                    </p:tab>
+                                    
+                                    <p:tab title="Tree">
+                                        <h:form>
+                                            <p:poll interval="10" listener="#{evaluator_WDAqua.periodicPoll()}" 
+                                                    update="allQuestions" process="@this"/>
+                                            
+                                            <p:dataTable var="qs" value="#{evaluator_WDAqua.evaluatedBenchmark.treeEvaluatedQuestions}" 
+                                                         id="allQuestions">
+                                                <p:column headerText="Question" width="50%">
+                                                    <h:outputText  style="font-size: 12px; font-style: italic; font-weight: bold;" 
+                                                                   value="#{qs.question.questionString}" escape="false"/>
+                                                    <pre style="font-size: 10px;"><h:outputText value="#{qs.question.questionQuery}" /></pre>
+
+                                                    <span style="font-size: 12px; color: #008fa1;" >
+                                                        <b>Properties: </b>
+                                                        (<h:outputText value="#{qs.properties.type}" /> - 
+                                                        <h:outputText value="#{qs.properties.keywords}" /> - 
+                                                        T=<h:outputText value="#{qs.properties.triples}" />  
+                                                        )
+                                                    </span>
+                                                </p:column>
+
+                                                <p:column headerText="Golden Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.g.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.g}" var="g">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{g}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="System Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.a.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.a}" var="a">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{a}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="F1">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.f_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="R">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.r_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="P">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.p_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </h:form>
+                                    </p:tab>
+                                    
+                                    <p:tab title="Forest">
+                                        <h:form>
+                                            <p:poll interval="10" listener="#{evaluator_WDAqua.periodicPoll()}" 
+                                                    update="allQuestions" process="@this"/>
+                                            
+                                            <p:dataTable var="qs" value="#{evaluator_WDAqua.evaluatedBenchmark.forestEvaluatedQuestions}" 
+                                                         id="allQuestions">
+                                                <p:column headerText="Question" width="50%">
+                                                    <h:outputText  style="font-size: 12px; font-style: italic; font-weight: bold;" 
+                                                                   value="#{qs.question.questionString}" escape="false"/>
+                                                    <pre style="font-size: 10px;"><h:outputText value="#{qs.question.questionQuery}" /></pre>
+
+                                                    <span style="font-size: 12px; color: #008fa1;" >
+                                                        <b>Properties: </b>
+                                                        (<h:outputText value="#{qs.properties.type}" /> - 
+                                                        <h:outputText value="#{qs.properties.keywords}" /> - 
+                                                        T=<h:outputText value="#{qs.properties.triples}" />  
+                                                        )
+                                                    </span>
+                                                </p:column>
+
+                                                <p:column headerText="Golden Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.g.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.g}" var="g">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{g}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="System Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.a.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.a}" var="a">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{a}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="F1">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.f_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="R">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.r_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="P">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.p_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </h:form>
+                                    </p:tab>
+                                    
+                                    <p:tab title="Flower">
+                                        <h:form>
+                                            <p:poll interval="10" listener="#{evaluator_WDAqua.periodicPoll()}" 
+                                                    update="allQuestions" process="@this"/>
+                                            
+                                            <p:dataTable var="qs" value="#{evaluator_WDAqua.evaluatedBenchmark.flowerEvaluatedQuestions}" 
+                                                         id="allQuestions">
+                                                <p:column headerText="Question" width="50%">
+                                                    <h:outputText  style="font-size: 12px; font-style: italic; font-weight: bold;" 
+                                                                   value="#{qs.question.questionString}" escape="false"/>
+                                                    <pre style="font-size: 10px;"><h:outputText value="#{qs.question.questionQuery}" /></pre>
+
+                                                    <span style="font-size: 12px; color: #008fa1;" >
+                                                        <b>Properties: </b>
+                                                        (<h:outputText value="#{qs.properties.type}" /> - 
+                                                        <h:outputText value="#{qs.properties.keywords}" /> - 
+                                                        T=<h:outputText value="#{qs.properties.triples}" />  
+                                                        )
+                                                    </span>
+                                                </p:column>
+
+                                                <p:column headerText="Golden Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.g.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.g}" var="g">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{g}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="System Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.a.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.a}" var="a">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{a}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="F1">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.f_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="R">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.r_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="P">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.p_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </h:form>
+                                    </p:tab>
+                                    
+                                    <p:tab title="Flower-Set">
+                                        <h:form>
+                                            <p:poll interval="10" listener="#{evaluator_WDAqua.periodicPoll()}" 
+                                                    update="allQuestions" process="@this"/>
+                                            
+                                            <p:dataTable var="qs" value="#{evaluator_WDAqua.evaluatedBenchmark.flowerSetEvaluatedQuestions}" 
+                                                         id="allQuestions">
+                                                <p:column headerText="Question" width="50%">
+                                                    <h:outputText  style="font-size: 12px; font-style: italic; font-weight: bold;" 
+                                                                   value="#{qs.question.questionString}" escape="false"/>
+                                                    <pre style="font-size: 10px;"><h:outputText value="#{qs.question.questionQuery}" /></pre>
+
+                                                    <span style="font-size: 12px; color: #008fa1;" >
+                                                        <b>Properties: </b>
+                                                        (<h:outputText value="#{qs.properties.type}" /> - 
+                                                        <h:outputText value="#{qs.properties.keywords}" /> - 
+                                                        T=<h:outputText value="#{qs.properties.triples}" />  
+                                                        )
+                                                    </span>
+                                                </p:column>
+
+                                                <p:column headerText="Golden Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.g.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.g}" var="g">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{g}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="System Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.a.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.a}" var="a">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{a}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="F1">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.f_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="R">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.r_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="P">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.p_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </h:form>
+                                    </p:tab>
+                                    
+                                    <p:tab title="Cycle">
+                                        <h:form>
+                                            <p:poll interval="10" listener="#{evaluator_WDAqua.periodicPoll()}" 
+                                                    update="allQuestions" process="@this"/>
+                                            
+                                            <p:dataTable var="qs" value="#{evaluator_WDAqua.evaluatedBenchmark.cycleEvaluatedQuestions}" 
+                                                         id="allQuestions">
+                                                <p:column headerText="Question" width="50%">
+                                                    <h:outputText  style="font-size: 12px; font-style: italic; font-weight: bold;" 
+                                                                   value="#{qs.question.questionString}" escape="false"/>
+                                                    <pre style="font-size: 10px;"><h:outputText value="#{qs.question.questionQuery}" /></pre>
+
+                                                    <span style="font-size: 12px; color: #008fa1;" >
+                                                        <b>Properties: </b>
+                                                        (<h:outputText value="#{qs.properties.type}" /> - 
+                                                        <h:outputText value="#{qs.properties.keywords}" /> - 
+                                                        T=<h:outputText value="#{qs.properties.triples}" />  
+                                                        )
+                                                    </span>
+                                                </p:column>
+
+                                                <p:column headerText="Golden Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.g.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.g}" var="g">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{g}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="System Answer" width="15%">
+                                                    <b style="font-size: 12px;">List size: </b>
+                                                    <h:outputText  style="font-size: 12px;" value="#{qs.a.size()}"/>
+                                                    <div style="overflow-y: scroll; max-height: 200px;">
+                                                        <ui:repeat value="#{qs.a}" var="a">
+                                                            <h:outputText style="display: inline-block;
+                                                                          opacity: 0.5;
+                                                                          color: #00529b;
+                                                                          background-color: #bde5f8;
+                                                                          font-size: 12px;
+                                                                          border: 1px solid;
+                                                                          width: 90%;
+                                                                          margin: 2px;
+                                                                          padding: 2px 5px;" value="#{a}"/>
+                                                        </ui:repeat>
+                                                    </div>
+                                                </p:column>
+
+                                                <p:column headerText="F1">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.f_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="R">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.r_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+
+                                                <p:column headerText="P">
+                                                    <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.p_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                    </pre>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </h:form>
+                                    </p:tab>
+                                    
                                 </p:tabView>
 
                             </div>

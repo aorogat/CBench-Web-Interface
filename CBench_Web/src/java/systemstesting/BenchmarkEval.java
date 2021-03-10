@@ -4,12 +4,18 @@ import ShapeAnalysis.QueryShapeType;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import visualization.FineGrained;
 import model.MainBean;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.DonutChartModel;
+import static systemstesting.Evaluator_WDAqua.evaluatedBenchmark;
 
 @ManagedBean
 @SessionScoped
@@ -36,6 +42,8 @@ public class BenchmarkEval {
     private ArrayList<QuestionEval> cycleEvaluatedQuestions = new ArrayList<>();
     private ArrayList<QuestionEval> flowerEvaluatedQuestions = new ArrayList<>();
     private ArrayList<QuestionEval> flowerSetEvaluatedQuestions = new ArrayList<>();
+    
+    private DonutChartModel donutModel;
 
     public BenchmarkEval() {
         benchmarkName = MainBean.eval_benchmark;
@@ -234,6 +242,22 @@ public class BenchmarkEval {
         }
         return sumOfFi / (double) questionsWithCorrectAnswers;
     }
+    
+    public double R_Ma() {
+        double sumOfFi = 0;
+        for (QuestionEval evaluatedQuestion : evaluatedQuestions) {
+            sumOfFi += evaluatedQuestion.R_q;
+        }
+        return sumOfFi / (double) questionsWithCorrectAnswers;
+    }
+    
+    public double P_Ma() {
+        double sumOfFi = 0;
+        for (QuestionEval evaluatedQuestion : evaluatedQuestions) {
+            sumOfFi += evaluatedQuestion.P_q;
+        }
+        return sumOfFi / (double) questionsWithCorrectAnswers;
+    }
 
     public double R_G() {
         return R_G(1);
@@ -244,11 +268,12 @@ public class BenchmarkEval {
     }
 
     public double F_G() {
+        evaluatedBenchmark.calculateParameters();
         return F_G(1);
     }
 
     //Global scores with threshold theta
-    private double R_G(double theta) {
+    public double R_G(double theta) {
         answeredWithThetaThreshold = 0;
         for (QuestionEval evaluatedQuestion : evaluatedQuestions) {
             if (evaluatedQuestion.F_q >= theta) {
@@ -271,6 +296,7 @@ public class BenchmarkEval {
     }
 
     public double F_G(double theta) {
+        evaluatedBenchmark.calculateParameters();
         double R = R_G(theta);
         double P = P_G(theta);
 
@@ -474,6 +500,15 @@ public class BenchmarkEval {
         BenchmarkEval.threshold = threshold;
     }
 
-    
+    public void createDonutModel() {
+        donutModel = new DonutChartModel();
+        
+        Map<String, Number> circle1 = new LinkedHashMap<String, Number>();
+        circle1.put("Brand 1", 150);
+        circle1.put("Brand 2", 400);
+        circle1.put("Brand 3", 200);
+        circle1.put("Brand 4", 10);
+        donutModel.addCircle(circle1);
+    }
     
 }

@@ -291,12 +291,14 @@ public class Evaluator_WDAqua {
         if (currentQuestion >= questions.size()) {
             progress=100;
         }
+        
         return progress;
     }
 
     public void setProgress(int progress) {
         this.progress = progress;
     }
+    
     
     public void onComplete() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("CBench Collected All System Answers."));
