@@ -72,17 +72,52 @@
     </h:head>
     <h:body>
         <div class="s009">
-            <div style="width: 35%; display: inline-block;">
-                <img src="images/CarletonLogo.png" width="40%" style="display: block;"/><br/>
-                <h1>CBench, QA over KG Systems Evaluator.</h1>
+            <div style="width: 100%; display: inline-block;">
+                <img src="images/6.png" height="100px;"/>
+
+                <h1 style="display: inline; margin: 20px">Question Answering over Knowledge Graphs Benchmarking.</h1>
                 <hr/>
-                <p  class="row third" style="color: gray;">
-                    Developed at Data Science Institute, Carleton University, Canada<br/>
-                    Copyright 2020 by Carleton Data Science Institute
-                </p>
             </div>
-            <h:form style="display: inline-block;">
-                <div class="inner-form">
+            <h:form>
+                <div class="inner-form"   style="display: inline-block; width: 40%;
+                     vertical-align: top; margin-right: 2%;">
+                    <h2><span>Benchmark Analysis</span></h2>
+
+
+                    <div class="advance-search">
+
+                        <div class="row">
+                            <div class="input-field">
+                                <div class="input-select">
+                                    <h:selectOneListbox value="#{mainBean.benchmark}"  pa:placeholder="Benchmark">
+                                        <f:selectItems value = "#{mainBean.benchmarks}" var="c"
+                                                       itemValue="#{c}" itemLabel="#{c}"/>
+                                    </h:selectOneListbox>
+                                </div>
+                            </div>
+                            <span style="font-size: 20px;"> OR </span>
+                            <div class="input-field">
+                                <div class="input-select">
+                                    <input type="file" name="file" id="file" class="inputfile" />
+                                    <label for="file"><i class="fa fa-upload"  aria-hidden="true"></i>
+                                        Upload a benchmark.</label>
+                                </div>
+                            </div>
+                            <div class="input-field">
+                                <div class="result-count">
+
+                                </div>
+                                <div class="group-btn">
+                                    <h:commandButton class="btn-search" value="Analyze"
+                                                     action="#{mainBean.analysis()}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="inner-form"  style="display: inline-block; width: 55%;">
                     <div class="basic-search">
                         <div class="input-field">
 
@@ -120,18 +155,70 @@
                                 </div> 
                             </div>
                             <span style="font-size: 20px;"> OR </span>
+                            <div class="desc">
+                                <h:selectBooleanCheckbox value="#{mainBean.eval_Properties_defined}">
+                                    <p:ajax event="change" update="properties" process="@this"/>
+                                </h:selectBooleanCheckbox> Properties Defined.
+                            </div>
+                            <div class="card">
+                                <p:commandButton id="btn" type="button" icon="pi pi-external-link" onclick="PF('dlg').show();"/>
+                            </div>
+                            <span style="font-size: 20px;"> OR </span>
                             <div class="input-field">
                                 <div class="input-select">
                                     <input type="file" name="file" id="file" class="inputfile" />
                                     <label for="file">Upload a benchmark.</label>
                                 </div>
                             </div>
-                            <span style="font-size: 20px;"> OR </span>
-                            <div class="desc">
-                                <h:selectBooleanCheckbox value="#{mainBean.eval_Properties_defined}">
-                                    <p:ajax event="change" update="properties" process="@this"/>
-                                </h:selectBooleanCheckbox> Properties Defined.
-                            </div>
+                            
+                            
+
+                            <p:dialog id="gmapDialog" widgetVar="dlg" width="625" height="500" modal="true">
+                                <h:panelGroup id="properties" class="row second">
+                                    <div class="desc" id="prop" style="width: 80%;">
+                                        <span style="font-size: 20px;">
+                                            What properties you would like to include?<br/><br/>
+                                        </span>
+                                        <div style="width: 35%; display: inline-block;
+                                             vertical-align: top;">
+                                            <span style="font-size: 16px;">NLQ Type</span>
+                                            <hr/>
+                                            <h:selectManyCheckbox value="#{mainBean.propertiesNLQTypes}"
+                                                                  layout="pageDirection" style="display: inline-block;">
+                                                <f:selectItems value="#{mainBean.propertiesNLQTypesValues}"/>
+                                            </h:selectManyCheckbox> 
+                                        </div>
+                                        <div style="width: 55%; display: inline-block;
+                                             vertical-align: top;">
+                                            <span style="font-size: 16px;">Query</span><br/>
+                                            <hr/>
+                                            <div style="width: 48%; display: inline-block;
+                                                 vertical-align: top;">
+                                                Triple Patterns
+                                                <hr/>
+                                                <h:panelGrid columns="1" style="margin-bottom: 10px">
+                                                    <h:outputText id="displayRange" value="Between #{mainBean.number8} and #{mainBean.number9}"/>
+                                                    <p:slider for="txt6,txt7" display="displayRange" style="width: 100px" range="true"
+                                                              minValue="0" maxValue="20"
+                                                              displayTemplate="Between {min} and {max}"/>
+                                                </h:panelGrid>
+                                                <h:inputHidden id="txt6" value="#{mainBean.number8}"/>
+                                                <h:inputHidden id="txt7" value="#{mainBean.number9}"/>
+                                            </div>
+                                            <div style="width: 48%; display: inline-block;
+                                                 vertical-align: top;">
+                                                Query Shape
+                                                <hr/>
+                                                <h:selectManyCheckbox value="#{mainBean.propertiesQueryShapes}"
+                                                                      layout="pageDirection" style="display: inline-block;">
+                                                    <f:selectItems value="#{mainBean.propertiesQueryShapesValues}"/>
+                                                </h:selectManyCheckbox>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </h:panelGroup>
+                            </p:dialog>
                         </div>
                         <div class="row second">
                             <div class="desc" id="updateAns">
@@ -156,41 +243,7 @@
 
                             </div>
                         </div>
-                        <h:panelGroup id="properties" class="row second"
-                                      rendered="#{mainBean.propertiesDefined}">
-                            <div class="desc" id="prop">
-                                What properties you would like to include?<br/>
-                                
-                                <table>
-                                    <tr style="color: black;">
-                                        <td>
-                                            NLQ Type
-                                        </td>
-                                        <td>
-                                            Query Type
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h:selectManyCheckbox value="#{mainBean.propertiesNLQTypes}"
-                                                                  layout="pageDirection" style="display: inline-block;">
-                                                <f:selectItems value="#{mainBean.propertiesNLQTypesValues}"/>
-                                            </h:selectManyCheckbox> 
-                                        </td>
-                                        <td>
-                                            <h:selectManyCheckbox value="#{mainBean.propertiesQueryShapes}"
-                                                                  layout="pageDirection" style="display: inline-block;">
-                                                <f:selectItems value="#{mainBean.propertiesQueryShapesValues}"/>
-                                            </h:selectManyCheckbox> <br/><br/><br/><br/>
-                                        </td>
-                                    </tr>
-                                </table>
 
-                                
-
-
-                            </div>
-                        </h:panelGroup>
                         <div class="row third">
                             <div class="input-field">
                                 <div class="result-count">
@@ -204,71 +257,34 @@
                         </div>
                     </div>
                 </div>
-            </h:form>
-
-            <h:form>
-                <div class="inner-form">
-                    <h2><span>Benchmark Analysis</span></h2>
 
 
-                    <div class="advance-search">
-
-                        <div class="row">
-                            <div class="input-field">
-                                <div class="input-select">
-                                    <h:selectOneListbox value="#{mainBean.benchmark}"  pa:placeholder="Benchmark">
-                                        <f:selectItems value = "#{mainBean.benchmarks}" var="c"
-                                                       itemValue="#{c}" itemLabel="#{c}"/>
-                                    </h:selectOneListbox>
-                                </div>
-                            </div>
-                            <span style="font-size: 20px;"> OR </span>
-                            <div class="input-field">
-                                <div class="input-select">
-                                    <input type="file" name="file" id="file" class="inputfile" />
-                                    <label for="file"><i class="fa fa-upload"  aria-hidden="true"></i>
-                                        Upload a benchmark.</label>
-                                </div>
-                            </div>
-                            <div class="input-field">
-                                <div class="result-count">
-
-                                </div>
-                                <div class="group-btn">
-                                    <h:commandButton class="btn-search" value="Analyze"
-                                                     action="#{mainBean.analysis()}"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
             </h:form>
         </div>
         <script src="js/extention/choices.js"></script>
         <script type="text/javascript">
-            /* <![CDATA[ */
-            const customSelects = document.querySelectorAll("select");
-                    const deleteBtn = document.getElementById('delete')
-                    const choices = new Choices('select',
-                    {
-                    searchEnabled: false,
-                            itemSelectText: '',
-                            removeItemButton: true,
-                    });
-                    deleteBtn.addEventListener("click", function (e)
-                    {
-                        e.preventDefault();
-                                const deleteAll = document.querySelectorAll('.choices__button')
-                                for (let i = 0; i < deleteAll.length;
-                                i++
-                                        );
-                        {
-                            deleteAll[i].click();
-                        }
-                    });
+                                    /* <![CDATA[ */
+                                    const customSelects = document.querySelectorAll("select");
+                                            const deleteBtn = document.getElementById('delete')
+                                            const choices = new Choices('select',
+                                            {
+                                            searchEnabled: false,
+                                                    itemSelectText: '',
+                                                    removeItemButton: true,
+                                            });
+                                            deleteBtn.addEventListener("click", function (e)
+                                            {
+                                                e.preventDefault();
+                                                        const deleteAll = document.querySelectorAll('.choices__button')
+                                                        for (let i = 0; i < deleteAll.length;
+                                                        i++
+                                                                );
+                                                {
+                                                    deleteAll[i].click();
+                                                }
+                                            });
 
-            /* ]]> */
+                                    /* ]]> */
         </script>
     </h:body>
 

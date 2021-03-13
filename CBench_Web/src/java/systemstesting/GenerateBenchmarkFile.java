@@ -9,7 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import mainClass.CBench;
+//import mainClass.CBench;
 import org.apache.jena.query.Query;
 import qa.dataStructures.Question;
 
@@ -24,7 +24,7 @@ public class GenerateBenchmarkFile
     private static FileWriter file;
  
     public static void generateFile(int benchmark) throws Exception {
-        DataSetPreprocessing.getQueriesWithoutDuplicates(benchmark);
+        //DataSetPreprocessing.getQueriesWithoutDuplicates(benchmark);
         questions = DataSetPreprocessing.questions;
         // JSON object. Key value pairs are unordered. JSONObject supports java.util.Map interface.
         JSONObject root = new JSONObject();
@@ -63,7 +63,7 @@ public class GenerateBenchmarkFile
         System.out.println("Write s then press Enter to run CBench again.");
         Scanner in = new Scanner(System.in);
         in.next();
-        CBench.run();
+        //CBench.run();
     }
     
     

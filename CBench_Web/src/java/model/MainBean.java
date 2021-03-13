@@ -58,7 +58,7 @@ public class MainBean
     public String evaluate() throws IOException
     {
         Evaluator_WDAqua.evaluate();
-        return "evalute.xhtml";
+        return "evalute.xhtml?faces-redirect=true";
     }
     
     public String analysis() throws IOException
@@ -67,7 +67,7 @@ public class MainBean
         NLQCategoraizer a = new NLQCategoraizer();
         NoOfTriples.triplesAnalysis();
         OperatorDistribution.analysis();
-        return "analysis.xhtml";
+        return "analysis.xhtml?faces-redirect=true";
     }
     ////////////////////////////////////////////////////////////////////////////
 
@@ -292,6 +292,25 @@ public class MainBean
 
     public void setEval_thresould(int eval_thresould) {
         MainBean.eval_thresould = eval_thresould;
+    }
+    
+    int number8;
+    int number9;
+
+    public int getNumber8() {
+        return number8;
+    }
+
+    public void setNumber8(int number8) {
+        this.number8 = number8;
+    }
+
+    public int getNumber9() {
+        return number9;
+    }
+
+    public void setNumber9(int number9) {
+        this.number9 = number9;
     }
     
     

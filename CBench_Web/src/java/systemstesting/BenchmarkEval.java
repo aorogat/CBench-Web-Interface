@@ -13,9 +13,15 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import visualization.FineGrained;
 import model.MainBean;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.DonutChartModel;
+import org.primefaces.model.chart.HorizontalBarChartModel;
 import static systemstesting.Evaluator_WDAqua.evaluatedBenchmark;
+import java.util.stream.*;
+import java.util.*;
+import java.util.function.*;
 
 @ManagedBean
 @SessionScoped
@@ -42,13 +48,13 @@ public class BenchmarkEval {
     private ArrayList<QuestionEval> cycleEvaluatedQuestions = new ArrayList<>();
     private ArrayList<QuestionEval> flowerEvaluatedQuestions = new ArrayList<>();
     private ArrayList<QuestionEval> flowerSetEvaluatedQuestions = new ArrayList<>();
-    
+
     private DonutChartModel donutModel;
 
     public BenchmarkEval() {
         benchmarkName = MainBean.eval_benchmark;
     }
-    
+
     public BenchmarkEval(String benchmarkName) {
         this.benchmarkName = benchmarkName;
     }
@@ -149,16 +155,13 @@ public class BenchmarkEval {
                 break;
         }
 
-        
-         System.out.println("       +");
+        System.out.println("       +");
         System.out.println("       +");
         System.out.println("       +");
         System.out.println("       +");
         System.out.println("       ++++> Final Scores, Press 's' then Enter to show");
         update = in.next();
-        
 
-        
         System.out.println("\n================================ " + benchmarkName + " ================================");
         System.out.println("All Questions: " + allQuestions);
         System.out.println("System Answered: " + answered);
@@ -214,6 +217,8 @@ public class BenchmarkEval {
             sumOfIntesect += evaluatedQuestion.A_intersect_G_length;
             sumOfGi += evaluatedQuestion.G.size();
         }
+        if(sumOfGi<=0)
+            return 0;
         return sumOfIntesect / (double) sumOfGi;
     }
 
@@ -224,6 +229,8 @@ public class BenchmarkEval {
             sumOfIntesect += evaluatedQuestion.A_intersect_G_length;
             sumOfAi += evaluatedQuestion.A.size();
         }
+        if(sumOfAi<=0)
+            return 0;
         return sumOfIntesect / (double) sumOfAi;
     }
 
@@ -231,6 +238,8 @@ public class BenchmarkEval {
         double R = R_Mi();
         double P = P_Mi();
 
+        if(R+P<=0)
+            return 0;
         return (2 * R * P) / (R + P);
     }
 
@@ -240,22 +249,28 @@ public class BenchmarkEval {
         for (QuestionEval evaluatedQuestion : evaluatedQuestions) {
             sumOfFi += evaluatedQuestion.F_q;
         }
+        if(questionsWithCorrectAnswers<=0)
+            return 0;
         return sumOfFi / (double) questionsWithCorrectAnswers;
     }
-    
+
     public double R_Ma() {
         double sumOfFi = 0;
         for (QuestionEval evaluatedQuestion : evaluatedQuestions) {
             sumOfFi += evaluatedQuestion.R_q;
         }
+        if(questionsWithCorrectAnswers<=0)
+            return 0;
         return sumOfFi / (double) questionsWithCorrectAnswers;
     }
-    
+
     public double P_Ma() {
         double sumOfFi = 0;
         for (QuestionEval evaluatedQuestion : evaluatedQuestions) {
             sumOfFi += evaluatedQuestion.P_q;
         }
+        if(questionsWithCorrectAnswers<=0)
+            return 0;
         return sumOfFi / (double) questionsWithCorrectAnswers;
     }
 
@@ -280,7 +295,8 @@ public class BenchmarkEval {
                 answeredWithThetaThreshold++;
             }
         }
-
+        if(questionsWithCorrectAnswers<=0)
+            return 0;
         return answeredWithThetaThreshold / (double) questionsWithCorrectAnswers;
     }
 
@@ -291,7 +307,8 @@ public class BenchmarkEval {
                 answeredWithThetaThreshold++;
             }
         }
-
+        if(answered<=0)
+            return 0;
         return answeredWithThetaThreshold / (double) answered;
     }
 
@@ -299,7 +316,8 @@ public class BenchmarkEval {
         evaluatedBenchmark.calculateParameters();
         double R = R_G(theta);
         double P = P_G(theta);
-
+        if(R+P<=0)
+            return 0;
         return (2 * R * P) / (R + P);
     }
 
@@ -502,7 +520,7 @@ public class BenchmarkEval {
 
     public void createDonutModel() {
         donutModel = new DonutChartModel();
-        
+
         Map<String, Number> circle1 = new LinkedHashMap<String, Number>();
         circle1.put("Brand 1", 150);
         circle1.put("Brand 2", 400);
@@ -510,5 +528,122 @@ public class BenchmarkEval {
         circle1.put("Brand 4", 10);
         donutModel.addCircle(circle1);
     }
+
+    private HorizontalBarChartModel single_model;
+    private HorizontalBarChartModel chain_model;
+    private HorizontalBarChartModel chainSet_model;
+    private HorizontalBarChartModel star_model;
+    private HorizontalBarChartModel tree_model;
+    private HorizontalBarChartModel forest_model;
+    private HorizontalBarChartModel flower_model;
+    private HorizontalBarChartModel flowerSet_model;
+    private HorizontalBarChartModel cycle_model;
+    private HorizontalBarChartModel all_model;
+
+    public HorizontalBarChartModel getSingle_model() {
+        return generateModel(singleEdgeEvaluatedQuestions, "Single-Edge");
+    }
+
+    public HorizontalBarChartModel getChain_model() {
+        return generateModel(chainEvaluatedQuestions, "Chain");
+    }
+
+    public HorizontalBarChartModel getChainSet_model() {
+        return generateModel(chainSetEvaluatedQuestions, "Chain-Set");
+    }
+
+    public HorizontalBarChartModel getStar_model() {
+        return generateModel(starEvaluatedQuestions, "Star");
+    }
+
+    public HorizontalBarChartModel getTree_model() {
+        return generateModel(treeEvaluatedQuestions, "Tree");
+    }
+
+    public HorizontalBarChartModel getFlower_model() {
+        return generateModel(flowerEvaluatedQuestions, "Flower");
+    }
+
+    public HorizontalBarChartModel getFlowerSet_model() {
+        return generateModel(flowerSetEvaluatedQuestions, "Flower-Set");
+    }
+
+    public HorizontalBarChartModel getCycle_model() {
+        return generateModel(cycleEvaluatedQuestions, "Cycle");
+    }
+
+    public HorizontalBarChartModel getForest_model() {
+        return generateModel(forestEvaluatedQuestions, "Forest");
+    }
+
+    public HorizontalBarChartModel getAll_model() {
+        return generateModel(evaluatedQuestions, "All");
+    }
     
+    
+    
+    
+    private HorizontalBarChartModel generateModel(ArrayList<QuestionEval> evaluated_qs, String shape)
+    {
+        HorizontalBarChartModel model = new HorizontalBarChartModel();
+        ArrayList<String> corr = new ArrayList<>();
+        ArrayList<String> incorr = new ArrayList<>();
+        for (QuestionEval q : evaluated_qs) {
+            String prop = "(" + q.properties.type + ", " + q.properties.keywords + ", T=" + q.properties.triples + ")";
+            if (q.F_q >= threshold) {
+                corr.add(prop);
+            } else {
+                incorr.add(prop);
+            }
+        }
+        Set<String> propertiesSet = new HashSet<>(corr);
+        propertiesSet.addAll(incorr);
+
+        
+        ChartSeries correct = new ChartSeries();
+        for (String property : propertiesSet) {
+            correct.set(property, count(property, corr));
+        }
+
+        ChartSeries incorrect = new ChartSeries();
+        for (String property : propertiesSet) {
+            incorrect.set(property, count(property, incorr));
+        }
+
+        correct.setLabel("Correct");
+
+        incorrect.setLabel("InCorrect");
+
+        model.addSeries(correct);
+
+        model.addSeries(incorrect);
+
+        model.setTitle( shape + " Questions");
+        model.setLegendPosition("e");
+        model.setStacked(true);
+
+        Axis xAxis = model.getAxis(AxisType.X);
+        xAxis.setLabel("Frequency");
+        xAxis.setMin(0);
+
+        Axis yAxis = model.getAxis(AxisType.Y);
+        yAxis.setLabel("Properties");
+        //yAxis.setTickAngle(-45);
+        return model;
+    }
+
+    public void setSingle_model(HorizontalBarChartModel single_model) {
+        this.single_model = single_model;
+    }
+
+    private int count(String s, ArrayList<String> list) {
+        int c = 0;
+        for (String l : list) {
+            if (l.equals(s)) {
+                c++;
+            }
+        }
+        return c;
+    }
+
 }

@@ -63,7 +63,8 @@ public class Evaluator_GAnswerNew {
         evaluatedQuestions = new ArrayList<>();
 
         //KB = "freebase";
-        qs = DataSetPreprocessing.getQueriesWithoutDuplicates(benchmark);
+        //qs = DataSetPreprocessing.getQueriesWithoutDuplicates(benchmark);
+        qs = DataSetPreprocessing.queries;
         BenchmarkEval evaluatedBenchmark = new BenchmarkEval(benchmarkName);
         evaluatedBenchmark.allQuestions = questions.size();
 
