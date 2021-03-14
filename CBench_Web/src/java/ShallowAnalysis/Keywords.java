@@ -305,10 +305,10 @@ public class Keywords {
         patternKys.set("groupconcat()", groupconcat);
 
         model2.addSeries(patternKys);
-        model2.setTitle("Pattern Keywords");
+        model2.setTitle("Query Keywords");
         model2.setLegendPosition("e");
         model2.setShowPointLabels(true);
-        model2.getAxes().put(AxisType.X, new CategoryAxis("Pattern Keywords"));
+        model2.getAxes().put(AxisType.X, new CategoryAxis("Keyword"));
         Axis xAxis2 = model2.getAxis(AxisType.X);
         xAxis2.setTickAngle(-30);
 

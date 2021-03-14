@@ -54,8 +54,8 @@
                     <h2>This analysis is for 
                         <span style="font-weight: bold; color: #00BCD4">#{mainBean.benchmark}</span>
                         that has
-                        <span style="font-weight: bold; color: #00BCD4">#{keywords.qs.size()}</span> 
-                        queries.
+                        <span style="font-weight: bold; color: #00BCD4">408</span> 
+                        questions.
                     </h2>
                     <p:tabView>
                         <p:tab title="Shallow Analysis">
@@ -226,7 +226,7 @@
                                     </p:tab>
                                     <p:tab title="Tree">
                                         Total questions: #{categorizedQuestions.tree_Qs.size()}.
-                                        Tree Shape subsumes Chain. In this table Chain Questions are excluded.
+                                        Tree Shape subsumes Chain. In this table Chain and Star Questions are excluded.
                                         <p:dataTable var="qs" value="#{categorizedQuestions.tree_Qs}">
                                             <p:column headerText="Question">
                                                 <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>

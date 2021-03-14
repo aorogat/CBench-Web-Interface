@@ -103,12 +103,12 @@ public class CategorizedQuestions {
                         &&!QueryShapeType.isTree(current)) {
                     forest_Qs.add(q);
                 }
-                if (QueryShapeType.isStar(current)
-                        &&!QueryShapeType.isTree(current)) {
+                if (QueryShapeType.isStar(current)) {
                     star_Qs.add(q);
                 }
                 if (QueryShapeType.isTree(current)
-                        &&!QueryShapeType.isChain(current)) {
+                    &&!QueryShapeType.isChain(current)
+                    &&!QueryShapeType.isStar(current)) {
                     tree_Qs.add(q);
                 }
             } catch (Exception e) {
@@ -203,7 +203,7 @@ public class CategorizedQuestions {
         barModel.setTitle("Cumulative Query Shapes");
         barModel.setLegendPosition("e");
         barModel.setShowPointLabels(true);
-        barModel.getAxes().put(AxisType.X, new CategoryAxis("Modifier"));
+        barModel.getAxes().put(AxisType.X, new CategoryAxis("Shape"));
         Axis xAxis = barModel.getAxis(AxisType.X);
         xAxis.setTickAngle(-30);
         Axis yAxis = barModel.getAxis(AxisType.Y);
