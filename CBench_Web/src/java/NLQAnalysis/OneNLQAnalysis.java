@@ -53,7 +53,7 @@ public class OneNLQAnalysis {
     
     public static boolean whoseQuestion(String question) {
         question = question.toLowerCase();
-        return question.trim().startsWith("whose");
+        return question.trim().matches("^(.{0,8})whose.*$");
     }
     
     public static boolean whomQuestion(String question) {
