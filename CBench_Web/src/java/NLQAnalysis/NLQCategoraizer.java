@@ -82,11 +82,6 @@ public class NLQCategoraizer {
                             replaceFirst("which", "<b><u>Which</u></b>"));
                     which_Qs.add(q);
                 }
-                else if (OneNLQAnalysis.whoQuestion(q.getQuestionString())) {
-                    q.setQuestionString(q.getQuestionString().toLowerCase().
-                            replaceFirst("who", "<b><u>Who</u></b>"));
-                    who_Qs.add(q);
-                }
                 else if (OneNLQAnalysis.whomQuestion(q.getQuestionString())) {
                     q.setQuestionString(q.getQuestionString().toLowerCase().
                             replaceFirst("whom", "<b><u>Whom</u></b>"));
@@ -96,6 +91,12 @@ public class NLQCategoraizer {
                     q.setQuestionString(q.getQuestionString().toLowerCase().
                             replaceFirst("whose", "<b><u>Whose</u></b>"));
                     whose_Qs.add(q);
+                }
+                
+                else if (OneNLQAnalysis.whoQuestion(q.getQuestionString())) {
+                    q.setQuestionString(q.getQuestionString().toLowerCase().
+                            replaceFirst("who", "<b><u>Who</u></b>"));
+                    who_Qs.add(q);
                 }
                 else if (OneNLQAnalysis.howQuestion(q.getQuestionString())) {
                     q.setQuestionString(q.getQuestionString().toLowerCase().
