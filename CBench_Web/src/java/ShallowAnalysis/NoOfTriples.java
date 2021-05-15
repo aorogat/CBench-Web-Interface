@@ -31,13 +31,14 @@ import qa.dataStructures.Question;
 @RequestScoped
 public class NoOfTriples {
 
-    static ArrayList<Query> qs;
-    public static int zero = 0, one = 0, two = 0, three = 0, four = 0, five = 0, six = 0, seven = 0,
-            eight = 0, nine = 0, ten = 0, elevenOrMore = 0, total = 0, counter = 0;
-    static LineChartModel model2 = new LineChartModel();
-    static LineChartModel modelNLQ = new LineChartModel();
+    ArrayList<Query> qs;
+    public int zero = 0, one = 0, two = 0, three = 0, four = 0, five = 0, six = 0, seven = 0,
+            eight = 0, nine = 0, ten = 0, elevenOrMore = 0, total = 0;
+    public static int counter = 0;
+    LineChartModel model2 = new LineChartModel();
+    LineChartModel modelNLQ = new LineChartModel();
 
-    public static void triplesAnalysis() {
+    public void triplesAnalysis() {
         NumberFormat formatter = new DecimalFormat("#0.00");
 
         zero = 0;
@@ -108,49 +109,49 @@ public class NoOfTriples {
         for (Query q : qs) {
 
             try {
-                NoOfTriples.counter = 0;
-                NoOfTriples.total++;
+                counter = 0;
+                total++;
                 Element e = q.getQueryPattern();
 
                 ElementVisitorBase visitor = new ElementVistorImpl();
                 ElementWalker.walk(e, visitor);
 
-                switch (NoOfTriples.counter) {
+                switch (counter) {
                     case 0:
-                        NoOfTriples.zero++;
+                        zero++;
                         break;
                     case 1:
-                        NoOfTriples.one++;
+                        one++;
                         break;
                     case 2:
-                        NoOfTriples.two++;
+                        two++;
                         break;
                     case 3:
-                        NoOfTriples.three++;
+                        three++;
                         break;
                     case 4:
-                        NoOfTriples.four++;
+                        four++;
                         break;
                     case 5:
-                        NoOfTriples.five++;
+                        five++;
                         break;
                     case 6:
-                        NoOfTriples.six++;
+                        six++;
                         break;
                     case 7:
-                        NoOfTriples.seven++;
+                        seven++;
                         break;
                     case 8:
-                        NoOfTriples.eight++;
+                        eight++;
                         break;
                     case 9:
-                        NoOfTriples.nine++;
+                        nine++;
                         break;
                     case 10:
-                        NoOfTriples.ten++;
+                        ten++;
                         break;
                     default:
-                        NoOfTriples.elevenOrMore++;
+                        elevenOrMore++;
                         break;
 
                 }
@@ -163,7 +164,7 @@ public class NoOfTriples {
         createCharts();
     }
 
-    private static void createCharts() {
+    private void createCharts() {
 
         
         model2.clear();
@@ -231,116 +232,116 @@ public class NoOfTriples {
         //yAxis3.setMax(max+max/10);
     }
 
-    public static ArrayList<Query> getQs() {
+    public ArrayList<Query> getQs() {
         return qs;
     }
 
-    public static void setQs(ArrayList<Query> qs) {
-        NoOfTriples.qs = qs;
+    public void setQs(ArrayList<Query> qs) {
+        qs = qs;
     }
 
-    public static int getZero() {
+    public int getZero() {
         return zero;
     }
 
-    public static void setZero(int zero) {
-        NoOfTriples.zero = zero;
+    public void setZero(int zero) {
+        this.zero = zero;
     }
 
-    public static int getOne() {
+    public int getOne() {
         return one;
     }
 
-    public static void setOne(int one) {
-        NoOfTriples.one = one;
+    public void setOne(int one) {
+        this.one = one;
     }
 
-    public static int getTwo() {
+    public int getTwo() {
         return two;
     }
 
-    public static void setTwo(int two) {
-        NoOfTriples.two = two;
+    public void setTwo(int two) {
+        this.two = two;
     }
 
-    public static int getThree() {
+    public int getThree() {
         return three;
     }
 
-    public static void setThree(int three) {
-        NoOfTriples.three = three;
+    public void setThree(int three) {
+        this.three = three;
     }
 
-    public static int getFour() {
+    public int getFour() {
         return four;
     }
 
-    public static void setFour(int four) {
-        NoOfTriples.four = four;
+    public void setFour(int four) {
+        this.four = four;
     }
 
-    public static int getFive() {
+    public int getFive() {
         return five;
     }
 
-    public static void setFive(int five) {
-        NoOfTriples.five = five;
+    public void setFive(int five) {
+        this.five = five;
     }
 
-    public static int getSix() {
+    public int getSix() {
         return six;
     }
 
-    public static void setSix(int six) {
-        NoOfTriples.six = six;
+    public void setSix(int six) {
+        this.six = six;
     }
 
-    public static int getSeven() {
+    public int getSeven() {
         return seven;
     }
 
-    public static void setSeven(int seven) {
-        NoOfTriples.seven = seven;
+    public void setSeven(int seven) {
+        this.seven = seven;
     }
 
-    public static int getEight() {
+    public int getEight() {
         return eight;
     }
 
-    public static void setEight(int eight) {
-        NoOfTriples.eight = eight;
+    public void setEight(int eight) {
+        this.eight = eight;
     }
 
-    public static int getNine() {
+    public int getNine() {
         return nine;
     }
 
-    public static void setNine(int nine) {
-        NoOfTriples.nine = nine;
+    public void setNine(int nine) {
+        this.nine = nine;
     }
 
-    public static int getTen() {
+    public int getTen() {
         return ten;
     }
 
-    public static void setTen(int ten) {
-        NoOfTriples.ten = ten;
+    public void setTen(int ten) {
+        this.ten = ten;
     }
 
-    public static int getElevenOrMore() {
+    public int getElevenOrMore() {
         return elevenOrMore;
     }
 
-    public static void setElevenOrMore(int elevenOrMore) {
-        NoOfTriples.elevenOrMore = elevenOrMore;
+    public void setElevenOrMore(int elevenOrMore) {
+        this.elevenOrMore = elevenOrMore;
     }
 
-    public static int getTotal() {
+    public int getTotal() {
         return total;
     }
 
-    public static void setTotal(int total) {
-        NoOfTriples.total = total;
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     public LineChartModel getModel2() {
@@ -348,7 +349,7 @@ public class NoOfTriples {
     }
 
     public void setModel2(LineChartModel model2) {
-        NoOfTriples.model2 = model2;
+        this.model2 = model2;
     }
 
     public LineChartModel getModelNLQ() {
@@ -356,7 +357,7 @@ public class NoOfTriples {
     }
 
     public void setModelNLQ(LineChartModel modelNLQ) {
-        NoOfTriples.modelNLQ = modelNLQ;
+        this.modelNLQ = modelNLQ;
     }
 
     

@@ -23,29 +23,28 @@ import org.primefaces.model.chart.PieChartModel;
 @RequestScoped
 public class Keywords {
 
-    static ArrayList<Query> qs = new ArrayList<>();
-    static ArrayList<Keyword> kws = new ArrayList<>();
-    static PieChartModel pieModelSelect_Ask = new PieChartModel();
-    //static BubbleChartModel bubbleModel1 = new BubbleChartModel();
+    ArrayList<Query> qs = new ArrayList<>();
+    ArrayList<Keyword> kws = new ArrayList<>();
+    PieChartModel pieModelSelect_Ask = new PieChartModel();
 
-    static LineChartModel model = new LineChartModel();
-    static LineChartModel model2 = new LineChartModel();
+    LineChartModel model = new LineChartModel();
+    LineChartModel model2 = new LineChartModel();
 
-    static int select = 0, ask = 0, describe = 0, construct = 0;
+    int select = 0, ask = 0, describe = 0, construct = 0;
 
-    static int distinct = 0, limit = 0, offset = 0, orderBy = 0;
+    int distinct = 0, limit = 0, offset = 0, orderBy = 0;
 
-    static int filter = 0, and = 0, union = 0, opt = 0, graph = 0, notExists = 0, minus = 0, exists = 0;
+    int filter = 0, and = 0, union = 0, opt = 0, graph = 0, notExists = 0, minus = 0, exists = 0;
 
-    static int aggregators = 0, groupBy = 0, having = 0;
+    int aggregators = 0, groupBy = 0, having = 0;
     
-    static int count = 0, min = 0, max = 0, 
+    int count = 0, min = 0, max = 0, 
             sum = 0, avg = 0, sample = 0, groupconcat = 0 ;
 
     public Keywords() {
     }
 
-    public static void keywordsAnalysis() {
+    public void keywordsAnalysis() {
         select = 0;
         ask = 0;
         describe = 0;
@@ -247,7 +246,7 @@ public class Keywords {
         createCharts();
     }
 
-    private static void createCharts() {
+    private void createCharts() {
 
         pieModelSelect_Ask.clear();
         model.clear();
@@ -330,7 +329,7 @@ public class Keywords {
     }
 
     public void setQs(ArrayList<Query> qs) {
-        Keywords.qs = qs;
+        this.qs = qs;
     }
 
     public PieChartModel getPieModelSelect_Ask() {
@@ -346,7 +345,7 @@ public class Keywords {
     }
 
     public void setModel(LineChartModel model) {
-        Keywords.model = model;
+        this.model = model;
     }
 
     public LineChartModel getModel2() {
@@ -354,7 +353,7 @@ public class Keywords {
     }
 
     public void setModel2(LineChartModel model) {
-        Keywords.model2 = model;
+        this.model2 = model;
     }
 
 }

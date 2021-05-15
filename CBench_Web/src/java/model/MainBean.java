@@ -4,6 +4,7 @@ import NLQAnalysis.NLQCategoraizer;
 import ShallowAnalysis.Keywords;
 import ShallowAnalysis.NoOfTriples;
 import ShallowAnalysis.OperatorDistribution;
+import ShapeAnalysis.CategorizedQuestions;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
@@ -18,6 +19,12 @@ import systemstesting.Evaluator_WDAqua;
 @SessionScoped
 public class MainBean 
 {
+    Keywords ks = new Keywords();
+    NoOfTriples nu = new NoOfTriples();
+    OperatorDistribution ope = new OperatorDistribution();
+    CategorizedQuestions categorizedQuestions;
+    NLQCategoraizer nlqCategoraizer;
+    
     public static String knowledgebase = "-- Knowledgebase --";
     public static String benchmarkAnalysis = "-- Benchmark --";
     public static String benchmark = "-- Benchmark --";
@@ -27,6 +34,7 @@ public class MainBean
     public ArrayList knowledgebases = new ArrayList();
     public ArrayList benchmarks = new ArrayList();
     public ArrayList analysisTypes = new ArrayList();
+    public ArrayList selectedBenchmarks = new ArrayList();
     
     public static boolean propertiesDefined=false;
     public boolean[] propertiesNLQTypes = new boolean[10];
@@ -47,7 +55,7 @@ public class MainBean
     
     
     
-    public MainBean() 
+    public MainBean() throws IOException 
     {
         for (int i = 0; i < propertiesNLQTypes.length; i++)
             propertiesNLQTypes[i]=false;
@@ -63,10 +71,11 @@ public class MainBean
     
     public String analysis() throws IOException
     {
-        Keywords.keywordsAnalysis();
-        NLQCategoraizer a = new NLQCategoraizer();
-        NoOfTriples.triplesAnalysis();
-        OperatorDistribution.analysis();
+        ks.keywordsAnalysis();
+        nu.triplesAnalysis();
+        ope.analysis();
+        categorizedQuestions = new CategorizedQuestions();
+        nlqCategoraizer = new NLQCategoraizer();
         return "analysis.xhtml?faces-redirect=true";
     }
     ////////////////////////////////////////////////////////////////////////////
@@ -311,6 +320,54 @@ public class MainBean
 
     public void setNumber9(int number9) {
         this.number9 = number9;
+    }
+
+    public ArrayList getSelectedBenchmarks() {
+        return selectedBenchmarks;
+    }
+
+    public void setSelectedBenchmarks(ArrayList selectedBenchmarks) {
+        this.selectedBenchmarks = selectedBenchmarks;
+    }
+
+    public Keywords getKs() {
+        return ks;
+    }
+
+    public void setKs(Keywords ks) {
+        this.ks = ks;
+    }
+
+    public NoOfTriples getNu() {
+        return nu;
+    }
+
+    public void setNu(NoOfTriples nu) {
+        this.nu = nu;
+    }
+
+    public OperatorDistribution getOpe() {
+        return ope;
+    }
+
+    public void setOpe(OperatorDistribution ope) {
+        this.ope = ope;
+    }
+
+    public CategorizedQuestions getCategorizedQuestions() {
+        return categorizedQuestions;
+    }
+
+    public void setCategorizedQuestions(CategorizedQuestions categorizedQuestions) {
+        this.categorizedQuestions = categorizedQuestions;
+    }
+
+    public NLQCategoraizer getNlqCategoraizer() {
+        return nlqCategoraizer;
+    }
+
+    public void setNlqCategoraizer(NLQCategoraizer nlqCategoraizer) {
+        this.nlqCategoraizer = nlqCategoraizer;
     }
     
     

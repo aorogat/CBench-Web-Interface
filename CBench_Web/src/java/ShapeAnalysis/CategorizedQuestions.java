@@ -38,37 +38,36 @@ import org.primefaces.model.chart.PieChartModel;
  *
  * @author aorogat
  */
-@ManagedBean
-@RequestScoped
+
 public class CategorizedQuestions {
 
-    static ArrayList<Question> singleShape_Qs = new ArrayList<Question>();
-    static ArrayList<Question> chain_Qs = new ArrayList<Question>();
-    static ArrayList<Question> chainSet_Qs = new ArrayList<Question>();
-    static ArrayList<Question> star_Qs = new ArrayList<Question>();
-    static ArrayList<Question> tree_Qs = new ArrayList<Question>();
-    static ArrayList<Question> forest_Qs = new ArrayList<Question>();
-    static ArrayList<Question> cycle_Qs = new ArrayList<Question>();
-    static ArrayList<Question> flower_Qs = new ArrayList<Question>();
-    static ArrayList<Question> flowerSet_Qs = new ArrayList<Question>();
+    ArrayList<Question> singleShape_Qs = new ArrayList<Question>();
+    ArrayList<Question> chain_Qs = new ArrayList<Question>();
+    ArrayList<Question> chainSet_Qs = new ArrayList<Question>();
+    ArrayList<Question> star_Qs = new ArrayList<Question>();
+    ArrayList<Question> tree_Qs = new ArrayList<Question>();
+    ArrayList<Question> forest_Qs = new ArrayList<Question>();
+    ArrayList<Question> cycle_Qs = new ArrayList<Question>();
+    ArrayList<Question> flower_Qs = new ArrayList<Question>();
+    ArrayList<Question> flowerSet_Qs = new ArrayList<Question>();
 
-    static PieChartModel pieModelSelect= new PieChartModel();
-    static BarChartModel barModel = new BarChartModel();
+    PieChartModel pieModelSelect= new PieChartModel();
+    BarChartModel barModel = new BarChartModel();
     
     private List<SortMeta> sortBy;
 
     
     public CategorizedQuestions() throws IOException {
       
-    singleShape_Qs = new ArrayList<Question>();
-    chain_Qs = new ArrayList<Question>();
-    chainSet_Qs = new ArrayList<Question>();
-    star_Qs = new ArrayList<Question>();
-    tree_Qs = new ArrayList<Question>();
-    forest_Qs = new ArrayList<Question>();
-    cycle_Qs = new ArrayList<Question>();
-    flower_Qs = new ArrayList<Question>();
-    flowerSet_Qs = new ArrayList<Question>();
+    singleShape_Qs = new ArrayList<>();
+    chain_Qs = new ArrayList<>();
+    chainSet_Qs = new ArrayList<>();
+    star_Qs = new ArrayList<>();
+    tree_Qs = new ArrayList<>();
+    forest_Qs = new ArrayList<>();
+    cycle_Qs = new ArrayList<>();
+    flower_Qs = new ArrayList<>();
+    flowerSet_Qs = new ArrayList<>();
         
         //DataSetPreprocessing.getQueriesWithoutDuplicates(9, false, false, false);
         for (Question q : DataSetPreprocessing.questionsWithoutDuplicates) {
@@ -181,7 +180,7 @@ public class CategorizedQuestions {
     }
 
     
-    private static void createCharts() {
+    private void createCharts() {
 
         barModel.clear();
 
@@ -287,7 +286,7 @@ public class CategorizedQuestions {
     }
 
     public void setPieModelSelect(PieChartModel pieModelSelect) {
-        CategorizedQuestions.pieModelSelect = pieModelSelect;
+        this.pieModelSelect = pieModelSelect;
     }
 
     public BarChartModel getBarModel() {
@@ -295,7 +294,7 @@ public class CategorizedQuestions {
     }
 
     public void setBarModel(BarChartModel barModel) {
-        CategorizedQuestions.barModel = barModel;
+        this.barModel = barModel;
     }
     
     
