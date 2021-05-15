@@ -67,6 +67,11 @@
             .no-js .inputfile + label {
                 display: none;
             }
+            
+            .compareBenchmarks
+            {
+                width: 300px !important;
+            }
         </style>
 
     </h:head>
@@ -115,6 +120,40 @@
                         </div>
                     </div>
 
+                    
+                    <div class="advance-search">
+
+                        <div class="row">
+                            <div class="input-field">
+                                <div >
+                                    <h:selectManyListbox value="#{mainBean.selectedBenchmarks}"  
+                                                         pa:placeholder="Benchmark">
+                                        <f:selectItems value = "#{mainBean.benchmarks}" var="c"
+                                                       itemValue="#{c}" itemLabel="#{c}"
+                                                       class="compareBenchmarks"/>
+                                    </h:selectManyListbox>
+                                </div>
+                            </div>
+                            <span style="font-size: 20px;"> AND </span>
+                            <div class="input-field">
+                                <div class="input-select">
+                                    <input type="file" name="file" id="file" class="inputfile" />
+                                    <label for="file"><i class="fa fa-upload"  aria-hidden="true"></i>
+                                        Upload a benchmark.</label>
+                                </div>
+                            </div>
+                            <div class="input-field">
+                                <div class="result-count">
+
+                                </div>
+                                <div class="group-btn">
+                                    <h:commandButton class="btn-search" value="Compare"
+                                                     action="#{mainBean.analysis()}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
 
                 <div class="inner-form"  style="display: inline-block; width: 55%;">

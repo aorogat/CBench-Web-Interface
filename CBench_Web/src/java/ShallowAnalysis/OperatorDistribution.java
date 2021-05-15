@@ -19,18 +19,18 @@ import org.primefaces.model.chart.LineChartModel;
 @RequestScoped
 public class OperatorDistribution {
 
-    static ArrayList<Query> qs;
-    static ArrayList<OperatorOneDistribution> distributions = new ArrayList<>();
+    ArrayList<Query> qs;
+    ArrayList<OperatorOneDistribution> distributions = new ArrayList<>();
     
-    public static int none = 0, F = 0, A = 0, AF = 0, CPF = 0, 
+    public int none = 0, F = 0, A = 0, AF = 0, CPF = 0, 
                                 O = 0, OF = 0, AO = 0, AOF = 0, CPF_O = 0,
                                 G = 0, CPF_G = 0,
                                 U = 0, UF = 0, AU = 0, AUF = 0, CPF_U = 0,
                                 FGP = 0, FGU = 0, FAG = 0, AOUF = 0, AOUFG = 0;
 
-    static LineChartModel model2 = new LineChartModel();
+    LineChartModel model2 = new LineChartModel();
 
-    public static void analysis() {
+    public void analysis() {
         NumberFormat formatter = new DecimalFormat("#0.00");
 
         none = 0;
@@ -215,7 +215,7 @@ public class OperatorDistribution {
     }
 
     public void setQs(ArrayList<Query> qs) {
-        OperatorDistribution.qs = qs;
+        this.qs = qs;
     }
 
     public ArrayList<OperatorOneDistribution> getDistributions() {
@@ -223,7 +223,7 @@ public class OperatorDistribution {
     }
 
     public void setDistributions(ArrayList<OperatorOneDistribution> distributions) {
-        OperatorDistribution.distributions = distributions;
+        this.distributions = distributions;
     }
 
     public LineChartModel getModel2() {
@@ -231,7 +231,7 @@ public class OperatorDistribution {
     }
 
     public void setModel2(LineChartModel model2) {
-        OperatorDistribution.model2 = model2;
+        this.model2 = model2;
     }
     
     

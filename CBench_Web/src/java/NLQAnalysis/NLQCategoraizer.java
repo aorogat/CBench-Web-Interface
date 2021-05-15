@@ -16,8 +16,6 @@ import qa.dataStructures.Question;
  *
  * @author aorogat
  */
-@ManagedBean
-@RequestScoped
 public class NLQCategoraizer {
     ArrayList<Question> what_Qs = new ArrayList<Question>();
     ArrayList<Question> when_Qs = new ArrayList<Question>();
@@ -31,7 +29,7 @@ public class NLQCategoraizer {
     ArrayList<Question> request_Qs = new ArrayList<Question>();
     ArrayList<Question> Topical_Qs = new ArrayList<Question>();
 
-    static PieChartModel pieModelSelect= new PieChartModel();
+    PieChartModel pieModelSelect= new PieChartModel();
     
     
     public NLQCategoraizer() throws IOException {
@@ -188,7 +186,7 @@ public class NLQCategoraizer {
     }
 
     public void setPieModelSelect(PieChartModel pieModelSelect) {
-        NLQCategoraizer.pieModelSelect = pieModelSelect;
+        this.pieModelSelect = pieModelSelect;
     }
     
     

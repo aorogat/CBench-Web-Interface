@@ -850,7 +850,7 @@ legend {
   font-size: 18px;
   color: #666;
   border-radius: 3px;
-  height: 70px;
+  //height: 70px;
   color: #555;
   font-family: 'Lato', sans-serif;
 }
@@ -1024,7 +1024,7 @@ legend {
   height: 100%;
   color: #fff;
   display: -ms-flexbox;
-  display: flex;
+  //display: flex;
   -ms-flex-align: center;
       align-items: center;
   padding: 0;
