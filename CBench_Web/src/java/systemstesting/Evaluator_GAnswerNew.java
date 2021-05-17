@@ -6,7 +6,7 @@
 package systemstesting;
 
 import DataSet.Benchmark;
-import DataSet.DataSetPreprocessing;
+import DataSet.Benchmark;
 import UptodatAnswers.CuratedAnswer;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,7 +31,7 @@ import qa.dataStructures.Question;
 public class Evaluator_GAnswerNew {
 
     static ArrayList<Query> qs;
-    static ArrayList<Question> questions = DataSetPreprocessing.questions;
+    static ArrayList<Question> questions = Benchmark.questions;
 
     static String KB;
 
@@ -63,8 +63,8 @@ public class Evaluator_GAnswerNew {
         evaluatedQuestions = new ArrayList<>();
 
         //KB = "freebase";
-        //qs = DataSetPreprocessing.getQueriesWithoutDuplicates(benchmark);
-        qs = DataSetPreprocessing.queries;
+        //qs = Benchmark.getQueriesWithoutDuplicates(benchmark);
+        qs = Benchmark.queries;
         BenchmarkEval evaluatedBenchmark = new BenchmarkEval(benchmarkName);
         evaluatedBenchmark.allQuestions = questions.size();
 

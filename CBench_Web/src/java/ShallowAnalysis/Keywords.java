@@ -1,11 +1,9 @@
 package ShallowAnalysis;
 
 import DataSet.Benchmark;
-import DataSet.DataSetPreprocessing;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import model.MainBean;
 import org.apache.jena.query.Query;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -44,7 +42,7 @@ public class Keywords {
     public Keywords() {
     }
 
-    public void keywordsAnalysis() {
+    public void keywordsAnalysis(Benchmark benchmark) {
         select = 0;
         ask = 0;
         describe = 0;
@@ -71,56 +69,56 @@ public class Keywords {
         count = 0; min = 0; max = 0; 
         sum = 0; avg = 0; sample = 0; groupconcat = 0 ;
         
-        String benchmark = MainBean.benchmark;
-        try {
+        //qs = allQueries;
+//        String benchmark = MainBean.benchmark;
+//        try {
+//            if (benchmark.equals("QALD-1")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_1, false, false, false);
+//            } else if (benchmark.equals("QALD-2")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_2, false, false, false);
+//            } else if (benchmark.equals("QALD-3")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_3, false, false, false);
+//            } else if (benchmark.equals("QALD-4")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_4, false, false, false);
+//            } else if (benchmark.equals("QALD-5")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_5, false, false, false);
+//            } else if (benchmark.equals("QALD-6")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_6, false, false, false);
+//            } else if (benchmark.equals("QALD-7")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_7, false, false, false);
+//            } else if (benchmark.equals("QALD-8")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_8, false, false, false);
+//            } else if (benchmark.equals("QALD-9")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_9, false, false, false);
+//            } else if (benchmark.equals("QALD-ALL")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_ALL, false, false, false);
+//            } else if (benchmark.equals("LC-QUAD")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.LC_QUAD, true, false, false);
+//            } else if (benchmark.equals("WebQuestions")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.WebQuestions, false, true, true);
+//            } else if (benchmark.equals("GraphQuestions")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.GraphQuestions, false, true, true);
+//            } else if (benchmark.equals("SimpleDBpediaQA")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.SimpleDBpediaQA, false, true, true);
+//            } else if (benchmark.equals("SimpleQuestions")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.SimpleQuestions, false, true, true);
+//            } else if (benchmark.equals("ComplexQuestions")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.ComplexQuestions, false, true, true);
+//            } else if (benchmark.equals("ComQA")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.ComQA, false, true, true);
+//            } else if (benchmark.equals("TempQuestions")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.TempQuestions, false, true, true);
+//            } else if (benchmark.equals("UserDefined")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.UserDefined, false, true, true);
+//            }
+//             else if (benchmark.equals("PropertiesDefined")) {
+//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.PropertiesDefined, false, true, true);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
-            if (benchmark.equals("QALD-1")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_1, false, false, false);
-            } else if (benchmark.equals("QALD-2")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_2, false, false, false);
-            } else if (benchmark.equals("QALD-3")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_3, false, false, false);
-            } else if (benchmark.equals("QALD-4")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_4, false, false, false);
-            } else if (benchmark.equals("QALD-5")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_5, false, false, false);
-            } else if (benchmark.equals("QALD-6")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_6, false, false, false);
-            } else if (benchmark.equals("QALD-7")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_7, false, false, false);
-            } else if (benchmark.equals("QALD-8")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_8, false, false, false);
-            } else if (benchmark.equals("QALD-9")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_9, false, false, false);
-            } else if (benchmark.equals("QALD-ALL")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_ALL, false, false, false);
-            } else if (benchmark.equals("LC-QUAD")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.LC_QUAD, true, false, false);
-            } else if (benchmark.equals("WebQuestions")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.WebQuestions, false, true, true);
-            } else if (benchmark.equals("GraphQuestions")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.GraphQuestions, false, true, true);
-            } else if (benchmark.equals("SimpleDBpediaQA")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.SimpleDBpediaQA, false, true, true);
-            } else if (benchmark.equals("SimpleQuestions")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.SimpleQuestions, false, true, true);
-            } else if (benchmark.equals("ComplexQuestions")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.ComplexQuestions, false, true, true);
-            } else if (benchmark.equals("ComQA")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.ComQA, false, true, true);
-            } else if (benchmark.equals("TempQuestions")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.TempQuestions, false, true, true);
-            } else if (benchmark.equals("UserDefined")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.UserDefined, false, true, true);
-            }
-             else if (benchmark.equals("PropertiesDefined")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.PropertiesDefined, false, true, true);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        for (Query q : qs) {
+        for (Query q : benchmark.queries) {
             if (q.isSelectType()) {
                 select++;
             } else if (q.isAskType()) {

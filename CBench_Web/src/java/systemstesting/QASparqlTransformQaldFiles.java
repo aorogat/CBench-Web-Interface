@@ -1,7 +1,7 @@
 package systemstesting;
 
 import DataSet.Benchmark;
-import DataSet.DataSetPreprocessing;
+import DataSet.Benchmark;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -16,15 +16,15 @@ public class QASparqlTransformQaldFiles {
     static int benchmark = Benchmark.QALD_7;
     static ArrayList<Query> qs;
 
-    static ArrayList<Question> questions = DataSetPreprocessing.questions;
+    static ArrayList<Question> questions = Benchmark.questions;
 
     private static FileWriter file;
 
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {
 
-        //qs = DataSetPreprocessing.getQueriesWithoutDuplicates(benchmark);
-        qs = DataSetPreprocessing.queries;
+        //qs = Benchmark.getQueriesWithoutDuplicates(benchmark);
+        qs = Benchmark.queries;
 
         // JSON object. Key value pairs are unordered. JSONObject supports java.util.Map interface.
         JSONObject root = new JSONObject();

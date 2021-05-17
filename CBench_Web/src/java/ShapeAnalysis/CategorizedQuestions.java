@@ -5,7 +5,7 @@
  */
 package ShapeAnalysis;
 
-import DataSet.DataSetPreprocessing;
+import DataSet.Benchmark;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -57,7 +57,7 @@ public class CategorizedQuestions {
     private List<SortMeta> sortBy;
 
     
-    public CategorizedQuestions() throws IOException {
+    public CategorizedQuestions(Benchmark benchmark) throws IOException {
       
     singleShape_Qs = new ArrayList<>();
     chain_Qs = new ArrayList<>();
@@ -70,7 +70,7 @@ public class CategorizedQuestions {
     flowerSet_Qs = new ArrayList<>();
         
         //DataSetPreprocessing.getQueriesWithoutDuplicates(9, false, false, false);
-        for (Question q : DataSetPreprocessing.questionsWithoutDuplicates) {
+        for (Question q : benchmark.questionsWithoutDuplicates) {
             String queryString = q.getQuestionQuery();
             try {
                 Query query = QueryFactory.create(queryString, Syntax.syntaxARQ);

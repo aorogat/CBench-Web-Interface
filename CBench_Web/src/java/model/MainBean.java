@@ -1,5 +1,6 @@
 package model;
 
+import DataSet.Benchmark;
 import NLQAnalysis.NLQCategoraizer;
 import ShallowAnalysis.Keywords;
 import ShallowAnalysis.NoOfTriples;
@@ -17,67 +18,75 @@ import systemstesting.Evaluator_WDAqua;
  */
 @ManagedBean
 @SessionScoped
-public class MainBean 
-{
+public class MainBean {
+
     Keywords ks = new Keywords();
     NoOfTriples nu = new NoOfTriples();
     OperatorDistribution ope = new OperatorDistribution();
     CategorizedQuestions categorizedQuestions;
     NLQCategoraizer nlqCategoraizer;
-    
+
     public static String knowledgebase = "-- Knowledgebase --";
     public static String benchmarkAnalysis = "-- Benchmark --";
     public static String benchmark = "-- Benchmark --";
     public static String analysisType = "-- Analysis Type --";
-    public static boolean update=false;
-    
+    public static boolean update = false;
+
     public ArrayList knowledgebases = new ArrayList();
     public ArrayList benchmarks = new ArrayList();
     public ArrayList analysisTypes = new ArrayList();
     public ArrayList selectedBenchmarks = new ArrayList();
-    
-    public static boolean propertiesDefined=false;
+
+    public static boolean propertiesDefined = false;
     public boolean[] propertiesNLQTypes = new boolean[10];
     public boolean[] propertiesQueryShapes = new boolean[10];
-    
+
     public ArrayList propertiesNLQTypesValues = new ArrayList();
     public ArrayList propertiesQueryShapesValues = new ArrayList();
 
-    
     public static String eval_knowledgebase = "-- Knowledgebase --";
     public static String eval_benchmarkAnalysis = "-- Benchmark --";
     public static String eval_benchmark = "-- Benchmark --";
-    public static boolean eval_Properties_defined=false;
-    public static boolean eval_update_answers=false;
+    public static boolean eval_Properties_defined = false;
+    public static boolean eval_update_answers = false;
     public static String eval_SPARQL_URL;
-    public static int eval_thresould=0;
-    
-    
-    
-    
-    public MainBean() throws IOException 
-    {
-        for (int i = 0; i < propertiesNLQTypes.length; i++)
-            propertiesNLQTypes[i]=false;
-        for (int i = 0; i < propertiesQueryShapes.length; i++)
-            propertiesQueryShapes[i]=false;
+    public static int eval_thresould = 0;
+
+    public static Benchmark benchmarkData;
+
+    public MainBean() throws IOException {
+        
+        for (int i = 0; i < propertiesNLQTypes.length; i++) {
+            propertiesNLQTypes[i] = false;
+        }
+        for (int i = 0; i < propertiesQueryShapes.length; i++) {
+            propertiesQueryShapes[i] = false;
+        }
     }
-    
-    public String evaluate() throws IOException
-    {
-        Evaluator_WDAqua.evaluate();
+
+    public String evaluate(Benchmark benchmark) throws IOException {
+        getBenchmarkData();
+        Evaluator_WDAqua wDAqua = new Evaluator_WDAqua();
+        wDAqua.evaluate(benchmark);
         return "evalute.xhtml?faces-redirect=true";
     }
-    
-    public String analysis() throws IOException
-    {
-        ks.keywordsAnalysis();
-        nu.triplesAnalysis();
-        ope.analysis();
-        categorizedQuestions = new CategorizedQuestions();
-        nlqCategoraizer = new NLQCategoraizer();
+
+    public String analysis() throws IOException {
+        getBenchmarkData();
+        ks.keywordsAnalysis(benchmarkData);
+        nu.triplesAnalysis(benchmarkData);
+        ope.analysis(benchmarkData);
+        categorizedQuestions = new CategorizedQuestions(benchmarkData);
+        nlqCategoraizer = new NLQCategoraizer(benchmarkData);
         return "analysis.xhtml?faces-redirect=true";
     }
+
+    public String compare() throws IOException {
+
+        return "compare.xhtml?faces-redirect=true";
+    }
+    
+    
     ////////////////////////////////////////////////////////////////////////////
 
     public String getKnowledgebase() {
@@ -153,8 +162,6 @@ public class MainBean
     public void setBenchmarkAnalysis(String benchmarkAnalysis) {
         MainBean.benchmarkAnalysis = benchmarkAnalysis;
     }
-    
-    
 
     public ArrayList<String> getAnalysisTypes() {
         analysisTypes.clear();
@@ -163,13 +170,6 @@ public class MainBean
         analysisTypes.add("Deep");
         return analysisTypes;
     }
-
-
-   
-
-
-
-    
 
     public void setAnalysisTypes(ArrayList analysisTypes) {
         this.analysisTypes = analysisTypes;
@@ -212,7 +212,7 @@ public class MainBean
         propertiesNLQTypesValues.add("Yes-No");
         propertiesNLQTypesValues.add("Request");
         propertiesNLQTypesValues.add("Topical");
-        
+
         return propertiesNLQTypesValues;
     }
 
@@ -231,7 +231,7 @@ public class MainBean
         propertiesQueryShapesValues.add("Flower");
         propertiesQueryShapesValues.add("Flower-Set");
         propertiesQueryShapesValues.add("Cycle");
-        
+
         return propertiesQueryShapesValues;
     }
 
@@ -302,7 +302,7 @@ public class MainBean
     public void setEval_thresould(int eval_thresould) {
         MainBean.eval_thresould = eval_thresould;
     }
-    
+
     int number8;
     int number9;
 
@@ -369,7 +369,61 @@ public class MainBean
     public void setNlqCategoraizer(NLQCategoraizer nlqCategoraizer) {
         this.nlqCategoraizer = nlqCategoraizer;
     }
-    
+
+    public static Benchmark getBenchmarkData() {
+        benchmarkData = new Benchmark();
+        try {
+            if (benchmark.equals("QALD-1")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.QALD_1);
+            } else if (benchmark.equals("QALD-2")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.QALD_2);
+            } else if (benchmark.equals("QALD-3")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.QALD_3);
+            } else if (benchmark.equals("QALD-4")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.QALD_4);
+            } else if (benchmark.equals("QALD-5")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.QALD_5);
+            } else if (benchmark.equals("QALD-6")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.QALD_6);
+            } else if (benchmark.equals("QALD-7")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.QALD_7);
+            } else if (benchmark.equals("QALD-8")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.QALD_8);
+            } else if (benchmark.equals("QALD-9")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.QALD_9);
+            } else if (benchmark.equals("QALD-ALL")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.QALD_ALL);
+            } else if (benchmark.equals("LC-QUAD")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.LC_QUAD);
+            } else if (benchmark.equals("WebQuestions")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.WebQuestions);
+            } else if (benchmark.equals("GraphQuestions")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.GraphQuestions);
+            } else if (benchmark.equals("SimpleDBpediaQA")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.SimpleDBpediaQA);
+            } else if (benchmark.equals("SimpleQuestions")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.SimpleQuestions);
+            } else if (benchmark.equals("ComplexQuestions")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.ComplexQuestions);
+            } else if (benchmark.equals("ComQA")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.ComQA);
+            } else if (benchmark.equals("TempQuestions")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.TempQuestions);
+            } else if (benchmark.equals("UserDefined")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.UserDefined);
+            } else if (benchmark.equals("PropertiesDefined")) {
+                benchmarkData.parseBenchmarkFiles(Benchmark.PropertiesDefined);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return benchmarkData;
+    }
+
+    public static void setBenchmarkData(Benchmark benchmarkData) {
+        MainBean.benchmarkData = benchmarkData;
+    }
+
     
     
 }
