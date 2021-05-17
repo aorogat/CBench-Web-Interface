@@ -3,6 +3,7 @@ package model;
 import DataSet.Benchmark;
 import NLQAnalysis.NLQCategoraizer;
 import ShallowAnalysis.Keywords;
+import ShallowAnalysis.KeywordsComparison;
 import ShallowAnalysis.NoOfTriples;
 import ShallowAnalysis.OperatorDistribution;
 import ShapeAnalysis.CategorizedQuestions;
@@ -25,6 +26,8 @@ public class MainBean {
     OperatorDistribution ope = new OperatorDistribution();
     CategorizedQuestions categorizedQuestions;
     NLQCategoraizer nlqCategoraizer;
+    
+    KeywordsComparison keywordsComparison;
 
     public static String knowledgebase = "-- Knowledgebase --";
     public static String benchmarkAnalysis = "-- Benchmark --";
@@ -52,7 +55,7 @@ public class MainBean {
     public static int eval_thresould = 0;
 
     public static Benchmark benchmarkData;
-    public ArrayList selectedBenchmarks = new ArrayList();
+    public ArrayList<String> selectedBenchmarks = new ArrayList();
 
     public MainBean() throws IOException {
         
@@ -65,14 +68,14 @@ public class MainBean {
     }
 
     public String evaluate(Benchmark benchmark) throws IOException {
-        getBenchmarkData();
+        getBenchmarkData(this.benchmark);
         Evaluator_WDAqua wDAqua = new Evaluator_WDAqua();
         wDAqua.evaluate(benchmark);
         return "evalute.xhtml?faces-redirect=true";
     }
 
     public String analysis() throws IOException {
-        getBenchmarkData();
+        getBenchmarkData(benchmark);
         ks.keywordsAnalysis(benchmarkData);
         nu.triplesAnalysis(benchmarkData);
         ope.analysis(benchmarkData);
@@ -82,7 +85,11 @@ public class MainBean {
     }
 
     public String compare() throws IOException {
-
+        ArrayList<Benchmark> bs = new ArrayList<>();
+        for (String s : selectedBenchmarks) {
+            bs.add(getBenchmarkData(s));
+        }
+        keywordsComparison = new KeywordsComparison(bs);
         return "compare.xhtml?faces-redirect=true";
     }
     
@@ -370,48 +377,48 @@ public class MainBean {
         this.nlqCategoraizer = nlqCategoraizer;
     }
 
-    public static Benchmark getBenchmarkData() {
+    public static Benchmark getBenchmarkData(String benchmarkName) {
         benchmarkData = new Benchmark();
         try {
-            if (benchmark.equals("QALD-1")) {
+            if (benchmarkName.equals("QALD-1")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.QALD_1);
-            } else if (benchmark.equals("QALD-2")) {
+            } else if (benchmarkName.equals("QALD-2")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.QALD_2);
-            } else if (benchmark.equals("QALD-3")) {
+            } else if (benchmarkName.equals("QALD-3")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.QALD_3);
-            } else if (benchmark.equals("QALD-4")) {
+            } else if (benchmarkName.equals("QALD-4")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.QALD_4);
-            } else if (benchmark.equals("QALD-5")) {
+            } else if (benchmarkName.equals("QALD-5")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.QALD_5);
-            } else if (benchmark.equals("QALD-6")) {
+            } else if (benchmarkName.equals("QALD-6")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.QALD_6);
-            } else if (benchmark.equals("QALD-7")) {
+            } else if (benchmarkName.equals("QALD-7")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.QALD_7);
-            } else if (benchmark.equals("QALD-8")) {
+            } else if (benchmarkName.equals("QALD-8")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.QALD_8);
-            } else if (benchmark.equals("QALD-9")) {
+            } else if (benchmarkName.equals("QALD-9")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.QALD_9);
-            } else if (benchmark.equals("QALD-ALL")) {
+            } else if (benchmarkName.equals("QALD-ALL")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.QALD_ALL);
-            } else if (benchmark.equals("LC-QUAD")) {
+            } else if (benchmarkName.equals("LC-QUAD")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.LC_QUAD);
-            } else if (benchmark.equals("WebQuestions")) {
+            } else if (benchmarkName.equals("WebQuestions")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.WebQuestions);
-            } else if (benchmark.equals("GraphQuestions")) {
+            } else if (benchmarkName.equals("GraphQuestions")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.GraphQuestions);
-            } else if (benchmark.equals("SimpleDBpediaQA")) {
+            } else if (benchmarkName.equals("SimpleDBpediaQA")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.SimpleDBpediaQA);
-            } else if (benchmark.equals("SimpleQuestions")) {
+            } else if (benchmarkName.equals("SimpleQuestions")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.SimpleQuestions);
-            } else if (benchmark.equals("ComplexQuestions")) {
+            } else if (benchmarkName.equals("ComplexQuestions")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.ComplexQuestions);
-            } else if (benchmark.equals("ComQA")) {
+            } else if (benchmarkName.equals("ComQA")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.ComQA);
-            } else if (benchmark.equals("TempQuestions")) {
+            } else if (benchmarkName.equals("TempQuestions")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.TempQuestions);
-            } else if (benchmark.equals("UserDefined")) {
+            } else if (benchmarkName.equals("UserDefined")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.UserDefined);
-            } else if (benchmark.equals("PropertiesDefined")) {
+            } else if (benchmarkName.equals("PropertiesDefined")) {
                 benchmarkData.parseBenchmarkFiles(Benchmark.PropertiesDefined);
             }
         } catch (Exception e) {
@@ -423,6 +430,16 @@ public class MainBean {
     public static void setBenchmarkData(Benchmark benchmarkData) {
         MainBean.benchmarkData = benchmarkData;
     }
+
+    public KeywordsComparison getKeywordsComparison() {
+        return keywordsComparison;
+    }
+
+    public void setKeywordsComparison(KeywordsComparison keywordsComparison) {
+        this.keywordsComparison = keywordsComparison;
+    }
+
+    
 
     
     

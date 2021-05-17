@@ -33,11 +33,11 @@
                 background-image: none !important;
                 color: #000000 !important;
             }
-            
+
             th{
                 font-size: 14px !important;
             }
-            
+
             .ui-state-default{
                 font-size: 14px !important;
             }
@@ -67,45 +67,9 @@
                             <p:accordionPanel>
                                 <p:tab title="Keywords Analysis">
                                     <div>
-                                        <p:dataTable var="keyword" value="#{mainBean.ks.kws}" style="width: 30%; min-width: 250px; 
-                                                     font-size: 14px; display: inline-block;"
-                                                     rowStyleClass="#{keyword.key eq 'select' or 
-                                                                      keyword.key eq 'ask' or
-                                                                      keyword.key eq 'describe' or
-                                                                      keyword.key eq 'construct' 
-                                                                      ? 'qtype' : 
-                                                                      keyword.key eq 'distinct' or 
-                                                                      keyword.key eq 'limit' or
-                                                                      keyword.key eq 'offset' or
-                                                                      keyword.key eq 'orderBy' 
-                                                                      ? 'qkys' :
-                                                                      null}">
-                                            <p:column headerText="Keyword">
-                                                <h:outputText value="#{keyword.key}"  style="font-family: monospace;"/>
-                                            </p:column>
-
-                                            <p:column headerText="#Absolute">
-                                                <h:outputText value="#{keyword.occuurances}"   style="font-size: 12px;"/>
-                                            </p:column>
-                                            <p:column headerText="%Relative">
-                                                <h:outputText value="#{keyword.relative}"  style="font-size: 12px;">
-                                                    <f:convertNumber pattern="#00.00" />
-                                                </h:outputText>%
-                                            </p:column>
-                                        </p:dataTable>
-                                        <div style="display: inline-block; vertical-align: top;">
-                                            <p:chart type="pie" model="#{mainBean.ks.pieModelSelect_Ask}" 
-                                                     style="width:300px; height:250px;
-                                                     display: inline-block; font-family: monospace;" />
-
-                                            <p:chart type="line" model="#{mainBean.ks.model}"  
-                                                     style="width:300px; height:250px;
-                                                     display: inline-block; font-family: monospace;"/>
-                                            <br/>
-                                            <p:chart type="line" model="#{mainBean.ks.model2}"  
-                                                     style="width:600px; height:300px;
-                                                     display: inline-block; font-family: monospace;"/>
-                                        </div>
+                                        <p:chart type="line" model="#{mainBean.keywordsComparison.model2}"  
+                                                 style="width:1200px; height:500px;
+                                                 display: inline-block; font-family: monospace;"/>
                                     </div>
                                 </p:tab>
                             </p:accordionPanel>
@@ -177,16 +141,16 @@
                             <h2>This analysis is for <span style="font-weight: bold; color: #00BCD4">#{mainBean.benchmark}</span></h2>
                             <div style="display: inline-block; vertical-align: top;">
                                 <p:chart type="pie" model="#{mainBean.categorizedQuestions.pieModelSelect}" 
-                                                     style="width:450px; height:350px;
-                                                     display: inline-block; font-family: monospace;" />
+                                         style="width:450px; height:350px;
+                                         display: inline-block; font-family: monospace;" />
 
-                                        </div>
+                            </div>
                             <div style="display: inline-block; vertical-align: top;">
                                 <p:chart type="bar" model="#{mainBean.categorizedQuestions.barModel}" 
-                                                     style="width:450px; height:350px;
-                                                     display: inline-block; font-family: monospace;" />
+                                         style="width:450px; height:350px;
+                                         display: inline-block; font-family: monospace;" />
 
-                                        </div>
+                            </div>
                             <div>
                                 <p:tabView>
                                     <p:tab title="Single-Edge">
@@ -311,10 +275,10 @@
                             <h2>This analysis is for <span style="font-weight: bold; color: #00BCD4">#{mainBean.benchmark}</span></h2>
                             <div style="display: inline-block; vertical-align: top;">
                                 <p:chart type="pie" model="#{mainBean.nlqCategoraizer.pieModelSelect}" 
-                                                     style="width:450px; height:350px;
-                                                     display: inline-block; font-family: monospace;" />
+                                         style="width:450px; height:350px;
+                                         display: inline-block; font-family: monospace;" />
 
-                                        </div>
+                            </div>
                             <div>
                                 <p:tabView>
                                     <p:tab title="What">

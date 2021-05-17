@@ -11,7 +11,6 @@ import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.PieChartModel;
-//import org.primefaces.model.charts.bubble.BubbleChartModel;
 
 /**
  *
@@ -42,7 +41,7 @@ public class Keywords {
     public Keywords() {
     }
 
-    public void keywordsAnalysis(Benchmark benchmark) {
+    public ArrayList<Keyword> keywordsAnalysis(Benchmark benchmark) {
         select = 0;
         ask = 0;
         describe = 0;
@@ -195,6 +194,7 @@ public class Keywords {
         kws.add(new Keyword("groupconcat()", groupconcat, qs.size()));
         
         createCharts();
+        return kws;
     }
 
     private void createCharts() {

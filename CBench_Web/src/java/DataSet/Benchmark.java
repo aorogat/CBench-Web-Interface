@@ -44,7 +44,7 @@ public class Benchmark {
     public ArrayList<Question> questionsWithoutDuplicates = new ArrayList<>();
     public ArrayList<Query> queries = new ArrayList<>();
     public static String currentDirectory;
-
+    public String name;
 
     public void parseBenchmarkFiles(int benchmarkID) throws IOException {
         questions.clear();
@@ -53,6 +53,7 @@ public class Benchmark {
         //Dataset
         if(benchmarkID == Benchmark.QALD_1 || benchmarkID == Benchmark.QALD_ALL)
         {
+            name = "QALD-1";
             questions.addAll(Parser.parseQald1((Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/1/data/dbpedia-test.xml")), "QALD-1", "dbpedia", false));
             questions.addAll(Parser.parseQald1((Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/1/data/dbpedia-train.xml")), "QALD-1", "dbpedia", false));
             questions.addAll(Parser.parseQald1((Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/1/data/musicbrainz-test.xml")), "QALD-1", "dbpedia", false));
@@ -60,6 +61,7 @@ public class Benchmark {
         }
         if(benchmarkID == Benchmark.QALD_2 || benchmarkID == Benchmark.QALD_ALL)
         {
+            name = "QALD-2";
             questions.addAll(Parser.parseQald1((Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/2/data/dbpedia-test.xml")), "QALD-2", "dbpedia", false));
             questions.addAll(Parser.parseQald1((Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/2/data/dbpedia-train.xml")), "QALD-2", "dbpedia", false));
             questions.addAll(Parser.parseQald1((Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/2/data/dbpedia-train-answers.xml")), "QALD-2", "dbpedia", false));
@@ -71,6 +73,7 @@ public class Benchmark {
         }
         if(benchmarkID == Benchmark.QALD_3 || benchmarkID == Benchmark.QALD_ALL)
         {
+            name = "QALD-3";
             questions.addAll(XMLParser.parseQald4((Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/3/data/dbpedia-test.xml")), "QALD-3", "dbpedia", true));
             questions.addAll(XMLParser.parseQald4((Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/3/data/dbpedia-test-answers.xml")), "QALD-3", "dbpedia", true));
             questions.addAll(XMLParser.parseQald4((Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/3/data/dbpedia-train.xml")), "QALD-3", "dbpedia", true));
@@ -86,6 +89,7 @@ public class Benchmark {
         }
         if(benchmarkID == Benchmark.QALD_4 || benchmarkID == Benchmark.QALD_ALL)
         {
+            name = "QALD-4";
             questions.addAll(XMLParser.parseQald4((Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/4/data/qald-4_multilingual_test.xml")), "QALD-4", "dbpedia", true));
             questions.addAll(XMLParser.parseQald4((Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/4/data/qald-4_multilingual_train.xml")), "QALD-4", "dbpedia", true));
             questions.addAll(XMLParser.parseQald4((Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/4/data/qald-4_multilingual_test_withanswers.xml")), "QALD-4", "dbpedia", true));
@@ -99,13 +103,13 @@ public class Benchmark {
         }
         if(benchmarkID == Benchmark.QALD_5 || benchmarkID == Benchmark.QALD_ALL)
         {
+            name = "QALD-5";
             questions.addAll(XMLParser.parseQald5((Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/5/data/qald-5_train.xml")), "QALD-5", "dbpedia"));
             questions.addAll(XMLParser.parseQald5((Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/5/data/qald-5_test.xml")), "QALD-5", "dbpedia"));
         }
         if(benchmarkID == Benchmark.QALD_6 || benchmarkID == Benchmark.QALD_ALL)
         {
-            
-            
+            name = "QALD-6";
             questions.addAll(JSONParser.parseQald7File2(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/6/data/qald-6-train-multilingual.json"), StandardCharsets.UTF_8), "QALD-6", "dbpedia"));
             questions.addAll(JSONParser.parseQald7File2(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/6/data/qald-6-test-multilingual.json"), StandardCharsets.UTF_8), "QALD-6", "dbpedia"));
             questions.addAll(JSONParser.parseQald7File4(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/6/data/qald-6-train-datacube.json"), StandardCharsets.UTF_8), "QALD-6", "linkedspending"));
@@ -114,6 +118,7 @@ public class Benchmark {
         }
         if(benchmarkID == Benchmark.QALD_7 || benchmarkID == Benchmark.QALD_ALL)
         {
+            name = "QALD-7";
             questions.addAll(JSONParser.parseQald7File2(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/7/data/qald-7-test-en-wikidata.json"), StandardCharsets.UTF_8), "QALD-7", "wikidata"));
             questions.addAll(JSONParser.parseQald7File2(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/7/data/qald-7-train-largescale.json"), StandardCharsets.UTF_8), "QALD-7", "dbpedia"));
             questions.addAll(JSONParser.parseQald7File1(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/7/data/qald-7-train-multilingual-extended-json.json"), StandardCharsets.UTF_8), "QALD-7", "dbpedia"));
@@ -125,30 +130,39 @@ public class Benchmark {
         }
         if(benchmarkID == Benchmark.QALD_8 || benchmarkID == Benchmark.QALD_ALL)
         {
+            name = "QALD-8";
             questions.addAll(JSONParser.parseQald8File(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/8/data/qald-8-test-multilingual.json"), StandardCharsets.UTF_8), "QALD-8", "dbpedia"));
             questions.addAll(JSONParser.parseQald8File(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/8/data/qald-8-train-multilingual.json"), StandardCharsets.UTF_8), "QALD-8", "dbpedia"));
             questions.addAll(JSONParser.parseQald7File2(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/8/data/wikidata-train-7.json"), StandardCharsets.UTF_8), "QALD-8", "wikidata"));
         }
         if(benchmarkID == Benchmark.QALD_9 || benchmarkID == Benchmark.QALD_ALL)
         {
+            name = "QALD-9";
             questions.addAll(JSONParser.parseQald9File(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/QALD-master/9/data/qald-9-train-multilingual.json"), StandardCharsets.UTF_8), "QALD-9", "dbpedia"));
+        }
+        if(benchmarkID == Benchmark.QALD_ALL)
+        {
+            name = "QALD-ALL";
         }
         if(benchmarkID == Benchmark.LC_QUAD)
         {
+            name = "LC-QUAD";
             questions.addAll(JSONParser.parseQuADFile(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/LC-QuAD-data/test-data.json"), StandardCharsets.UTF_8), "QUAD", "dbpedia"));
             questions.addAll(JSONParser.parseQuADFile(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/SPARQL/LC-QuAD-data/train-data.json"), StandardCharsets.UTF_8), "QUAD", "dbpedia"));
             
             questions.addAll(JSONParser.parseNo(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/No_SPARQL/V1/train.json"), StandardCharsets.UTF_8), "QUAD", "dbpedia"));
             questions.addAll(JSONParser.parseNo(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/No_SPARQL/V1/test.json"), StandardCharsets.UTF_8), "QUAD", "dbpedia"));
             questions.addAll(JSONParser.parseNo(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/DBpedia/No_SPARQL/V1/valid.json"), StandardCharsets.UTF_8), "QUAD", "dbpedia"));
-        }      
+        }  
         if(benchmarkID == Benchmark.GraphQuestions)
         {
+            name = "GraphQuestions";
             questions.addAll(JSONParser.parseGra(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/Freebase/SPARQL/GraphQuestions-master/freebase13/graphquestions.testing.json"), StandardCharsets.UTF_8), "Freebase_Graph", "Freebase"));
             questions.addAll(JSONParser.parseGra(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/Freebase/SPARQL/GraphQuestions-master/freebase13/graphquestions.training.json"), StandardCharsets.UTF_8), "Freebase_Graph", "Freebase"));
         }
         if(benchmarkID == Benchmark.WebQuestions)
         {
+            name = "WebQuestions";
             questions.addAll(JSONParser.parseWeb(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/Freebase/SPARQL/WebQuestionsSP/WebQSP.test.json"), StandardCharsets.UTF_8), "Freebase_Web", "Freebase"));
             questions.addAll(JSONParser.parseWeb(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/Freebase/SPARQL/WebQuestionsSP/WebQSP.test.partial.json"), StandardCharsets.UTF_8), "Freebase_Web", "Freebase"));
             questions.addAll(JSONParser.parseWeb(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/Freebase/SPARQL/WebQuestionsSP/WebQSP.train.json"), StandardCharsets.UTF_8), "Freebase_Web", "Freebase"));
