@@ -56,15 +56,10 @@
                         <ui:repeat value="#{mainBean.selectedBenchmarks}" var="benchmark">
                             <h:outputText value="#{benchmark}"
                                           style="display: inline-block;
-                                          width: 200px;
                                           background-color: #b8d8d4;
                                           margin: 5px;
                                           padding: 5px;"/>
                         </ui:repeat>
-                        <span style="font-weight: bold; color: #00BCD4">#{mainBean.benchmark}</span>
-                        that has
-                        <span style="font-weight: bold; color: #00BCD4">408</span> 
-                        questions.
                     </h2>
                     <p:tabView>
                         <p:tab title="Shallow Analysis">

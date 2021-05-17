@@ -51,58 +51,8 @@ public class NoOfTriples {
         total = 0;
         counter = 0;
 
-        //qs = allQueries;
+        qs = benchmark.queries;
         
-//        String benchmark = MainBean.benchmark;
-//        try {
-//
-//            if (benchmark.equals("QALD-1")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_1, false, false, false);
-//            } else if (benchmark.equals("QALD-2")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_2, false, false, false);
-//            } else if (benchmark.equals("QALD-3")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_3, false, false, false);
-//            } else if (benchmark.equals("QALD-4")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_4, false, false, false);
-//            } else if (benchmark.equals("QALD-5")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_5, false, false, false);
-//            } else if (benchmark.equals("QALD-6")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_6, false, false, false);
-//            } else if (benchmark.equals("QALD-7")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_7, false, false, false);
-//            } else if (benchmark.equals("QALD-8")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_8, false, false, false);
-//            } else if (benchmark.equals("QALD-9")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_9, false, false, false);
-//            } else if (benchmark.equals("QALD-ALL")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.QALD_ALL, false, false, false);
-//            } else if (benchmark.equals("LC-QUAD")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.LC_QUAD, true, false, false);
-//            } else if (benchmark.equals("WebQuestions")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.WebQuestions, false, true, true);
-//            } else if (benchmark.equals("GraphQuestions")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.GraphQuestions, false, true, true);
-//            } else if (benchmark.equals("SimpleDBpediaQA")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.SimpleDBpediaQA, false, true, true);
-//            } else if (benchmark.equals("SimpleQuestions")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.SimpleQuestions, false, true, true);
-//            } else if (benchmark.equals("ComplexQuestions")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.ComplexQuestions, false, true, true);
-//            } else if (benchmark.equals("ComQA")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.ComQA, false, true, true);
-//            } else if (benchmark.equals("TempQuestions")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.TempQuestions, false, true, true);
-//            } else if (benchmark.equals("UserDefined")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.UserDefined, false, true, true);
-//            }
-//             else if (benchmark.equals("PropertiesDefined")) {
-//                qs = Benchmark.getQueriesWithoutDuplicates(Benchmark.PropertiesDefined, false, true, true);
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
         for (Query q : benchmark.queries) {
 
             try {

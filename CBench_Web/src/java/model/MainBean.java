@@ -35,7 +35,6 @@ public class MainBean {
     public ArrayList knowledgebases = new ArrayList();
     public ArrayList benchmarks = new ArrayList();
     public ArrayList analysisTypes = new ArrayList();
-    public ArrayList selectedBenchmarks = new ArrayList();
 
     public static boolean propertiesDefined = false;
     public boolean[] propertiesNLQTypes = new boolean[10];
@@ -53,6 +52,7 @@ public class MainBean {
     public static int eval_thresould = 0;
 
     public static Benchmark benchmarkData;
+    public ArrayList selectedBenchmarks = new ArrayList();
 
     public MainBean() throws IOException {
         
