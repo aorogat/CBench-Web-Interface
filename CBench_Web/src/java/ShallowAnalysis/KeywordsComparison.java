@@ -20,12 +20,14 @@ public class KeywordsComparison {
 
     ArrayList<Benchmark> benchmarks;
     LineChartModel model2 = new LineChartModel();
+    ArrayList<ArrayList<Keyword>> allBenchmarks = new ArrayList<>();
 
     public KeywordsComparison(ArrayList<Benchmark> benchmarks) {
         this.benchmarks = benchmarks;
         for (Benchmark benchmark : benchmarks) {
             Keywords k = new Keywords();
             ArrayList<Keyword> keywords = k.keywordsAnalysis(benchmark);
+            allBenchmarks.add(keywords);
             ChartSeries patternKys = new ChartSeries();
             patternKys.setLabel(benchmark.name);
             for (Keyword keyword : keywords) {
@@ -36,7 +38,7 @@ public class KeywordsComparison {
 
         model2.setTitle("Query Keywords");
         model2.setLegendPosition("e");
-        model2.setShowPointLabels(false);
+        //model2.setShowPointLabels(true);
         model2.getAxes().put(AxisType.X, new CategoryAxis("Keyword"));
         Axis xAxis2 = model2.getAxis(AxisType.X);
         xAxis2.setTickAngle(-30);
@@ -60,6 +62,14 @@ public class KeywordsComparison {
 
     public void setModel2(LineChartModel model2) {
         this.model2 = model2;
+    }
+
+    public ArrayList<ArrayList<Keyword>> getAllBenchmarks() {
+        return allBenchmarks;
+    }
+
+    public void setAllBenchmarks(ArrayList<ArrayList<Keyword>> allBenchmarks) {
+        this.allBenchmarks = allBenchmarks;
     }
 
     

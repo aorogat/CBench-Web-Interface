@@ -66,6 +66,58 @@
 
                             <p:accordionPanel>
                                 <p:tab title="Keywords Analysis">
+                                    <div style="overflow-x: scroll;">
+                                        <p:dataTable var="keyword" value="#{mainBean.keywordsComparison.allBenchmarks[0]}" 
+                                                     style="width: 120px; font-size: 14px; display: inline-block;"
+                                                     rowStyleClass="#{keyword.key eq 'select' or 
+                                                                      keyword.key eq 'ask' or
+                                                                      keyword.key eq 'describe' or
+                                                                      keyword.key eq 'construct' 
+                                                                      ? 'qtype' : 
+                                                                      keyword.key eq 'distinct' or 
+                                                                      keyword.key eq 'limit' or
+                                                                      keyword.key eq 'offset' or
+                                                                      keyword.key eq 'orderBy' 
+                                                                      ? 'qkys' :
+                                                                      null}">
+                                            <f:facet name="header">
+                                                Keywords
+                                            </f:facet>
+                                            <p:column headerText="Keyword">
+                                                <h:outputText value="#{keyword.key}"  style="font-family: monospace; 
+                                                              font-size: 12px;
+                                                              font-weight: bold;"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                        <ui:repeat value="#{mainBean.keywordsComparison.allBenchmarks}" var="benchmark"
+                                                   varStatus="current">
+                                            <p:dataTable var="keyword" value="#{benchmark}" style="width: 150px; 
+                                                         font-size: 14px; display: inline-block;"
+                                                         rowStyleClass="#{keyword.key eq 'select' or 
+                                                                          keyword.key eq 'ask' or
+                                                                          keyword.key eq 'describe' or
+                                                                          keyword.key eq 'construct' 
+                                                                          ? 'qtype' : 
+                                                                          keyword.key eq 'distinct' or 
+                                                                          keyword.key eq 'limit' or
+                                                                          keyword.key eq 'offset' or
+                                                                          keyword.key eq 'orderBy' 
+                                                                          ? 'qkys' :
+                                                                          null}">
+                                                <f:facet name="header">
+                                                    #{mainBean.selectedBenchmarks[current.index]}
+                                                </f:facet>
+                                                <p:column headerText="#Abs">
+                                                    <h:outputText value="#{keyword.occuurances}"   style="font-size: 12px;"/>
+                                                </p:column>
+                                                <p:column headerText="%Rel">
+                                                    <h:outputText value="#{keyword.relative}"  style="font-size: 12px;">
+                                                        <f:convertNumber pattern="#00.00" />
+                                                    </h:outputText>%
+                                                </p:column>
+                                            </p:dataTable>
+                                        </ui:repeat>
+                                    </div>
                                     <div>
                                         <p:chart type="line" model="#{mainBean.keywordsComparison.model2}"  
                                                  style="width:1200px; height:500px;
@@ -75,357 +127,15 @@
                             </p:accordionPanel>
 
                             <p:accordionPanel>
-                                <p:tab title="Number of Triple Patterns Analysis">
+                                <p:tab title="Number of Triple Patterns">
                                     <div>
-                                        <div style="display: inline-block; vertical-align: top;">
-
-                                            <p:chart type="line" model="#{mainBean.nu.model2}"  
-                                                     style="width:450px; height:300px;
-                                                     display: inline-block; 
-                                                     font-family: monospace;"/>
-                                        </div>
-                                        <div style="display: inline-block; vertical-align: top;">
-
-                                            <p:chart type="line" model="#{mainBean.nu.modelNLQ}"  
-                                                     style="width:450px; height:300px;
-                                                     display: inline-block; 
-                                                     font-family: monospace;"/>
-                                        </div>
+                                        <p:chart type="bar" model="#{mainBean.noOfTriplesComparison.model2}"  
+                                                 style="width:500px; height:400px;
+                                                 display: inline-block; font-family: monospace;"/>
                                     </div>
                                 </p:tab>
                             </p:accordionPanel>
 
-                            <p:accordionPanel>
-                                <p:tab title="Operator Distribution">
-                                    <div>
-                                        <p:dataTable var="distribution" value="#{mainBean.ope.distributions}" style="width: 30%; min-width: 250px; 
-                                                     font-size: 14px; display: inline-block;"
-                                                     rowStyleClass="#{distribution.key eq 'CPF' or 
-                                                                      distribution.key eq 'CPF + O' or
-                                                                      distribution.key eq 'CPF + U' or
-                                                                      distribution.key eq 'CPF + G'
-                                                                      ? 'qtype' :
-                                                                      'white'}">
-                                            <p:column headerText="distribution">
-                                                <h:outputText value="#{distribution.key}"  style="font-family: monospace;"/>
-                                            </p:column>
-
-                                            <p:column headerText="#Absolute">
-                                                #{distribution.key eq 'CPF + O' or
-                                                  distribution.key eq 'CPF + U' or
-                                                  distribution.key eq 'CPF + G'
-                                                  ? '+' :
-                                                  null}
-                                                <h:outputText value="#{distribution.occuurances}"   style="font-size: 12px;"/>
-                                            </p:column>
-                                            <p:column headerText="%Relative">
-                                                #{distribution.key eq 'CPF + O' or
-                                                  distribution.key eq 'CPF + U' or
-                                                  distribution.key eq 'CPF + G'
-                                                  ? '+' :
-                                                  null}
-                                                <h:outputText value="#{distribution.relative}"  style="font-size: 12px;">
-                                                    <f:convertNumber pattern="#00.00" />
-                                                </h:outputText>%
-                                            </p:column>
-                                        </p:dataTable>
-                                        <div style="display: inline-block; vertical-align: top;">
-
-                                        </div>
-                                    </div>
-                                </p:tab>
-                            </p:accordionPanel>
-
-                        </p:tab>
-                        <p:tab title="Shape Analysis">
-                            <h2>This analysis is for <span style="font-weight: bold; color: #00BCD4">#{mainBean.benchmark}</span></h2>
-                            <div style="display: inline-block; vertical-align: top;">
-                                <p:chart type="pie" model="#{mainBean.categorizedQuestions.pieModelSelect}" 
-                                         style="width:450px; height:350px;
-                                         display: inline-block; font-family: monospace;" />
-
-                            </div>
-                            <div style="display: inline-block; vertical-align: top;">
-                                <p:chart type="bar" model="#{mainBean.categorizedQuestions.barModel}" 
-                                         style="width:450px; height:350px;
-                                         display: inline-block; font-family: monospace;" />
-
-                            </div>
-                            <div>
-                                <p:tabView>
-                                    <p:tab title="Single-Edge">
-                                        Total questions: #{mainBean.categorizedQuestions.singleShape_Qs.size()}.
-                                        <p:dataTable var="qs" value="#{mainBean.categorizedQuestions.singleShape_Qs}"
-                                                     >
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="Chain">
-                                        Total questions: #{mainBean.categorizedQuestions.chain_Qs.size()}.
-                                        Chain Shape subsumes Single-Edge. In this table Single-Edge Questions are excluded.
-                                        <p:dataTable var="qs" value="#{mainBean.categorizedQuestions.chain_Qs}">
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="Chain-Set">
-                                        Total questions: #{mainBean.categorizedQuestions.chainSet_Qs.size()}.
-                                        Chain-Set Shape subsumes Chain. In this table Chain Questions are excluded.
-                                        <p:dataTable var="qs" value="#{mainBean.categorizedQuestions.chainSet_Qs}">
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="Tree">
-                                        Total questions: #{mainBean.categorizedQuestions.tree_Qs.size()}.
-                                        Tree Shape subsumes Chain. In this table Chain and Star Questions are excluded.
-                                        <p:dataTable var="qs" value="#{mainBean.categorizedQuestions.tree_Qs}">
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="Star">
-                                        Total questions: #{mainBean.categorizedQuestions.star_Qs.size()}.
-                                        <p:dataTable var="qs" value="#{mainBean.categorizedQuestions.star_Qs}">
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="Forest">
-                                        Total questions: #{mainBean.categorizedQuestions.forest_Qs.size()}.
-                                        Forest Shape subsumes Tree. In this table Tree Questions are excluded.
-                                        <p:dataTable var="qs" value="#{mainBean.categorizedQuestions.forest_Qs}">
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="Cyle">
-                                        Total questions: #{mainBean.categorizedQuestions.cycle_Qs.size()}.
-                                        <p:dataTable var="qs" value="#{mainBean.categorizedQuestions.cycle_Qs}">
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="Flower">
-                                        Total questions: #{mainBean.categorizedQuestions.flower_Qs.size()}.
-                                        Flower Shape subsumes Tree. In this table Tree Questions are excluded.
-                                        <p:dataTable var="qs" value="#{mainBean.categorizedQuestions.flower_Qs}">
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="Flower-Set">
-                                        Total questions: #{mainBean.categorizedQuestions.flowerSet_Qs.size()}.
-                                        Flower-Set Shape subsumes Flower. In this table Flower Questions are excluded.
-                                        <p:dataTable var="qs" value="#{mainBean.categorizedQuestions.flowerSet_Qs}">
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                </p:tabView>
-                            </div>
-                        </p:tab>
-                        <p:tab title="NLQ Analysis">
-                            <h2>This analysis is for <span style="font-weight: bold; color: #00BCD4">#{mainBean.benchmark}</span></h2>
-                            <div style="display: inline-block; vertical-align: top;">
-                                <p:chart type="pie" model="#{mainBean.nlqCategoraizer.pieModelSelect}" 
-                                         style="width:450px; height:350px;
-                                         display: inline-block; font-family: monospace;" />
-
-                            </div>
-                            <div>
-                                <p:tabView>
-                                    <p:tab title="What">
-                                        Total questions: #{mainBean.nlqCategoraizer.what_Qs.size()}.
-                                        <p:dataTable var="qs" value="#{mainBean.nlqCategoraizer.what_Qs}"
-                                                     >
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="When">
-                                        Total questions: #{mainBean.nlqCategoraizer.when_Qs.size()}.
-                                        <p:dataTable var="qs" value="#{mainBean.nlqCategoraizer.when_Qs}"
-                                                     >
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="Where">
-                                        Total questions: #{mainBean.nlqCategoraizer.where_Qs.size()}.
-                                        <p:dataTable var="qs" value="#{mainBean.nlqCategoraizer.where_Qs}"
-                                                     >
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="Which">
-                                        Total questions: #{mainBean.nlqCategoraizer.which_Qs.size()}.
-                                        <p:dataTable var="qs" value="#{mainBean.nlqCategoraizer.which_Qs}"
-                                                     >
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="Who">
-                                        Total questions: #{mainBean.nlqCategoraizer.who_Qs.size()}.
-                                        <p:dataTable var="qs" value="#{mainBean.nlqCategoraizer.who_Qs}"
-                                                     >
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="Whom">
-                                        Total questions: #{mainBean.nlqCategoraizer.whom_Qs.size()}.
-                                        <p:dataTable var="qs" value="#{mainBean.nlqCategoraizer.whom_Qs}"
-                                                     >
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="Whose">
-                                        Total questions: #{mainBean.nlqCategoraizer.whose_Qs.size()}.
-                                        <p:dataTable var="qs" value="#{mainBean.nlqCategoraizer.whose_Qs}"
-                                                     >
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="How">
-                                        Total questions: #{mainBean.nlqCategoraizer.how_Qs.size()}.
-                                        <p:dataTable var="qs" value="#{mainBean.nlqCategoraizer.how_Qs}"
-                                                     >
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="Yes/No">
-                                        Total questions: #{mainBean.nlqCategoraizer.yes_no_Qs.size()}.
-                                        <p:dataTable var="qs" value="#{mainBean.nlqCategoraizer.yes_no_Qs}"
-                                                     >
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="Request">
-                                        Total questions: #{mainBean.nlqCategoraizer.request_Qs.size()}.
-                                        <p:dataTable var="qs" value="#{mainBean.nlqCategoraizer.request_Qs}"
-                                                     >
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                    <p:tab title="Topical">
-                                        Total questions: #{mainBean.nlqCategoraizer.topical_Qs.size()}.
-                                        <p:dataTable var="qs" value="#{mainBean.nlqCategoraizer.topical_Qs}"
-                                                     >
-                                            <p:column headerText="Question">
-                                                <h:outputText  style="font-size: 14px;" value="#{qs.questionString}" escape="false"/>
-                                            </p:column>
-
-                                            <p:column headerText="Query">
-                                                <pre style="font-size: 12px;"><h:outputText value="#{qs.questionQuery}" /></pre>
-                                            </p:column>
-                                        </p:dataTable>
-                                    </p:tab>
-                                </p:tabView>
-                            </div>
                         </p:tab>
                     </p:tabView>
 

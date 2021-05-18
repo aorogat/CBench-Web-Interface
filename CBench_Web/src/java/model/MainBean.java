@@ -5,6 +5,7 @@ import NLQAnalysis.NLQCategoraizer;
 import ShallowAnalysis.Keywords;
 import ShallowAnalysis.KeywordsComparison;
 import ShallowAnalysis.NoOfTriples;
+import ShallowAnalysis.NoOfTriplesComparison;
 import ShallowAnalysis.OperatorDistribution;
 import ShapeAnalysis.CategorizedQuestions;
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class MainBean {
     NLQCategoraizer nlqCategoraizer;
     
     KeywordsComparison keywordsComparison;
+    NoOfTriplesComparison noOfTriplesComparison;
 
     public static String knowledgebase = "-- Knowledgebase --";
     public static String benchmarkAnalysis = "-- Benchmark --";
@@ -90,6 +92,7 @@ public class MainBean {
             bs.add(getBenchmarkData(s));
         }
         keywordsComparison = new KeywordsComparison(bs);
+        noOfTriplesComparison = new NoOfTriplesComparison(bs);
         return "compare.xhtml?faces-redirect=true";
     }
     
@@ -437,6 +440,14 @@ public class MainBean {
 
     public void setKeywordsComparison(KeywordsComparison keywordsComparison) {
         this.keywordsComparison = keywordsComparison;
+    }
+
+    public NoOfTriplesComparison getNoOfTriplesComparison() {
+        return noOfTriplesComparison;
+    }
+
+    public void setNoOfTriplesComparison(NoOfTriplesComparison noOfTriplesComparison) {
+        this.noOfTriplesComparison = noOfTriplesComparison;
     }
 
     

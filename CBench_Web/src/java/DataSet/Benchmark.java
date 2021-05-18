@@ -173,28 +173,28 @@ public class Benchmark {
         //Reverse List to remain most recent
         Collections.reverse(questions);
         //Remove duplicates
-        String format = "%-10s%-10s%-20s%-30s%-70s%-50s%n";
-        System.out.format(format, "#\t", "Status\t", "Source\t", "File name\t", "Question\t", "Answers\t");
-        System.out.format(format, "======\t", "======\t", "======\t", "=========\t", "========\t", "========\t");
+//        String format = "%-10s%-10s%-20s%-30s%-70s%-50s%n";
+//        System.out.format(format, "#\t", "Status\t", "Source\t", "File name\t", "Question\t", "Answers\t");
+//        System.out.format(format, "======\t", "======\t", "======\t", "=========\t", "========\t", "========\t");
         for (int i = 0; i < questions.size(); i++) {
             Question q = questions.get(i);
-            System.out.format(format,
-                    (i + 1)+"\t",
-                    "Remain\t",
-                    questions.get(i).getQuestionSource()+"\t",
-                    questions.get(i).getFilepath().substring(questions.get(i).getFilepath().lastIndexOf("/") + 1)+"\t",
-                    questions.get(i).getQuestionString()+"\t",
-                    questions.get(i).getAnswers().toString()+"\t");
+//            System.out.format(format,
+//                    (i + 1)+"\t",
+//                    "Remain\t",
+//                    questions.get(i).getQuestionSource()+"\t",
+//                    questions.get(i).getFilepath().substring(questions.get(i).getFilepath().lastIndexOf("/") + 1)+"\t",
+//                    questions.get(i).getQuestionString()+"\t",
+//                    questions.get(i).getAnswers().toString()+"\t");
             for (int j = 0; j < questions.size(); j++) {
                 if (q.getQuestionString().equals(questions.get(j).getQuestionString()) && i != j) {
 
-                    System.out.format(format,
-                            "-"+"\t",
-                            "Removed"+"\t",
-                            questions.get(j).getQuestionSource()+"\t",
-                            questions.get(j).getFilepath().substring(questions.get(j).getFilepath().lastIndexOf("/") + 1)+"\t",
-                            questions.get(j).getQuestionString()+"\t",
-                            questions.get(j).getAnswers().toString()+"\t");
+//                    System.out.format(format,
+//                            "-"+"\t",
+//                            "Removed"+"\t",
+//                            questions.get(j).getQuestionSource()+"\t",
+//                            questions.get(j).getFilepath().substring(questions.get(j).getFilepath().lastIndexOf("/") + 1)+"\t",
+//                            questions.get(j).getQuestionString()+"\t",
+//                            questions.get(j).getAnswers().toString()+"\t");
                     questions.remove(j);
                 }
             }

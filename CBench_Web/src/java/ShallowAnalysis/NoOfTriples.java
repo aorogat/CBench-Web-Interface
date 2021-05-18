@@ -4,6 +4,8 @@ import DataSet.Benchmark;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -32,8 +34,9 @@ public class NoOfTriples {
     public static int counter = 0;
     LineChartModel model2 = new LineChartModel();
     LineChartModel modelNLQ = new LineChartModel();
+    Map<String, Integer> triplesCounts = new HashMap<>();
 
-    public void triplesAnalysis(Benchmark benchmark) {
+    public Map<String, Integer> triplesAnalysis(Benchmark benchmark) {
         NumberFormat formatter = new DecimalFormat("#0.00");
 
         zero = 0;
@@ -109,6 +112,7 @@ public class NoOfTriples {
         }
 
         createCharts(benchmark);
+        return triplesCounts;
     }
 
     private void createCharts(Benchmark benchmark) {
@@ -130,6 +134,20 @@ public class NoOfTriples {
         triples.set("9", nine);
         triples.set("10", ten);
         triples.set("11+", elevenOrMore);
+        
+        triplesCounts.clear();
+        triplesCounts.put("0", zero);
+        triplesCounts.put("1", one);
+        triplesCounts.put("2", two);
+        triplesCounts.put("3", three);
+        triplesCounts.put("4", four);
+        triplesCounts.put("5", five);
+        triplesCounts.put("6", six);
+        triplesCounts.put("7", seven);
+        triplesCounts.put("8", eight);
+        triplesCounts.put("9", nine);
+        triplesCounts.put("10", ten);
+        triplesCounts.put("11+", elevenOrMore);
 
         model2.addSeries(triples);
         model2.setTitle("Number of Triple Patterns");
