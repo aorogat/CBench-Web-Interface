@@ -41,6 +41,10 @@
             .ui-state-default{
                 font-size: 14px !important;
             }
+            table.jqplot-table-legend, table.jqplot-cursor-legend {
+                width: max-content !important;
+                right: -100px !important;
+            }
         </style>
 
     </h:head>
@@ -66,63 +70,96 @@
 
                             <p:accordionPanel>
                                 <p:tab title="Keywords Analysis">
-                                    <div style="overflow-x: scroll;">
-                                        <p:dataTable var="keyword" value="#{mainBean.keywordsComparison.allBenchmarks[0]}" 
-                                                     style="width: 120px; font-size: 14px; display: inline-block;"
-                                                     rowStyleClass="#{keyword.key eq 'select' or 
-                                                                      keyword.key eq 'ask' or
-                                                                      keyword.key eq 'describe' or
-                                                                      keyword.key eq 'construct' 
-                                                                      ? 'qtype' : 
-                                                                      keyword.key eq 'distinct' or 
-                                                                      keyword.key eq 'limit' or
-                                                                      keyword.key eq 'offset' or
-                                                                      keyword.key eq 'orderBy' 
-                                                                      ? 'qkys' :
-                                                                      null}">
-                                            <f:facet name="header">
-                                                Keywords
-                                            </f:facet>
-                                            <p:column headerText="Keyword">
-                                                <h:outputText value="#{keyword.key}"  style="font-family: monospace; 
-                                                              font-size: 12px;
-                                                              font-weight: bold;"/>
-                                            </p:column>
-                                        </p:dataTable>
-                                        <ui:repeat value="#{mainBean.keywordsComparison.allBenchmarks}" var="benchmark"
-                                                   varStatus="current">
-                                            <p:dataTable var="keyword" value="#{benchmark}" style="width: 150px; 
-                                                         font-size: 14px; display: inline-block;"
-                                                         rowStyleClass="#{keyword.key eq 'select' or 
-                                                                          keyword.key eq 'ask' or
-                                                                          keyword.key eq 'describe' or
-                                                                          keyword.key eq 'construct' 
-                                                                          ? 'qtype' : 
-                                                                          keyword.key eq 'distinct' or 
-                                                                          keyword.key eq 'limit' or
-                                                                          keyword.key eq 'offset' or
-                                                                          keyword.key eq 'orderBy' 
-                                                                          ? 'qkys' :
-                                                                          null}">
-                                                <f:facet name="header">
-                                                    #{mainBean.selectedBenchmarks[current.index]}
-                                                </f:facet>
-                                                <p:column headerText="#Abs">
-                                                    <h:outputText value="#{keyword.occuurances}"   style="font-size: 12px;"/>
-                                                </p:column>
-                                                <p:column headerText="%Rel">
-                                                    <h:outputText value="#{keyword.relative}"  style="font-size: 12px;">
-                                                        <f:convertNumber pattern="#00.00" />
-                                                    </h:outputText>%
-                                                </p:column>
-                                            </p:dataTable>
-                                        </ui:repeat>
-                                    </div>
-                                    <div>
-                                        <p:chart type="line" model="#{mainBean.keywordsComparison.model2}"  
-                                                 style="width:1200px; height:500px;
-                                                 display: inline-block; font-family: monospace;"/>
-                                    </div>
+                                    <p:tabView>
+                                        <p:tab title="Table">
+                                            <div style="overflow-x: scroll;">
+                                                <p:dataTable var="keyword" value="#{mainBean.keywordsComparison.allBenchmarks[0]}" 
+                                                             style="width: 120px; font-size: 14px; display: inline-block;"
+                                                             rowStyleClass="#{keyword.key eq 'select' or 
+                                                                              keyword.key eq 'ask' or
+                                                                              keyword.key eq 'describe' or
+                                                                              keyword.key eq 'construct' 
+                                                                              ? 'qtype' : 
+                                                                              keyword.key eq 'distinct' or 
+                                                                              keyword.key eq 'limit' or
+                                                                              keyword.key eq 'offset' or
+                                                                              keyword.key eq 'orderBy' 
+                                                                              ? 'qkys' :
+                                                                              keyword.key eq 'aggregators' or 
+                                                                              keyword.key eq 'count()' or
+                                                                              keyword.key eq 'min()' or
+                                                                              keyword.key eq 'max()' or
+                                                                              keyword.key eq 'sum()' or 
+                                                                              keyword.key eq 'avg()' or
+                                                                              keyword.key eq 'sample()' or
+                                                                              keyword.key eq 'groupconcat()'
+                                                                              ? 'qtype' : 
+                                                                              null}">
+                                                    <f:facet name="header">
+                                                        Keywords
+                                                    </f:facet>
+                                                    <p:column headerText="Keyword">
+                                                        <h:outputText value="#{keyword.key}"  style="font-family: monospace; 
+                                                                      font-size: 12px;
+                                                                      font-weight: bold;"/>
+                                                    </p:column>
+                                                </p:dataTable>
+                                                <ui:repeat value="#{mainBean.keywordsComparison.allBenchmarks}" var="benchmark"
+                                                           varStatus="current">
+                                                    <p:dataTable var="keyword" value="#{benchmark}" style="width: 120px; 
+                                                                 font-size: 14px; display: inline-block;
+                                                                 margin: 2px;"
+                                                                 rowStyleClass="#{keyword.key eq 'select' or 
+                                                                                  keyword.key eq 'ask' or
+                                                                                  keyword.key eq 'describe' or
+                                                                                  keyword.key eq 'construct' 
+                                                                                  ? 'qtype' : 
+                                                                                  keyword.key eq 'distinct' or 
+                                                                                  keyword.key eq 'limit' or
+                                                                                  keyword.key eq 'offset' or
+                                                                                  keyword.key eq 'orderBy' 
+                                                                                  ? 'qkys' :
+                                                                                  keyword.key eq 'aggregators' or 
+                                                                                  keyword.key eq 'count()' or
+                                                                                  keyword.key eq 'min()' or
+                                                                                  keyword.key eq 'max()' or
+                                                                                  keyword.key eq 'sum()' or 
+                                                                                  keyword.key eq 'avg()' or
+                                                                                  keyword.key eq 'sample()' or
+                                                                                  keyword.key eq 'groupconcat()'
+                                                                                  ? 'qtype' : 
+                                                                                  null}">
+                                                        <f:facet name="header">
+                                                            #{mainBean.selectedBenchmarks[current.index]}
+                                                        </f:facet>
+                                                        <p:column headerText="#Abs">
+                                                            <h:outputText value="#{keyword.occuurances}"   style="font-size: 12px;"/>
+                                                        </p:column>
+                                                        <p:column headerText="%Rel">
+                                                            <h:outputText value="#{keyword.relative}"  style="font-size: 12px;">
+                                                                <f:convertNumber pattern="#00.00" />
+                                                            </h:outputText>%
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </ui:repeat>
+                                            </div>
+                                        </p:tab>
+                                        <p:tab title="Line Chart">
+                                            <div>
+                                                <p:chart type="line" model="#{mainBean.keywordsComparison.model2}"  
+                                                         style="width:1200px; height:500px;
+                                                         display: inline-block; font-family: monospace;"
+                                                         />
+                                            </div>
+                                        </p:tab>
+                                        <p:tab title="Bar Chart">
+                                            <div>
+                                                <p:chart type="bar" model="#{mainBean.keywordsComparison.model3}"  
+                                                         style="width:1200px; height:500px;
+                                                         display: inline-block; font-family: monospace;"/>
+                                            </div>
+                                        </p:tab>
+                                    </p:tabView>
                                 </p:tab>
                             </p:accordionPanel>
 
@@ -135,6 +172,74 @@
                                     </div>
                                 </p:tab>
                             </p:accordionPanel>
+
+
+                            <p:accordionPanel>
+                                <p:tab title="Operatot Distribution Analysis">
+                                    <p:tabView>
+                                        <p:tab title="Table">
+                                            <div style="overflow-x: scroll;">
+                                                <p:dataTable var="operator" value="#{mainBean.operatorDistributionComparison.allBenchmarks[0]}" 
+                                                             style="width: 120px; font-size: 14px; display: inline-block;"
+                                                             rowStyleClass="#{operator.key eq 'CPF' or 
+                                                                              operator.key eq 'CPF + O' or
+                                                                              operator.key eq 'CPF + U' or
+                                                                              operator.key eq 'CPF + G'
+                                                                              ? 'qtype' :
+                                                                              'white'}">
+                                                    <f:facet name="header">
+                                                        Operators
+                                                    </f:facet>
+                                                    <p:column headerText="Operator">
+                                                        <h:outputText value="#{operator.key}"  style="font-family: monospace; 
+                                                                      font-size: 12px;
+                                                                      font-weight: bold;"/>
+                                                    </p:column>
+                                                </p:dataTable>
+                                                <ui:repeat value="#{mainBean.operatorDistributionComparison.allBenchmarks}" var="benchmark"
+                                                           varStatus="current">
+                                                    <p:dataTable var="operator" value="#{benchmark}" style="width: 120px; 
+                                                                 font-size: 14px; display: inline-block;
+                                                                 margin: 2px;"
+                                                                 rowStyleClass="#{operator.key eq 'CPF' or 
+                                                                                  operator.key eq 'CPF + O' or
+                                                                                  operator.key eq 'CPF + U' or
+                                                                                  operator.key eq 'CPF + G'
+                                                                                  ? 'qtype' :
+                                                                                  'white'}">
+                                                        <f:facet name="header">
+                                                            #{mainBean.selectedBenchmarks[current.index]}
+                                                        </f:facet>
+                                                        <p:column headerText="#Abs">
+                                                            <h:outputText value="#{operator.occuurances}"   style="font-size: 12px;"/>
+                                                        </p:column>
+                                                        <p:column headerText="%Rel">
+                                                            <h:outputText value="#{operator.relative}"  style="font-size: 12px;">
+                                                                <f:convertNumber pattern="#00.00" />
+                                                            </h:outputText>%
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </ui:repeat>
+                                            </div>
+                                        </p:tab>
+                                        <p:tab title="Line Chart">
+                                            <div>
+                                                <p:chart type="line" model="#{mainBean.operatorDistributionComparison.model2}"  
+                                                         style="width:1200px; height:500px;
+                                                         display: inline-block; font-family: monospace;"/>
+                                            </div>
+                                        </p:tab>
+                                        <p:tab title="Bar Chart">
+                                            <div>
+                                                <p:chart type="bar" model="#{mainBean.operatorDistributionComparison.model3}"  
+                                                         style="width:1200px; height:500px;
+                                                         display: inline-block; font-family: monospace;"/>
+                                            </div>
+                                        </p:tab>
+                                    </p:tabView>
+                                </p:tab>
+                            </p:accordionPanel>
+
 
                         </p:tab>
                     </p:tabView>
@@ -165,8 +270,7 @@
                             deleteAll[i].click();
                         }
                     });
-
-            /* ]]> */
+                /* ]]> */
         </script>
     </h:body>
 

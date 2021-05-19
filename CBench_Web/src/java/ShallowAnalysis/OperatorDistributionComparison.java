@@ -17,32 +17,32 @@ import org.primefaces.model.chart.LineChartModel;
  */
 @ManagedBean
 @RequestScoped
-public class KeywordsComparison {
+public class OperatorDistributionComparison {
 
     ArrayList<Benchmark> benchmarks;
     LineChartModel model2 = new LineChartModel();
     BarChartModel model3 = new BarChartModel();
-    ArrayList<ArrayList<Keyword>> allBenchmarks = new ArrayList<>();
+    ArrayList<ArrayList<OperatorOneDistribution>> allBenchmarks = new ArrayList<>();
 
-    public KeywordsComparison(ArrayList<Benchmark> benchmarks) {
+    public OperatorDistributionComparison(ArrayList<Benchmark> benchmarks) {
         this.benchmarks = benchmarks;
         for (Benchmark benchmark : benchmarks) {
-            Keywords k = new Keywords();
-            ArrayList<Keyword> keywords = k.keywordsAnalysis(benchmark);
-            allBenchmarks.add(keywords);
+            OperatorDistribution o = new OperatorDistribution();
+            ArrayList<OperatorOneDistribution> distribution = o.analysis(benchmark);
+            allBenchmarks.add(distribution);
             ChartSeries patternKys = new ChartSeries();
             patternKys.setLabel(benchmark.name);
-            for (Keyword keyword : keywords) {
-                patternKys.set(keyword.key, keyword.relative);
+            for (OperatorOneDistribution d : distribution) {
+                patternKys.set(d.key, d.relative);
             }
             model2.addSeries(patternKys);
             model3.addSeries(patternKys);
         }
 
-        model2.setTitle("Query Keywords");
+        model2.setTitle("Query Operators");
         model2.setLegendPosition("e");
         //model2.setShowPointLabels(true);
-        model2.getAxes().put(AxisType.X, new CategoryAxis("Keyword"));
+        model2.getAxes().put(AxisType.X, new CategoryAxis("Operator"));
         Axis xAxis2 = model2.getAxis(AxisType.X);
         xAxis2.setTickAngle(-30);
 
@@ -50,10 +50,10 @@ public class KeywordsComparison {
         yAxis2.setMin(0);
         yAxis2.setMax(100);
         
-        model3.setTitle("Query Keywords");
+        model3.setTitle("Query Operators");
         model3.setLegendPosition("e");
         //model2.setShowPointLabels(true);
-        model3.getAxes().put(AxisType.X, new CategoryAxis("Keyword"));
+        model3.getAxes().put(AxisType.X, new CategoryAxis("Operator"));
         Axis xAxis3 = model3.getAxis(AxisType.X);
         xAxis3.setTickAngle(-30);
 
@@ -78,13 +78,15 @@ public class KeywordsComparison {
         this.model2 = model2;
     }
 
-    public ArrayList<ArrayList<Keyword>> getAllBenchmarks() {
+    public ArrayList<ArrayList<OperatorOneDistribution>> getAllBenchmarks() {
         return allBenchmarks;
     }
 
-    public void setAllBenchmarks(ArrayList<ArrayList<Keyword>> allBenchmarks) {
+    public void setAllBenchmarks(ArrayList<ArrayList<OperatorOneDistribution>> allBenchmarks) {
         this.allBenchmarks = allBenchmarks;
     }
+
+    
 
     public BarChartModel getModel3() {
         return model3;

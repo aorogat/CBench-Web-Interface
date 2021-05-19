@@ -29,7 +29,7 @@ public class OperatorDistribution {
 
     LineChartModel model2 = new LineChartModel();
 
-    public void analysis(Benchmark benchmark) {
+    public ArrayList<OperatorOneDistribution> analysis(Benchmark benchmark) {
         NumberFormat formatter = new DecimalFormat("#0.00");
 
         none = 0;
@@ -148,7 +148,8 @@ public class OperatorDistribution {
         distributions.add(new OperatorOneDistribution("A, U", AU, qs.size()));
         distributions.add(new OperatorOneDistribution("A, U, F", AUF, qs.size()));
         distributions.add(new OperatorOneDistribution("CPF + U", CPF_U, qs.size()));
-
+        
+        return distributions;
     }
 
     public ArrayList<Query> getQs() {
