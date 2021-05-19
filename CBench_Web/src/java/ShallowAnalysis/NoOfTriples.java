@@ -1,19 +1,16 @@
 package ShallowAnalysis;
 
 import DataSet.Benchmark;
-import DataSet.DataSetPreprocessing;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import model.MainBean;
 import org.apache.jena.query.Query;
-import org.apache.jena.sparql.core.TriplePath;
 import org.apache.jena.sparql.syntax.Element;
-import org.apache.jena.sparql.syntax.ElementPathBlock;
 import org.apache.jena.sparql.syntax.ElementVisitorBase;
 import org.apache.jena.sparql.syntax.ElementWalker;
 import org.primefaces.model.chart.Axis;
@@ -37,8 +34,9 @@ public class NoOfTriples {
     public static int counter = 0;
     LineChartModel model2 = new LineChartModel();
     LineChartModel modelNLQ = new LineChartModel();
+    Map<String, Integer> triplesCounts = new HashMap<>();
 
-    public void triplesAnalysis() {
+    public Map<String, Integer> triplesAnalysis(Benchmark benchmark) {
         NumberFormat formatter = new DecimalFormat("#0.00");
 
         zero = 0;
@@ -56,57 +54,9 @@ public class NoOfTriples {
         total = 0;
         counter = 0;
 
-        String benchmark = MainBean.benchmark;
-        try {
-
-            if (benchmark.equals("QALD-1")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_1, false, false, false);
-            } else if (benchmark.equals("QALD-2")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_2, false, false, false);
-            } else if (benchmark.equals("QALD-3")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_3, false, false, false);
-            } else if (benchmark.equals("QALD-4")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_4, false, false, false);
-            } else if (benchmark.equals("QALD-5")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_5, false, false, false);
-            } else if (benchmark.equals("QALD-6")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_6, false, false, false);
-            } else if (benchmark.equals("QALD-7")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_7, false, false, false);
-            } else if (benchmark.equals("QALD-8")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_8, false, false, false);
-            } else if (benchmark.equals("QALD-9")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_9, false, false, false);
-            } else if (benchmark.equals("QALD-ALL")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_ALL, false, false, false);
-            } else if (benchmark.equals("LC-QUAD")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.LC_QUAD, true, false, false);
-            } else if (benchmark.equals("WebQuestions")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.WebQuestions, false, true, true);
-            } else if (benchmark.equals("GraphQuestions")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.GraphQuestions, false, true, true);
-            } else if (benchmark.equals("SimpleDBpediaQA")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.SimpleDBpediaQA, false, true, true);
-            } else if (benchmark.equals("SimpleQuestions")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.SimpleQuestions, false, true, true);
-            } else if (benchmark.equals("ComplexQuestions")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.ComplexQuestions, false, true, true);
-            } else if (benchmark.equals("ComQA")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.ComQA, false, true, true);
-            } else if (benchmark.equals("TempQuestions")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.TempQuestions, false, true, true);
-            } else if (benchmark.equals("UserDefined")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.UserDefined, false, true, true);
-            }
-             else if (benchmark.equals("PropertiesDefined")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.PropertiesDefined, false, true, true);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        for (Query q : qs) {
+        qs = benchmark.queries;
+        
+        for (Query q : benchmark.queries) {
 
             try {
                 counter = 0;
@@ -161,10 +111,11 @@ public class NoOfTriples {
             }
         }
 
-        createCharts();
+        createCharts(benchmark);
+        return triplesCounts;
     }
 
-    private void createCharts() {
+    private void createCharts(Benchmark benchmark) {
 
         
         model2.clear();
@@ -183,6 +134,20 @@ public class NoOfTriples {
         triples.set("9", nine);
         triples.set("10", ten);
         triples.set("11+", elevenOrMore);
+        
+        triplesCounts.clear();
+        triplesCounts.put("0", zero);
+        triplesCounts.put("1", one);
+        triplesCounts.put("2", two);
+        triplesCounts.put("3", three);
+        triplesCounts.put("4", four);
+        triplesCounts.put("5", five);
+        triplesCounts.put("6", six);
+        triplesCounts.put("7", seven);
+        triplesCounts.put("8", eight);
+        triplesCounts.put("9", nine);
+        triplesCounts.put("10", ten);
+        triplesCounts.put("11+", elevenOrMore);
 
         model2.addSeries(triples);
         model2.setTitle("Number of Triple Patterns");
@@ -203,7 +168,7 @@ public class NoOfTriples {
         int[] tokensNum = new int[30];
         tokens.setLabel("#Tokens");
         
-        for (Question qu : DataSetPreprocessing.questionsWithoutDuplicates) {
+        for (Question qu : benchmark.questionsWithoutDuplicates) {
             StringTokenizer t = new StringTokenizer(qu.getQuestionString().replace("?", ""));
             tokensNum[(t.countTokens()<30)? t.countTokens():29]++;
         }
@@ -214,7 +179,7 @@ public class NoOfTriples {
             if(max<tokensNum[i])max=tokensNum[i];
             s+=tokensNum[i];
             tokens.set(""+i, tokensNum[i]);
-            if(s>=DataSetPreprocessing.questionsWithoutDuplicates.size())
+            if(s>=benchmark.questionsWithoutDuplicates.size())
                 break;
         }
         tokens.set("..+", tokensNum[29]);

@@ -3,7 +3,7 @@ package ShapeAnalysis;
 import java.util.ArrayList;
 import org.apache.jena.query.Query;
 import DataSet.Benchmark;
-import DataSet.DataSetPreprocessing;
+import DataSet.Benchmark;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 

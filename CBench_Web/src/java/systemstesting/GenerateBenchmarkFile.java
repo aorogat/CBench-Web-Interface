@@ -1,7 +1,7 @@
 package systemstesting;
  
 import DataSet.Benchmark;
-import DataSet.DataSetPreprocessing;
+import DataSet.Benchmark;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
  
@@ -18,14 +18,14 @@ public class GenerateBenchmarkFile
     //static int benchmark = Benchmark.LC_QUAD;
     //static String BenchPrefix= "qlad_"+ benchmark;
     //static String BenchPrefix= "lcquad";
-    //static ArrayList<Query> qs = DataSetPreprocessing.getQueriesWithoutDuplicates(benchmark);
+    //static ArrayList<Query> qs = Benchmark.getQueriesWithoutDuplicates(benchmark);
     static ArrayList<Question> questions;
 
     private static FileWriter file;
  
     public static void generateFile(int benchmark) throws Exception {
         //DataSetPreprocessing.getQueriesWithoutDuplicates(benchmark);
-        questions = DataSetPreprocessing.questions;
+        questions = Benchmark.questions;
         // JSON object. Key value pairs are unordered. JSONObject supports java.util.Map interface.
         JSONObject root = new JSONObject();
 

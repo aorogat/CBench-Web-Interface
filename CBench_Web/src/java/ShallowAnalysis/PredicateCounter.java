@@ -6,7 +6,7 @@
 package ShallowAnalysis;
 
 import DataSet.Benchmark;
-import DataSet.DataSetPreprocessing;
+import DataSet.Benchmark;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -34,7 +34,7 @@ public class PredicateCounter {
 
     public static void main(String[] args) {
 
-        //PredicateCounter k = new PredicateCounter(DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.LC_QUAD));
+        //PredicateCounter k = new PredicateCounter(Benchmark.getQueriesWithoutDuplicates(Benchmark.LC_QUAD));
         //k.count();
     }
 

@@ -1,6 +1,6 @@
 package visualization;
 
-import DataSet.DataSetPreprocessing;
+import DataSet.Benchmark;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -35,7 +35,7 @@ public class FineGrained {
         System.out.print("              Your answer is: ");
         String python = "/home/aorogat/anaconda3/bin";
         python = in.next();
-        Process p = Runtime.getRuntime().exec(python+"/python3 " + DataSetPreprocessing.currentDirectory + "/visualize.py");
+        Process p = Runtime.getRuntime().exec(python+"/python3 " + Benchmark.currentDirectory + "/visualize.py");
 
         p.waitFor();
         

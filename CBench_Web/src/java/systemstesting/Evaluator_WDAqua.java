@@ -1,7 +1,7 @@
 package systemstesting;
 
 import DataSet.Benchmark;
-import DataSet.DataSetPreprocessing;
+import DataSet.Benchmark;
 import UptodatAnswers.CuratedAnswer;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -37,8 +37,7 @@ public class Evaluator_WDAqua {
     static BenchmarkEval evaluatedBenchmark;
     static int currentQuestion;
 
-    static ArrayList<Query> qs;
-    static ArrayList<Question> questions = DataSetPreprocessing.questions;
+    ArrayList<Query> qs;
 
     static String KB;
 
@@ -56,82 +55,34 @@ public class Evaluator_WDAqua {
 
     }
 
-    public static void evaluate() throws IOException {
+    public void evaluate(Benchmark benchmark) throws IOException {
         KB = MainBean.eval_knowledgebase;
         evaluatedBenchmark = new BenchmarkEval(MainBean.eval_benchmark);
         currentQuestion = 0;
         
         evaluatedQuestions = new ArrayList<>();
 
-        String benchmark = MainBean.eval_benchmark;
-        try {
-
-            if (benchmark.equals("QALD-1")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_1, false, false, false);
-            } else if (benchmark.equals("QALD-2")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_2, false, false, false);
-            } else if (benchmark.equals("QALD-3")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_3, false, false, false);
-            } else if (benchmark.equals("QALD-4")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_4, false, false, false);
-            } else if (benchmark.equals("QALD-5")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_5, false, false, false);
-            } else if (benchmark.equals("QALD-6")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_6, false, false, false);
-            } else if (benchmark.equals("QALD-7")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_7, false, false, false);
-            } else if (benchmark.equals("QALD-8")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_8, false, false, false);
-            } else if (benchmark.equals("QALD-9")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_9, false, false, false);
-            } else if (benchmark.equals("QALD-ALL")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.QALD_ALL, false, false, false);
-            } else if (benchmark.equals("LC-QUAD")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.LC_QUAD, true, false, false);
-            } else if (benchmark.equals("WebQuestions")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.WebQuestions, false, true, true);
-            } else if (benchmark.equals("GraphQuestions")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.GraphQuestions, false, true, true);
-            } else if (benchmark.equals("SimpleDBpediaQA")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.SimpleDBpediaQA, false, true, true);
-            } else if (benchmark.equals("SimpleQuestions")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.SimpleQuestions, false, true, true);
-            } else if (benchmark.equals("ComplexQuestions")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.ComplexQuestions, false, true, true);
-            } else if (benchmark.equals("ComQA")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.ComQA, false, true, true);
-            } else if (benchmark.equals("TempQuestions")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.TempQuestions, false, true, true);
-            } else if (benchmark.equals("UserDefined")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.UserDefined, false, true, true);
-            } else if (benchmark.equals("PropertiesDefined")) {
-                qs = DataSetPreprocessing.getQueriesWithoutDuplicates(Benchmark.PropertiesDefined, false, true, true);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        questions = DataSetPreprocessing.questions;
-        evaluatedBenchmark.allQuestions = questions.size();
+        qs = benchmark.queries;
+        evaluatedBenchmark.allQuestions = benchmark.questions.size();
 
         counter = 0;
         qsWithAnswers = 0;
 
-        performance(MainBean.eval_benchmark, MainBean.eval_update_answers);
+        performance(benchmark, MainBean.eval_benchmark, MainBean.eval_update_answers);
     }
 
     public void periodicPoll() throws IOException
     {
-        performance(MainBean.eval_benchmark, MainBean.eval_update_answers);
+        performance(MainBean.benchmarkData, MainBean.eval_benchmark, MainBean.eval_update_answers);
     }
     
-    public static void performance(String benchmarkName, boolean curated) throws IOException {
+    public static void performance(Benchmark benchmark, String benchmarkName, boolean curated) throws IOException {
 
         systemAnswersList = new ArrayList<>();
         corectAnswersList = new ArrayList<>();
         
         //for (Question question : questions) {
-        Question question = questions.get(currentQuestion);
+        Question question = benchmark.questions.get(currentQuestion);
         currentQuestion++;
         corectAnswersList = new ArrayList<>();
         counter++;
@@ -180,7 +131,7 @@ public class Evaluator_WDAqua {
         evaluatedBenchmark.evaluatedQuestions.add(new QuestionEval(question.getQuestionString(), question, corectAnswersList, systemAnswersList));
 
         //}
-        if (currentQuestion >= questions.size()) {
+        if (currentQuestion >= benchmark.questions.size()) {
             //4- Calculate parameters
             evaluatedBenchmark.calculateParameters();
 
@@ -286,9 +237,9 @@ public class Evaluator_WDAqua {
         Evaluator_WDAqua.evaluatedBenchmark = evaluatedBenchmark;
     }
 
-    public int getProgress() {
-        progress = (int)(100*((double)currentQuestion/questions.size()));
-        if (currentQuestion >= questions.size()) {
+    public int getProgress(Benchmark benchmark) {
+        progress = (int)(100*((double)currentQuestion/benchmark.questions.size()));
+        if (currentQuestion >= benchmark.questions.size()) {
             progress=100;
         }
         

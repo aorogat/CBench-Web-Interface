@@ -47,75 +47,75 @@ public class StandardFormt {
 
         PrintWriter writer;
         try {
-
-            DataSetPreprocessing.getQueriesWithoutDuplicates(1, false, false, false);
-            QALD1_Qs = DataSetPreprocessing.questionsWithoutDuplicates;
+            Benchmark d = new Benchmark();
+            d.parseBenchmarkFiles(Benchmark.QALD_1);
+            QALD1_Qs = d.questionsWithoutDuplicates;
             writer = new PrintWriter("QALD_1.xml", "UTF-8");
             writer.println(categories.printQuestionsAsXML(QALD1_Qs));
             writer.close();
 
-            DataSetPreprocessing.getQueriesWithoutDuplicates(2, false, false, false);
-            QALD2_Qs = DataSetPreprocessing.questionsWithoutDuplicates;
+            d.getQueriesWithoutDuplicates(2, false, false, false);
+            QALD2_Qs = d.questionsWithoutDuplicates;
             writer = new PrintWriter("QALD_2.xml", "UTF-8");
             writer.println(categories.printQuestionsAsXML(QALD2_Qs));
             writer.close();
 
-            DataSetPreprocessing.getQueriesWithoutDuplicates(3, false, false, false);
-            QALD3_Qs = DataSetPreprocessing.questionsWithoutDuplicates;
+            d.getQueriesWithoutDuplicates(3, false, false, false);
+            QALD3_Qs = d.questionsWithoutDuplicates;
             writer = new PrintWriter("QALD_3.xml", "UTF-8");
             writer.println(categories.printQuestionsAsXML(QALD3_Qs));
             writer.close();
 
-            DataSetPreprocessing.getQueriesWithoutDuplicates(4, false, false, false);
-            QALD4_Qs = DataSetPreprocessing.questionsWithoutDuplicates;
+            d.getQueriesWithoutDuplicates(4, false, false, false);
+            QALD4_Qs = d.questionsWithoutDuplicates;
             writer = new PrintWriter("QALD_4.xml", "UTF-8");
             writer.println(categories.printQuestionsAsXML(QALD4_Qs));
             writer.close();
 
-            DataSetPreprocessing.getQueriesWithoutDuplicates(5, false, false, false);
-            QALD5_Qs = DataSetPreprocessing.questionsWithoutDuplicates;
+            d.getQueriesWithoutDuplicates(5, false, false, false);
+            QALD5_Qs = d.questionsWithoutDuplicates;
             writer = new PrintWriter("QALD_5.xml", "UTF-8");
             writer.println(categories.printQuestionsAsXML(QALD5_Qs));
             writer.close();
 
-            DataSetPreprocessing.getQueriesWithoutDuplicates(6, false, false, false);
-            QALD6_Qs = DataSetPreprocessing.questionsWithoutDuplicates;
+            d.getQueriesWithoutDuplicates(6, false, false, false);
+            QALD6_Qs = d.questionsWithoutDuplicates;
             writer = new PrintWriter("QALD_6.xml", "UTF-8");
             writer.println(categories.printQuestionsAsXML(QALD6_Qs));
             writer.close();
 
-            DataSetPreprocessing.getQueriesWithoutDuplicates(7, false, false, false);
-            QALD7_Qs = DataSetPreprocessing.questionsWithoutDuplicates;
+            d.getQueriesWithoutDuplicates(7, false, false, false);
+            QALD7_Qs = d.questionsWithoutDuplicates;
             writer = new PrintWriter("QALD_7.xml", "UTF-8");
             writer.println(categories.printQuestionsAsXML(QALD7_Qs));
             writer.close();
 
-            DataSetPreprocessing.getQueriesWithoutDuplicates(8, false, false, false);
-            QALD8_Qs = DataSetPreprocessing.questionsWithoutDuplicates;
+            d.getQueriesWithoutDuplicates(8, false, false, false);
+            QALD8_Qs = d.questionsWithoutDuplicates;
             writer = new PrintWriter("QALD_8.xml", "UTF-8");
             writer.println(categories.printQuestionsAsXML(QALD8_Qs));
             writer.close();
 
-            DataSetPreprocessing.getQueriesWithoutDuplicates(9, false, false, false);
-            QALD9_Qs = DataSetPreprocessing.questionsWithoutDuplicates;
+            d.getQueriesWithoutDuplicates(9, false, false, false);
+            QALD9_Qs = d.questionsWithoutDuplicates;
             writer = new PrintWriter("QALD_9.xml", "UTF-8");
             writer.println(categories.printQuestionsAsXML(QALD9_Qs));
             writer.close();
 
-            DataSetPreprocessing.getQueriesWithoutDuplicates(100, false, false, false);
-            QALDALL_Qs = DataSetPreprocessing.questionsWithoutDuplicates;
+            d.getQueriesWithoutDuplicates(100, false, false, false);
+            QALDALL_Qs = d.questionsWithoutDuplicates;
             writer = new PrintWriter("QALD_ALL.xml", "UTF-8");
             writer.println(categories.printQuestionsAsXML(QALDALL_Qs));
             writer.close();
 
-            DataSetPreprocessing.getQueriesWithoutDuplicates(-1, true, false, false);
-            LC_QUAD = DataSetPreprocessing.questionsWithoutDuplicates;
+            d.getQueriesWithoutDuplicates(-1, true, false, false);
+            LC_QUAD = d.questionsWithoutDuplicates;
             writer = new PrintWriter("LC-QUAD.xml", "UTF-8");
             writer.println(categories.printQuestionsAsXML(LC_QUAD));
             writer.close();
 
-            DataSetPreprocessing.getQueriesWithoutDuplicates(-1, false, true, true);
-            FREEBASE = DataSetPreprocessing.questionsWithoutDuplicates;
+            d.getQueriesWithoutDuplicates(-1, false, true, true);
+            FREEBASE = d.questionsWithoutDuplicates;
             writer = new PrintWriter("FREEBASE.xml", "UTF-8");
             writer.println(categories.printQuestionsAsXML(FREEBASE));
             writer.close();

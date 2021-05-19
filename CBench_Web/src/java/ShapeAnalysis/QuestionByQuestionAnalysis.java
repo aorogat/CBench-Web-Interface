@@ -1,8 +1,9 @@
 package ShapeAnalysis;
 
 import DataSet.Benchmark;
-import DataSet.DataSetPreprocessing;
+import DataSet.Benchmark;
 import ShallowAnalysis.ElementVistorImpl;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.apache.jena.query.Query;
@@ -21,13 +22,15 @@ public class QuestionByQuestionAnalysis {
     static ArrayList<Question> questions;
     static int counter = 0;
 
-    public QuestionByQuestionAnalysis() {
-        qs = DataSetPreprocessing.queries;
-        questions = DataSetPreprocessing.questionsWithoutDuplicates;
+    public QuestionByQuestionAnalysis(Benchmark benchmark) {
+        qs = benchmark.queries;
+        questions = benchmark.questionsWithoutDuplicates;
     }
 
-    public static void main(String[] args) {
-        QuestionByQuestionAnalysis analysis = new QuestionByQuestionAnalysis();
+    public static void main(String[] args) throws IOException {
+        Benchmark benchmark = new Benchmark();
+        benchmark.parseBenchmarkFiles(Benchmark.QALD_1);
+        QuestionByQuestionAnalysis analysis = new QuestionByQuestionAnalysis(benchmark);
         System.out.println("===========================================================");
 
         for (int i = 0; i < questions.size(); i++) {
