@@ -168,6 +168,31 @@ public class Benchmark {
             questions.addAll(JSONParser.parseWeb(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/Freebase/SPARQL/WebQuestionsSP/WebQSP.train.json"), StandardCharsets.UTF_8), "Freebase_Web", "Freebase"));
             questions.addAll(JSONParser.parseWeb(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/Freebase/SPARQL/WebQuestionsSP/WebQSP.train.partial.json"), StandardCharsets.UTF_8), "Freebase_Web", "Freebase"));
         }
+//        if (benchmarkID == Benchmark.ComQA) {
+//            questions.addAll(JSONParser.parseComQA(currentDirectory + "/data/Freebase/No_SPARQL/ComQA/comqa_train.json", "ComQA", "freebase"));
+//            questions.addAll(JSONParser.parseComQA(currentDirectory + "/data/Freebase/No_SPARQL/ComQA/comqa_dev.json", "ComQA", "freebase"));
+//            questions.addAll(JSONParser.parseFreeNo2(currentDirectory + "/data/Freebase/No_SPARQL/ComQA/comqa_test.json", "ComQA", "freebase"));
+//        }
+//        if (benchmarkID == Benchmark.ComplexQuestions) {
+//            questions.addAll(JSONParser.parseFreeNo(currentDirectory + "/data/Freebase/No_SPARQL/Complex_Questions/questions.json", "ComplexQuestions", "freebase"));
+//        }
+//        if (benchmarkID == Benchmark.Free917) {
+//            questions.addAll(JSONParser.parseFree917(currentDirectory + "/data/Freebase/No_SPARQL/Free917/free917.train.examples.canonicalized.json", "Free917", "freebase"));
+//            questions.addAll(JSONParser.parseFree917(currentDirectory + "/data/Freebase/No_SPARQL/Free917/free917.test.examples.canonicalized.json", "Free917", "freebase"));
+//        }
+//        if (benchmarkID == Benchmark.SimpleDBpediaQA) {
+//            questions.addAll(JSONParser.parseSimpleDB(currentDirectory + "/data/DBpedia/No_SPARQL/SimpleDBpediaQA-master/V1/train.json", "SimpleDBpediaQA", "dbpediaa"));
+//            questions.addAll(JSONParser.parseSimpleDB(currentDirectory + "/data/DBpedia/No_SPARQL/SimpleDBpediaQA-master/V1/test.json", "SimpleDBpediaQA", "dbpediaa"));
+//            questions.addAll(JSONParser.parseSimpleDB(currentDirectory + "/data/DBpedia/No_SPARQL/SimpleDBpediaQA-master/V1/valid.json", "SimpleDBpediaQA", "dbpediaa"));
+//        }
+//        if (benchmarkID == Benchmark.TempQuestions) {
+//            questions.addAll(JSONParser.parseTemp(currentDirectory + "/data/Freebase/No_SPARQL/TempQuestions/TempQuestions.json", "TempQuestions", "freebase"));
+//        }
+        if (benchmarkID == Benchmark.UserDefined) {
+            name = "User Defined";
+            questions.addAll(JSONParser.parseQald9File(IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("data/userDefinied.json"), StandardCharsets.UTF_8), "UserDefined", "dbpedia"));
+            //questions.addAll(JSONParser.parseQald9File(currentDirectory + "/data/userDefinied.json", "UserDefined", "dbpedia"));
+        }
         
         
         //Reverse List to remain most recent

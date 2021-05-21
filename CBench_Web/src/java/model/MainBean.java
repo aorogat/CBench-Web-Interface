@@ -71,10 +71,10 @@ public class MainBean {
         }
     }
 
-    public String evaluate(Benchmark benchmark) throws IOException {
-        getBenchmarkData(this.benchmark);
+    public String evaluate() throws IOException {
+        Benchmark bench = getBenchmarkData(this.eval_benchmark);
         Evaluator_WDAqua wDAqua = new Evaluator_WDAqua();
-        wDAqua.evaluate(benchmark);
+        wDAqua.evaluate(bench);
         return "evalute.xhtml?faces-redirect=true";
     }
 
@@ -161,6 +161,7 @@ public class MainBean {
         benchmarks.add("TempQuestions");
         benchmarks.add("ComplexQuestions");
         benchmarks.add("ComQA");
+        benchmarks.add("UserDefined");
         return benchmarks;
     }
 

@@ -50,6 +50,7 @@ public class Evaluator_WDAqua {
     static int qsWithAnswers = 0;
     
     int progress=0;
+    static Benchmark ben;
 
     public Evaluator_WDAqua() throws IOException {
 
@@ -73,11 +74,11 @@ public class Evaluator_WDAqua {
 
     public void periodicPoll() throws IOException
     {
-        performance(MainBean.benchmarkData, MainBean.eval_benchmark, MainBean.eval_update_answers);
+        performance(ben, MainBean.eval_benchmark, MainBean.eval_update_answers);
     }
     
     public static void performance(Benchmark benchmark, String benchmarkName, boolean curated) throws IOException {
-
+        ben = benchmark;
         systemAnswersList = new ArrayList<>();
         corectAnswersList = new ArrayList<>();
         
@@ -237,9 +238,9 @@ public class Evaluator_WDAqua {
         Evaluator_WDAqua.evaluatedBenchmark = evaluatedBenchmark;
     }
 
-    public int getProgress(Benchmark benchmark) {
-        progress = (int)(100*((double)currentQuestion/benchmark.questions.size()));
-        if (currentQuestion >= benchmark.questions.size()) {
+    public int getProgress() {
+        progress = (int)(100*((double)currentQuestion/ben.questions.size()));
+        if (currentQuestion >= ben.questions.size()) {
             progress=100;
         }
         
