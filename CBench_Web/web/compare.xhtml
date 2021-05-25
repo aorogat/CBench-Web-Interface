@@ -146,7 +146,7 @@
                                         </p:tab>
                                         <p:tab title="Line Chart">
                                             <div>
-                                                <p:chart type="line" model="#{mainBean.keywordsComparison.model2}"  
+                                                <p:chart type="line" model="#{mainBean.keywordsComparison.lineChartModel}"  
                                                          style="width:1200px; height:500px;
                                                          display: inline-block; font-family: monospace;"
                                                          />
@@ -154,8 +154,8 @@
                                         </p:tab>
                                         <p:tab title="Bar Chart">
                                             <div>
-                                                <p:chart type="bar" model="#{mainBean.keywordsComparison.model3}"  
-                                                         style="width:1200px; height:500px;
+                                                <p:chart type="bar" model="#{mainBean.keywordsComparison.barChartModel}"  
+                                                         style="width:1300px; height:500px;
                                                          display: inline-block; font-family: monospace;"/>
                                             </div>
                                         </p:tab>
@@ -167,7 +167,7 @@
                                 <p:tab title="Number of Triple Patterns">
                                     <div>
                                         <p:chart type="bar" model="#{mainBean.noOfTriplesComparison.model2}"  
-                                                 style="width:500px; height:400px;
+                                                 style="width:#{(mainBean.selectedBenchmarks.size()/10)*500}px; height:400px;
                                                  display: inline-block; font-family: monospace;"/>
                                     </div>
                                 </p:tab>
@@ -314,6 +314,62 @@
 
 
                         </p:tab>
+                        <p:tab title="Shape Analysis">
+                            <p:tabView>
+                                <p:tab title="Table">
+                                    <div style="overflow-x: scroll;">
+                                        <p:dataTable var="shape" value="#{mainBean.shapesComparison.allBenchmarks[0]}" 
+                                                     style="width: 120px; font-size: 14px; display: inline-block;"
+                                                     >
+                                            <f:facet name="header">
+                                                Shapes
+                                            </f:facet>
+                                            <p:column headerText="Shape">
+                                                <h:outputText value="#{shape.key}"  style="font-family: monospace; 
+                                                              font-size: 12px;
+                                                              font-weight: bold;"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                        <ui:repeat value="#{mainBean.shapesComparison.allBenchmarks}" var="benchmark"
+                                                   varStatus="current">
+                                            <p:dataTable var="shape" value="#{benchmark}" style="width: 120px; 
+                                                         font-size: 14px; display: inline-block;
+                                                         margin: 2px;"
+                                                         >
+                                                <f:facet name="header">
+                                                    #{mainBean.selectedBenchmarks[current.index]}
+                                                </f:facet>
+                                                <p:column headerText="#Abs">
+                                                    <h:outputText value="#{shape.occuurances}"   style="font-size: 12px;"/>
+                                                </p:column>
+                                                <p:column headerText="%Rel">
+                                                    <h:outputText value="#{shape.relative}"  style="font-size: 12px;">
+                                                        <f:convertNumber pattern="#00.00" />
+                                                    </h:outputText>%
+                                                </p:column>
+                                            </p:dataTable>
+                                        </ui:repeat>
+                                    </div>
+                                    For each shape, the shapes it subsumes are excluded.
+                                </p:tab>
+                                <p:tab title="Line Chart">
+                                    <div>
+                                        <p:chart type="line" model="#{mainBean.shapesComparison.lineChartModel}"  
+                                                 style="width:1200px; height:500px;
+                                                 display: inline-block; font-family: monospace;"
+                                                 />
+                                    </div>
+                                </p:tab>
+                                <p:tab title="Bar Chart">
+                                    <div>
+                                        <p:chart type="bar" model="#{mainBean.shapesComparison.barChartModel}"  
+                                                 style="width:1300px; height:500px;
+                                                 display: inline-block; font-family: monospace;"/>
+                                    </div>
+                                </p:tab>
+                            </p:tabView>
+                        </p:tab>
+
                     </p:tabView>
 
                     <hr/>
@@ -342,7 +398,7 @@
                             deleteAll[i].click();
                         }
                     });
-                /* ]]> */
+            /* ]]> */
         </script>
     </h:body>
 

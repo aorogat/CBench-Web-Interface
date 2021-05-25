@@ -9,6 +9,7 @@ import ShallowAnalysis.NoOfTriplesComparison;
 import ShallowAnalysis.OperatorDistribution;
 import ShallowAnalysis.OperatorDistributionComparison;
 import ShapeAnalysis.CategorizedQuestions;
+import ShapeAnalysis.ShapesComparison;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
@@ -32,6 +33,7 @@ public class MainBean {
     KeywordsComparison keywordsComparison;
     NoOfTriplesComparison noOfTriplesComparison;
     OperatorDistributionComparison operatorDistributionComparison;
+    ShapesComparison shapesComparison;
 
     public static String knowledgebase = "-- Knowledgebase --";
     public static String benchmarkAnalysis = "-- Benchmark --";
@@ -96,6 +98,7 @@ public class MainBean {
         keywordsComparison = new KeywordsComparison(bs);
         noOfTriplesComparison = new NoOfTriplesComparison(bs);
         operatorDistributionComparison = new OperatorDistributionComparison(bs);
+        shapesComparison = new ShapesComparison(bs);
         return "compare.xhtml?faces-redirect=true";
     }
     
@@ -460,6 +463,14 @@ public class MainBean {
 
     public void setOperatorDistributionComparison(OperatorDistributionComparison operatorDistributionComparison) {
         this.operatorDistributionComparison = operatorDistributionComparison;
+    }
+
+    public ShapesComparison getShapesComparison() {
+        return shapesComparison;
+    }
+
+    public void setShapesComparison(ShapesComparison shapesComparison) {
+        this.shapesComparison = shapesComparison;
     }
 
     

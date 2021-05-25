@@ -41,20 +41,23 @@ import org.primefaces.model.chart.PieChartModel;
 
 public class CategorizedQuestions {
 
-    ArrayList<Question> singleShape_Qs = new ArrayList<Question>();
-    ArrayList<Question> chain_Qs = new ArrayList<Question>();
-    ArrayList<Question> chainSet_Qs = new ArrayList<Question>();
-    ArrayList<Question> star_Qs = new ArrayList<Question>();
-    ArrayList<Question> tree_Qs = new ArrayList<Question>();
-    ArrayList<Question> forest_Qs = new ArrayList<Question>();
-    ArrayList<Question> cycle_Qs = new ArrayList<Question>();
-    ArrayList<Question> flower_Qs = new ArrayList<Question>();
-    ArrayList<Question> flowerSet_Qs = new ArrayList<Question>();
+    ArrayList<Question> singleShape_Qs = new ArrayList<>();
+    ArrayList<Question> chain_Qs = new ArrayList<>();
+    ArrayList<Question> chainSet_Qs = new ArrayList<>();
+    ArrayList<Question> star_Qs = new ArrayList<>();
+    ArrayList<Question> tree_Qs = new ArrayList<>();
+    ArrayList<Question> forest_Qs = new ArrayList<>();
+    ArrayList<Question> cycle_Qs = new ArrayList<>();
+    ArrayList<Question> flower_Qs = new ArrayList<>();
+    ArrayList<Question> flowerSet_Qs = new ArrayList<>();
 
+    ShapesSummary shapesSummary = new ShapesSummary();
+    
     PieChartModel pieModelSelect= new PieChartModel();
     BarChartModel barModel = new BarChartModel();
     
     private List<SortMeta> sortBy;
+    int allSize = 0;
 
     
     public CategorizedQuestions(Benchmark benchmark) throws IOException {
@@ -68,6 +71,7 @@ public class CategorizedQuestions {
     cycle_Qs = new ArrayList<>();
     flower_Qs = new ArrayList<>();
     flowerSet_Qs = new ArrayList<>();
+    allSize = benchmark.questionsWithoutDuplicates.size();
         
         //DataSetPreprocessing.getQueriesWithoutDuplicates(9, false, false, false);
         for (Question q : benchmark.questionsWithoutDuplicates) {
@@ -295,6 +299,24 @@ public class CategorizedQuestions {
 
     public void setBarModel(BarChartModel barModel) {
         this.barModel = barModel;
+    }
+
+    public ShapesSummary getShapesSummary() {
+        shapesSummary.summarys.add(new OneShapeSummary("Single-Edge", singleShape_Qs.size(), allSize));
+        shapesSummary.summarys.add(new OneShapeSummary("Chain", chain_Qs.size(), allSize));
+        shapesSummary.summarys.add(new OneShapeSummary("Chain Set", chainSet_Qs.size(), allSize));
+        shapesSummary.summarys.add(new OneShapeSummary("Star", star_Qs.size(), allSize));
+        shapesSummary.summarys.add(new OneShapeSummary("Cycle", cycle_Qs.size(), allSize));
+        shapesSummary.summarys.add(new OneShapeSummary("Tree", tree_Qs.size(), allSize));
+        shapesSummary.summarys.add(new OneShapeSummary("Forest", forest_Qs.size(), allSize));
+        shapesSummary.summarys.add(new OneShapeSummary("Flower", flower_Qs.size(), allSize));
+        shapesSummary.summarys.add(new OneShapeSummary("Flower Set", flowerSet_Qs.size(), allSize));
+                
+        return shapesSummary;
+    }
+
+    public void setShapesSummary(ShapesSummary shapesSummary) {
+        this.shapesSummary = shapesSummary;
     }
     
     

@@ -50,6 +50,7 @@ public class BenchmarkEval {
     private ArrayList<QuestionEval> flowerSetEvaluatedQuestions = new ArrayList<>();
 
     private DonutChartModel donutModel;
+    private Set<String> propertiesSet;
 
     public BenchmarkEval() {
         benchmarkName = MainBean.eval_benchmark;
@@ -596,7 +597,7 @@ public class BenchmarkEval {
                 incorr.add(prop);
             }
         }
-        Set<String> propertiesSet = new HashSet<>(corr);
+        propertiesSet = new HashSet<>(corr);
         propertiesSet.addAll(incorr);
 
         
@@ -646,4 +647,14 @@ public class BenchmarkEval {
         return c;
     }
 
+    public Set<String> getPropertiesSet() {
+        return propertiesSet;
+    }
+
+    public void setPropertiesSet(Set<String> propertiesSet) {
+        this.propertiesSet = propertiesSet;
+    }
+
+    
+    
 }
