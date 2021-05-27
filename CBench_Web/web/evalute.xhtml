@@ -115,6 +115,11 @@
                                  width: 100%;">
                                 <h:form style="width: 100%;">
                                     <p:panel id="scores" style="width: 100%;">
+                                        All Questions: #{evaluator_WDAqua.evaluatedBenchmark.allQuestions} <br/>
+                                        Evaluated Questions: #{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions.size()} <br/>
+                                        Questions with correct answers: #{evaluator_WDAqua.evaluatedBenchmark.questionsWithCorrectAnswers} <br/>
+                                        Answered Questions: #{evaluator_WDAqua.evaluatedBenchmark.answered} <br/>
+                                        Partially Correctly Answered Questions: #{evaluator_WDAqua.evaluatedBenchmark.answeredWithThetaThreshold} <br/>
                                         <div style="display: inline-block; width: 30%; margin: 10px; padding: 10px;
                                              background-color: #e1e1ee;">
                                             <div style="font-size: 30px; margin: 10px; text-align: center;">

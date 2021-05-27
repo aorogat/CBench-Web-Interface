@@ -255,6 +255,15 @@ public class Evaluator_WDAqua {
     public void onComplete() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("CBench Collected All System Answers."));
     }
+
+    public ArrayList<QuestionEval> getEvaluatedQuestions() {
+        return evaluatedQuestions;
+    }
+
+    public void setEvaluatedQuestions(ArrayList<QuestionEval> evaluatedQuestions) {
+        Evaluator_WDAqua.evaluatedQuestions = evaluatedQuestions;
+    }
+    
     
     
 }

@@ -200,6 +200,8 @@ public class BenchmarkEval {
     }
 
     public void calculateParameters() {
+        answered = 0;
+        questionsWithCorrectAnswers = 0;
         for (QuestionEval evaluatedQuestion : evaluatedQuestions) {
             if (evaluatedQuestion.G.size() > 0) {
                 questionsWithCorrectAnswers++;
