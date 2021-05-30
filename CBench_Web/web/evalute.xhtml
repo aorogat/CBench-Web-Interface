@@ -115,11 +115,41 @@
                                  width: 100%;">
                                 <h:form style="width: 100%;">
                                     <p:panel id="scores" style="width: 100%;">
-                                        All Questions: #{evaluator_WDAqua.evaluatedBenchmark.allQuestions} <br/>
-                                        Evaluated Questions: #{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions.size()} <br/>
-                                        Questions with correct answers: #{evaluator_WDAqua.evaluatedBenchmark.questionsWithCorrectAnswers} <br/>
-                                        Answered Questions: #{evaluator_WDAqua.evaluatedBenchmark.answered} <br/>
-                                        Partially Correctly Answered Questions: #{evaluator_WDAqua.evaluatedBenchmark.answeredWithThetaThreshold} <br/>
+                                        <span style="display: inline-block;
+                                              background-color: #bde5f8; 
+                                              margin: 5px;
+                                              padding: 5px;">
+                                        All Questions: #{evaluator_WDAqua.evaluatedBenchmark.allQuestions}
+                                        </span>
+                                        <span style="display: inline-block;
+                                              background-color: #bde5f8; 
+                                              margin: 5px;
+                                              padding: 5px;">
+                                        Evaluated Questions: #{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions.size()}
+                                        </span>
+                                        <span style="display: inline-block;
+                                              background-color: #bde5f8; 
+                                              margin: 5px;
+                                              padding: 5px;">
+                                        Questions with correct answers: #{evaluator_WDAqua.evaluatedBenchmark.questionsWithCorrectAnswers}
+                                        </span>
+                                        <span style="display: inline-block;
+                                              background-color: #bde5f8; 
+                                              margin: 5px;
+                                              padding: 5px;">
+                                        Answered Questions (from the 
+                                        #{evaluator_WDAqua.evaluatedBenchmark.questionsWithCorrectAnswers}
+                                        Questions): #{evaluator_WDAqua.evaluatedBenchmark.answered} 
+                                        </span>
+                                        <span style="display: inline-block;
+                                              background-color: #bde5f8; 
+                                              margin: 5px;
+                                              padding: 5px;">
+                                        Partially Correctly Answered Questions (from the 
+                                        #{evaluator_WDAqua.evaluatedBenchmark.answered}
+                                        Questions): #{evaluator_WDAqua.evaluatedBenchmark.answeredWithThetaThreshold} 
+                                        </span>
+                                        <br/>
                                         <div style="display: inline-block; width: 30%; margin: 10px; padding: 10px;
                                              background-color: #e1e1ee;">
                                             <div style="font-size: 30px; margin: 10px; text-align: center;">
@@ -255,7 +285,8 @@
                                                     <tr>
                                                         <td width="65%">
                                                             <p:dataTable var="qs" value="#{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions}" 
-                                                                         scrollable="true" scrollHeight="450">
+                                                                         scrollable="true" scrollHeight="#{(evaluator_WDAqua.evaluatedBenchmark.allPropertiesSize/10)*250}"
+                                                                         >
                                                                 <p:column headerText="Question" width="40%">
                                                                     <h:outputText  style="font-size: 12px; font-style: italic; font-weight: bold;" 
                                                                                    value="#{qs.question.questionString}" escape="false"/>
@@ -332,11 +363,11 @@
                                                             </p:dataTable>
                                                         </td>
                                                         <td>
-                                                            <div style="overflow-x: scroll;">
+                                                            <div style="overflow-x: scroll; width:500px;">
                                                             <p:chart  type="bar" model="#{evaluator_WDAqua.evaluatedBenchmark.all_model}"
-                                                                      style="min-width: 500px;
+                                                                      style="min-width: 900px;
                                                                       min-height: 300px;
-                                                                      height: #{(evaluator_WDAqua.evaluatedBenchmark.propertiesSet.size()/10)*400}px;"/>
+                                                                      height: #{(evaluator_WDAqua.evaluatedBenchmark.allPropertiesSize/10)*250}px;"/>
                                                             </div>
                                                         </td>
                                                     </tr>

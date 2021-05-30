@@ -2,6 +2,7 @@ package model;
 
 import DataSet.Benchmark;
 import NLQAnalysis.NLQCategoraizer;
+import NLQAnalysis.NlqComparison;
 import ShallowAnalysis.Keywords;
 import ShallowAnalysis.KeywordsComparison;
 import ShallowAnalysis.NoOfTriples;
@@ -34,6 +35,7 @@ public class MainBean {
     NoOfTriplesComparison noOfTriplesComparison;
     OperatorDistributionComparison operatorDistributionComparison;
     ShapesComparison shapesComparison;
+    NlqComparison nlqComparison;
 
     public static String knowledgebase = "-- Knowledgebase --";
     public static String benchmarkAnalysis = "-- Benchmark --";
@@ -99,6 +101,7 @@ public class MainBean {
         noOfTriplesComparison = new NoOfTriplesComparison(bs);
         operatorDistributionComparison = new OperatorDistributionComparison(bs);
         shapesComparison = new ShapesComparison(bs);
+        nlqComparison = new NlqComparison(bs);
         return "compare.xhtml?faces-redirect=true";
     }
     
@@ -471,6 +474,14 @@ public class MainBean {
 
     public void setShapesComparison(ShapesComparison shapesComparison) {
         this.shapesComparison = shapesComparison;
+    }
+
+    public NlqComparison getNlqComparison() {
+        return nlqComparison;
+    }
+
+    public void setNlqComparison(NlqComparison nlqComparison) {
+        this.nlqComparison = nlqComparison;
     }
 
     

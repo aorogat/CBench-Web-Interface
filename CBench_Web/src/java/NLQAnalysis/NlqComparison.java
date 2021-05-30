@@ -1,6 +1,5 @@
-package ShapeAnalysis;
+package NLQAnalysis;
 
-import ShallowAnalysis.*;
 import DataSet.Benchmark;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,32 +18,32 @@ import org.primefaces.model.chart.LineChartModel;
  */
 @ManagedBean
 @RequestScoped
-public class ShapesComparison {
+public class NlqComparison {
 
     ArrayList<Benchmark> benchmarks;
     LineChartModel lineChartModel = new LineChartModel();
     BarChartModel barChartModel = new BarChartModel();
-    ArrayList<ArrayList<OneShapeSummary>> allBenchmarks = new ArrayList<>();
+    ArrayList<ArrayList<OneNLQSummary>> allBenchmarks = new ArrayList<>();
 
-    public ShapesComparison(ArrayList<Benchmark> benchmarks) throws IOException {
+    public NlqComparison(ArrayList<Benchmark> benchmarks) throws IOException {
         this.benchmarks = benchmarks;
         for (Benchmark benchmark : benchmarks) {
-            CategorizedQuestions k = new CategorizedQuestions(benchmark);
-            ShapesSummary shapesSummaries = k.getShapesSummary();
-            allBenchmarks.add(shapesSummaries.summarys);
+            NLQCategoraizer k = new NLQCategoraizer(benchmark);
+            NLQSummary nlqSummaries = k.getNlqSummary();
+            allBenchmarks.add(nlqSummaries.summarys);
             ChartSeries patternKys = new ChartSeries();
             patternKys.setLabel(benchmark.name);
-            for (OneShapeSummary shape : shapesSummaries.summarys) {
+            for (OneNLQSummary shape : nlqSummaries.summarys) {
                 patternKys.set(shape.key, shape.relative);
             }
             lineChartModel.addSeries(patternKys);
             barChartModel.addSeries(patternKys);
         }
 
-        lineChartModel.setTitle("Query Shape");
+        lineChartModel.setTitle("Question Type");
         lineChartModel.setLegendPosition("e");
         //model2.setShowPointLabels(true);
-        lineChartModel.getAxes().put(AxisType.X, new CategoryAxis("Shape"));
+        lineChartModel.getAxes().put(AxisType.X, new CategoryAxis("Type"));
         Axis xAxis2 = lineChartModel.getAxis(AxisType.X);
         xAxis2.setTickAngle(-30);
 
@@ -52,10 +51,10 @@ public class ShapesComparison {
         yAxis2.setMin(0);
         yAxis2.setMax(100);
         
-        barChartModel.setTitle("Query Shape");
+        barChartModel.setTitle("Question Type");
         barChartModel.setLegendPosition("e");
         //model2.setShowPointLabels(true);
-        barChartModel.getAxes().put(AxisType.X, new CategoryAxis("Shape"));
+        barChartModel.getAxes().put(AxisType.X, new CategoryAxis("Type"));
         Axis xAxis3 = barChartModel.getAxis(AxisType.X);
         xAxis3.setTickAngle(-30);
 
@@ -80,11 +79,11 @@ public class ShapesComparison {
         this.lineChartModel = lineChartModel;
     }
 
-    public ArrayList<ArrayList<OneShapeSummary>> getAllBenchmarks() {
+    public ArrayList<ArrayList<OneNLQSummary>> getAllBenchmarks() {
         return allBenchmarks;
     }
 
-    public void setAllBenchmarks(ArrayList<ArrayList<OneShapeSummary>> allBenchmarks) {
+    public void setAllBenchmarks(ArrayList<ArrayList<OneNLQSummary>> allBenchmarks) {
         this.allBenchmarks = allBenchmarks;
     }
 

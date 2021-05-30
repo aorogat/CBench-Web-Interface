@@ -51,6 +51,18 @@ public class BenchmarkEval {
 
     private DonutChartModel donutModel;
     private Set<String> propertiesSet;
+    
+    int allPropertiesSize = 0;
+    int singlePropertiesSize = 0;
+    int chainPropertiesSize = 0;
+    int chainSetPropertiesSize = 0;
+    int cyclePropertiesSize = 0;
+    int starPropertiesSize = 0;
+    int treePropertiesSize = 0;
+    int forestPropertiesSize = 0;
+    int flowerPropertiesSize = 0;
+    int flowerSetPropertiesSize = 0;
+    
 
     public BenchmarkEval() {
         benchmarkName = MainBean.eval_benchmark;
@@ -544,43 +556,63 @@ public class BenchmarkEval {
     private HorizontalBarChartModel all_model;
 
     public HorizontalBarChartModel getSingle_model() {
-        return generateModel(singleEdgeEvaluatedQuestions, "Single-Edge");
+        HorizontalBarChartModel m = generateModel(singleEdgeEvaluatedQuestions, "Single-Edge");
+        singlePropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getChain_model() {
-        return generateModel(chainEvaluatedQuestions, "Chain");
+        HorizontalBarChartModel m = generateModel(chainEvaluatedQuestions, "Chain");
+        chainPropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getChainSet_model() {
-        return generateModel(chainSetEvaluatedQuestions, "Chain-Set");
+        HorizontalBarChartModel m = generateModel(chainSetEvaluatedQuestions, "Chain-Set");
+        chainSetPropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getStar_model() {
-        return generateModel(starEvaluatedQuestions, "Star");
+        HorizontalBarChartModel m = generateModel(starEvaluatedQuestions, "Star");
+        starPropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getTree_model() {
-        return generateModel(treeEvaluatedQuestions, "Tree");
+        HorizontalBarChartModel m = generateModel(treeEvaluatedQuestions, "Tree");
+        treePropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getFlower_model() {
-        return generateModel(flowerEvaluatedQuestions, "Flower");
+        HorizontalBarChartModel m = generateModel(flowerEvaluatedQuestions, "Flower");
+        flowerPropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getFlowerSet_model() {
-        return generateModel(flowerSetEvaluatedQuestions, "Flower-Set");
+        HorizontalBarChartModel m = generateModel(flowerSetEvaluatedQuestions, "Flower-Set");
+        flowerSetPropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getCycle_model() {
-        return generateModel(cycleEvaluatedQuestions, "Cycle");
+        HorizontalBarChartModel m = generateModel(cycleEvaluatedQuestions, "Cycle");
+        cyclePropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getForest_model() {
-        return generateModel(forestEvaluatedQuestions, "Forest");
+        HorizontalBarChartModel m = generateModel(forestEvaluatedQuestions, "Forest");
+        forestPropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getAll_model() {
-        return generateModel(evaluatedQuestions, "All");
+        HorizontalBarChartModel m = generateModel(evaluatedQuestions, "All");
+        allPropertiesSize = propertiesSet.size();
+        return m;
     }
     
     
@@ -655,6 +687,86 @@ public class BenchmarkEval {
 
     public void setPropertiesSet(Set<String> propertiesSet) {
         this.propertiesSet = propertiesSet;
+    }
+
+    public int getAllPropertiesSize() {
+        return allPropertiesSize;
+    }
+
+    public void setAllPropertiesSize(int allPropertiesSize) {
+        this.allPropertiesSize = allPropertiesSize;
+    }
+
+    public int getSinglePropertiesSize() {
+        return singlePropertiesSize;
+    }
+
+    public void setSinglePropertiesSize(int singlePropertiesSize) {
+        this.singlePropertiesSize = singlePropertiesSize;
+    }
+
+    public int getChainPropertiesSize() {
+        return chainPropertiesSize;
+    }
+
+    public void setChainPropertiesSize(int chainPropertiesSize) {
+        this.chainPropertiesSize = chainPropertiesSize;
+    }
+
+    public int getChainSetPropertiesSize() {
+        return chainSetPropertiesSize;
+    }
+
+    public void setChainSetPropertiesSize(int chainSetPropertiesSize) {
+        this.chainSetPropertiesSize = chainSetPropertiesSize;
+    }
+
+    public int getCyclePropertiesSize() {
+        return cyclePropertiesSize;
+    }
+
+    public void setCyclePropertiesSize(int cyclePropertiesSize) {
+        this.cyclePropertiesSize = cyclePropertiesSize;
+    }
+
+    public int getStarPropertiesSize() {
+        return starPropertiesSize;
+    }
+
+    public void setStarPropertiesSize(int starPropertiesSize) {
+        this.starPropertiesSize = starPropertiesSize;
+    }
+
+    public int getTreePropertiesSize() {
+        return treePropertiesSize;
+    }
+
+    public void setTreePropertiesSize(int treePropertiesSize) {
+        this.treePropertiesSize = treePropertiesSize;
+    }
+
+    public int getForestPropertiesSize() {
+        return forestPropertiesSize;
+    }
+
+    public void setForestPropertiesSize(int forestPropertiesSize) {
+        this.forestPropertiesSize = forestPropertiesSize;
+    }
+
+    public int getFlowerPropertiesSize() {
+        return flowerPropertiesSize;
+    }
+
+    public void setFlowerPropertiesSize(int flowerPropertiesSize) {
+        this.flowerPropertiesSize = flowerPropertiesSize;
+    }
+
+    public int getFlowerSetPropertiesSize() {
+        return flowerSetPropertiesSize;
+    }
+
+    public void setFlowerSetPropertiesSize(int flowerSetPropertiesSize) {
+        this.flowerSetPropertiesSize = flowerSetPropertiesSize;
     }
 
     
