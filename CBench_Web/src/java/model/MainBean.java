@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import systemstesting.EvaluatorInterface;
+import systemstesting.Evaluator_QAsparqlBean;
 import systemstesting.Evaluator_WDAqua;
 
 /**
@@ -64,6 +66,7 @@ public class MainBean {
 
     public static Benchmark benchmarkData;
     public ArrayList<String> selectedBenchmarks = new ArrayList();
+    ArrayList<EvaluatorInterface> qaSystems = new ArrayList<>();
 
     public MainBean() throws IOException {
         
@@ -77,8 +80,15 @@ public class MainBean {
 
     public String evaluate() throws IOException {
         Benchmark bench = getBenchmarkData(this.eval_benchmark);
-        Evaluator_WDAqua wDAqua = new Evaluator_WDAqua();
-        wDAqua.evaluate(bench);
+        qaSystems.add(new Evaluator_WDAqua());
+        qaSystems.add(new Evaluator_QAsparqlBean());
+        //EvaluatorInterface wDAqua = new Evaluator_WDAqua();
+        //wDAqua.evaluate(bench);
+        //Evaluator_QAsparqlBean qaSparql = new Evaluator_QAsparqlBean();
+        //qaSparql.evaluate(bench);
+        for (EvaluatorInterface qaSystem : qaSystems) {
+            qaSystem.evaluate(bench);
+        }
         return "evalute.xhtml?faces-redirect=true";
     }
 
@@ -483,6 +493,16 @@ public class MainBean {
     public void setNlqComparison(NlqComparison nlqComparison) {
         this.nlqComparison = nlqComparison;
     }
+
+    public ArrayList<EvaluatorInterface> getQaSystems() {
+        return qaSystems;
+    }
+
+    public void setQaSystems(ArrayList<EvaluatorInterface> qaSystems) {
+        this.qaSystems = qaSystems;
+    }
+
+    
 
     
     

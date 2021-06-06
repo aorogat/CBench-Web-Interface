@@ -35,7 +35,7 @@ import javax.net.ssl.SSLSession;
 
 public class CuratedAnswer {
 
-    public static String endpoint = "http://dbpedia.org/sparql?";
+    public static String endpoint = "https://dbpedia.org/sparql?";
     public static String wikidataEndpoint = "https://query.wikidata.org/bigdata/namespace/wdq/sparql?query=";
 
     public static void main(String[] args) throws UnsupportedEncodingException {

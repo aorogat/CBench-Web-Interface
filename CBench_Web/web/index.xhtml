@@ -67,11 +67,12 @@
             .no-js .inputfile + label {
                 display: none;
             }
-            
+
             .compareBenchmarks
             {
                 width: 300px !important;
             }
+
         </style>
 
     </h:head>
@@ -120,7 +121,7 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="advance-search">
 
                         <div class="row">
@@ -153,7 +154,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
 
                 <div class="inner-form"  style="display: inline-block; width: 55%;">
@@ -161,14 +162,7 @@
                         <div class="input-field">
 
                             <h2><span>QA System Evaluation</span></h2>
-                            <h:inputText id="search" pa:type="text" pa:placeholder="Type QA System URL"
-                                         style="border-color: #DDDDDD; border-style: solid;
-                                         border-width: 1px; margin: 5px; width: 98.5%"/>
-                            <div class="icon-wrap">
-                                <svg class="svg-inline--fa fa-search fa-w-16" fill="#ccc" aria-hidden="true" data-prefix="fas" data-icon="url" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                    <path d=" 128-128 128z"></path>
-                                </svg>
-                            </div>
+
                         </div>
                     </div>
                     <div class="advance-search" style="margin: 5px;">
@@ -209,8 +203,8 @@
                                     <label for="file">Upload a benchmark.</label>
                                 </div>
                             </div>
-                            
-                            
+
+
 
                             <p:dialog id="gmapDialog" widgetVar="dlg" width="625" height="500" modal="true">
                                 <h:panelGroup id="properties" class="row second">
@@ -294,6 +288,57 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="advance-search" style="margin: 5px; padding: 0px;">
+                        <div style="display: inline-block;
+                             background-color: #008fa1; color: white;
+                             height: 80px; width: 15%;">
+                            <span style="font-size: 24px; display: inline-block;
+                                  width: 100%; text-align: center;
+                                  margin-top: 20%;">
+                                QA System
+                            </span>
+                        </div>
+                        <h:inputText pa:type="text" pa:placeholder="System Name"
+                                     style="border-color: #DDDDDD; border-style: solid;
+                                     border-width: 1px; margin-left: 5px; width: 20%; height: 40px;
+                                     display: inline-block;
+                                     padding-left: 10px;"/>
+                        <h:inputText pa:type="text" pa:placeholder="Type QA System URL or Answers' File Path"
+                                     style="border-color: #DDDDDD; border-style: solid;
+                                     border-width: 1px; margin-left: 5px; width: 60%; height: 40px;
+                                     display: inline-block;
+                                     padding-left: 10px;"/>
+
+                    </div>
+
+                    
+                    <div class="advance-search" style="margin: 5px; padding: 0px;">
+                        <div style="display: inline-block;
+                             background-color: #008fa1; color: white;
+                             height: 80px; width: 15%;">
+                            <span style="font-size: 24px; display: inline-block;
+                                  width: 100%; text-align: center;
+                                  margin-top: 20%;">
+                                QA System
+                            </span>
+                        </div>
+                        <h:inputText pa:type="text" pa:placeholder="System Name"
+                                     style="border-color: #DDDDDD; border-style: solid;
+                                     border-width: 1px; margin-left: 5px; width: 20%; height: 40px;
+                                     display: inline-block;
+                                     padding-left: 10px;"/>
+                        <h:inputText pa:type="text" pa:placeholder="Type QA System URL or Answers' File Path"
+                                     style="border-color: #DDDDDD; border-style: solid;
+                                     border-width: 1px; margin-left: 5px; width: 60%; height: 40px;
+                                     display: inline-block;
+                                     padding-left: 10px;"/>
+
+                    </div>
+                    
+                    <div class="group-btn">                                    
+                        <h:commandButton class="btn-search" value="Add Another System"
+                                         />
                     </div>
                 </div>
 
