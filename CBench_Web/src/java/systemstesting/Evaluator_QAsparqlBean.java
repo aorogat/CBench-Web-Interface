@@ -133,13 +133,13 @@ public class Evaluator_QAsparqlBean implements EvaluatorInterface{
         evaluatedBenchmark.evaluatedQuestions.add(new QuestionEval(question.getQuestionString(), question, corectAnswersList, systemAnswersList));
 
         //}
-        if (currentQuestion >= benchmark.questions.size()) {
+        //if (currentQuestion >= benchmark.questions.size()) {
             //4- Calculate parameters
             evaluatedBenchmark.calculateParameters();
 
             //5- At the End, Print Results
-            evaluatedBenchmark.printScores();
-        }
+            //evaluatedBenchmark.printScores();
+        //}
 
     }
 
