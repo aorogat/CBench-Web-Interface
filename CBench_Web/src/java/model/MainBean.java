@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import systemstesting.EvaluatorInterface;
+import systemstesting.Evaluator_NewQASystem;
 import systemstesting.Evaluator_QAsparqlBean;
 import systemstesting.Evaluator_WDAqua;
 
@@ -86,7 +87,7 @@ public class MainBean {
     public String evaluate() throws IOException {
         Benchmark bench = getBenchmarkData(this.eval_benchmark);
         
-        qaSystems.add(new Evaluator_WDAqua());
+        qaSystems.add(new Evaluator_NewQASystem());
         
         if(compareToWdaqua)
             qaSystems.add(new Evaluator_WDAqua());
