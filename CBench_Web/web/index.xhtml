@@ -101,7 +101,8 @@
                                     </h:selectOneListbox>
                                 </div>
                             </div>
-                            <span style="font-size: 20px;"> OR </span>
+                            <span style="font-size: 20px; display: inline-block; width: 50px;
+                                      text-align: center;"> OR </span>
                             <div class="input-field">
                                 <div class="input-select">
                                     <input type="file" name="file" id="file" class="inputfile" />
@@ -135,7 +136,8 @@
                                     </h:selectManyListbox>
                                 </div>
                             </div>
-                            <span style="font-size: 20px;"> AND </span>
+                            <span style="font-size: 20px; display: inline-block; width: 50px;
+                                      text-align: center;"> AND </span>
                             <div class="input-field">
                                 <div class="input-select">
                                     <input type="file" name="file" id="file" class="inputfile" />
@@ -158,18 +160,46 @@
                 </div>
 
                 <div class="inner-form"  style="display: inline-block; width: 55%;">
-                    <div class="basic-search">
+                    <div>
                         <div class="input-field">
 
                             <h2><span>QA System Evaluation</span></h2>
 
                         </div>
                     </div>
+                    <div class="advance-search" style="margin: 5px; padding: 0px;">
+                        <div style="display: inline-block;
+                             background-color: #008fa1; color: white;
+                             height: 80px; width: 15%;">
+                            <span style="font-size: 24px; display: inline-block;
+                                  width: 100%; text-align: center;
+                                  margin-top: 20%;">
+                                QA System
+                            </span>
+                        </div>
+                        <h:inputText pa:type="text" pa:placeholder="System Name"
+                                     value="#{mainBean.qaSystemName}"
+                                     style="border-color: #DDDDDD; border-style: solid;
+                                     border-width: 1px; margin-left: 5px; width: 20%; height: 40px;
+                                     display: inline-block;
+                                     padding-left: 10px;"/>
+                        <h:inputText pa:type="text" pa:placeholder="Type QA System URL"
+                                     style="border-color: #DDDDDD; border-style: solid;
+                                     border-width: 1px; margin-left: 5px; width: 60%; height: 40px;
+                                     display: inline-block;
+                                     padding-left: 10px;"/>
+
+                    </div>
                     <div class="advance-search" style="margin: 5px;">
-                        <span class="desc" >Evaluation Configuration</span>
+                        <span class="desc" style="font-size: 18px;">Evaluation Configuration</span>
+                        <hr style="margin-bottom: 5px; margin-top: 5px;"/>
                         <div class="row">
                             <div>
-                                <div class="input-select">
+                                <span style="display: inline-block; margin: 10px;
+                                      font-weight: bold; width: 130px;">
+                                    Knowledge Graph: 
+                                </span>
+                                <div class="input-select" style="display: inline-block;">
                                     <h:selectOneListbox value="#{mainBean.eval_knowledgebase}"  pa:placeholder="Knowledgebase">
                                         <f:selectItems value = "#{mainBean.knowledgebases}" var="c"
                                                        itemValue="#{c}" itemLabel="#{c}"/>
@@ -179,30 +209,37 @@
                             </div>
                         </div>
                         <div class="row second">
-                            <div class="input-field">
-                                <div class="input-select">
+                            <div style="width: 100%;">
+                                <span style="display: inline-block; margin: 10px;
+                                      font-weight: bold;  width: 130px;">
+                                    Benchmark: 
+                                </span>
+                                <div class="input-select" style="display: inline-block;">
                                     <h:selectOneListbox value="#{mainBean.eval_benchmark}"  pa:placeholder="Benchmark">
                                         <f:selectItems value = "#{mainBean.benchmarks}" var="c"
                                                        itemValue="#{c}" itemLabel="#{c}"/>
                                     </h:selectOneListbox>
                                 </div> 
-                            </div>
-                            <span style="font-size: 20px;"> OR </span>
-                            <div class="desc">
-                                <h:selectBooleanCheckbox value="#{mainBean.eval_Properties_defined}">
-                                    <p:ajax event="change" update="properties" process="@this"/>
-                                </h:selectBooleanCheckbox> Properties Defined.
-                            </div>
-                            <div class="card">
-                                <p:commandButton id="btn" type="button" icon="pi pi-external-link" onclick="PF('dlg').show();"/>
-                            </div>
-                            <span style="font-size: 20px;"> OR </span>
-                            <div class="input-field">
-                                <div class="input-select">
-                                    <input type="file" name="file" id="file" class="inputfile" />
-                                    <label for="file">Upload a benchmark.</label>
+                                <span style="font-size: 20px; display: inline-block; width: 50px;
+                                      text-align: center;"> OR </span>
+                                <div class="desc"  style="display: inline-block;">
+                                    <h:selectBooleanCheckbox value="#{mainBean.eval_Properties_defined}">
+                                        <p:ajax event="change" update="properties" process="@this"/>
+                                    </h:selectBooleanCheckbox> Properties Defined.
+                                </div>
+                                <div class="card"  style="display: inline-block;">
+                                    <p:commandButton id="btn" type="button" icon="pi pi-external-link" onclick="PF('dlg').show();"/>
+                                </div>
+                                <span style="font-size: 20px; display: inline-block; width: 50px;
+                                      text-align: center;"> OR </span>
+                                <div class="input-field"  style="display: inline-block; width: 150px;">
+                                    <div class="input-select" style="display: inline-block;">
+                                        <input type="file" name="file" id="file" class="inputfile" />
+                                        <label for="file">Upload a benchmark.</label>
+                                    </div>
                                 </div>
                             </div>
+
 
 
 
@@ -253,8 +290,13 @@
                                 </h:panelGroup>
                             </p:dialog>
                         </div>
+                        
                         <div class="row second">
-                            <div class="desc" id="updateAns">
+                            <span style="display: inline-block; margin: 10px;
+                                      font-weight: bold; width: 130px;">
+                                    Golden Answers: 
+                                </span>
+                            <div class="desc" id="updateAns"  style="display: inline-block;">
                                 <h:selectBooleanCheckbox value="#{mainBean.eval_update_answers}">
                                     <p:ajax event="change" update="delete" process="@this"/>
                                 </h:selectBooleanCheckbox> Update Answers from a SPARQL endpoint. 
@@ -267,78 +309,49 @@
                                              padding: 10px;" 
                                              />
 
-
                             </div>
-                            <div class="desc">
+                        </div>
+                        
+                        <div  class="row second">
+                                <span style="display: inline-block; margin: 10px;
+                                      font-weight: bold; width: 130px;">
+                                    Threshold: 
+                                </span>
+                                <div class="desc">
                                 <h:outputText id="output" value="Set F1-Global threshold to #{mainBean.eval_thresould}"/>
                                 <h:inputHidden id="txt2"/>
                                 <p:slider for="txt2" display="output" step="1" maxValue="10" style="width: 200px" displayTemplate="Set F1-Global threshold to 0.{value}"/>
 
                             </div>
+                            </div>
+
+                        <div class="row second">
+                            <div>
+                                <span style="display: inline-block; margin: 10px;
+                                      font-weight: bold; width: 130px;">
+                                Compare to 
+                                </span>
+                                <div class="desc" style="display: inline-block; width: 100px;
+                                     margin: 5px; padding: 5px;">
+                                    <h:selectBooleanCheckbox value="#{mainBean.compareToQasparql}">
+                                    </h:selectBooleanCheckbox> QASparql
+                                </div>
+                                <div class="desc" style="display: inline-block; width: 100px;
+                                     margin: 5px; padding: 5px;">
+                                    <h:selectBooleanCheckbox value="#{mainBean.compareToWdaqua}">
+                                    </h:selectBooleanCheckbox> WDAqua
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row third">
                             <div class="input-field">
-                                <div class="result-count">
-
-                                </div>
                                 <div class="group-btn">                                    
                                     <h:commandButton class="btn-search" value="Evaluate"
                                                      action="#{mainBean.evaluate()}"/>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="advance-search" style="margin: 5px; padding: 0px;">
-                        <div style="display: inline-block;
-                             background-color: #008fa1; color: white;
-                             height: 80px; width: 15%;">
-                            <span style="font-size: 24px; display: inline-block;
-                                  width: 100%; text-align: center;
-                                  margin-top: 20%;">
-                                QA System
-                            </span>
-                        </div>
-                        <h:inputText pa:type="text" pa:placeholder="System Name"
-                                     style="border-color: #DDDDDD; border-style: solid;
-                                     border-width: 1px; margin-left: 5px; width: 20%; height: 40px;
-                                     display: inline-block;
-                                     padding-left: 10px;"/>
-                        <h:inputText pa:type="text" pa:placeholder="Type QA System URL or Answers' File Path"
-                                     style="border-color: #DDDDDD; border-style: solid;
-                                     border-width: 1px; margin-left: 5px; width: 60%; height: 40px;
-                                     display: inline-block;
-                                     padding-left: 10px;"/>
-
-                    </div>
-
-                    
-                    <div class="advance-search" style="margin: 5px; padding: 0px;">
-                        <div style="display: inline-block;
-                             background-color: #008fa1; color: white;
-                             height: 80px; width: 15%;">
-                            <span style="font-size: 24px; display: inline-block;
-                                  width: 100%; text-align: center;
-                                  margin-top: 20%;">
-                                QA System
-                            </span>
-                        </div>
-                        <h:inputText pa:type="text" pa:placeholder="System Name"
-                                     style="border-color: #DDDDDD; border-style: solid;
-                                     border-width: 1px; margin-left: 5px; width: 20%; height: 40px;
-                                     display: inline-block;
-                                     padding-left: 10px;"/>
-                        <h:inputText pa:type="text" pa:placeholder="Type QA System URL or Answers' File Path"
-                                     style="border-color: #DDDDDD; border-style: solid;
-                                     border-width: 1px; margin-left: 5px; width: 60%; height: 40px;
-                                     display: inline-block;
-                                     padding-left: 10px;"/>
-
-                    </div>
-                    
-                    <div class="group-btn">                                    
-                        <h:commandButton class="btn-search" value="Add Another System"
-                                         />
                     </div>
                 </div>
 

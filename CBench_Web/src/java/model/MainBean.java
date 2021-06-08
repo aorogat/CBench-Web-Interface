@@ -67,6 +67,11 @@ public class MainBean {
     public static Benchmark benchmarkData;
     public ArrayList<String> selectedBenchmarks = new ArrayList();
     ArrayList<EvaluatorInterface> qaSystems = new ArrayList<>();
+    
+    boolean compareToQasparql;
+    boolean compareToWdaqua;
+    
+    String qaSystemName;
 
     public MainBean() throws IOException {
         
@@ -80,8 +85,13 @@ public class MainBean {
 
     public String evaluate() throws IOException {
         Benchmark bench = getBenchmarkData(this.eval_benchmark);
+        
         qaSystems.add(new Evaluator_WDAqua());
-        qaSystems.add(new Evaluator_QAsparqlBean());
+        
+        if(compareToWdaqua)
+            qaSystems.add(new Evaluator_WDAqua());
+        if(compareToQasparql)
+            qaSystems.add(new Evaluator_QAsparqlBean());
         //EvaluatorInterface wDAqua = new Evaluator_WDAqua();
         //wDAqua.evaluate(bench);
         //Evaluator_QAsparqlBean qaSparql = new Evaluator_QAsparqlBean();
@@ -177,7 +187,7 @@ public class MainBean {
         benchmarks.add("TempQuestions");
         benchmarks.add("ComplexQuestions");
         benchmarks.add("ComQA");
-        benchmarks.add("UserDefined");
+        //benchmarks.add("UserDefined");
         return benchmarks;
     }
 
@@ -502,8 +512,32 @@ public class MainBean {
         this.qaSystems = qaSystems;
     }
 
-    
+    public boolean isCompareToQasparql() {
+        return compareToQasparql;
+    }
 
+    public void setCompareToQasparql(boolean compareToQasparql) {
+        this.compareToQasparql = compareToQasparql;
+    }
+
+    public boolean isCompareToWdaqua() {
+        return compareToWdaqua;
+    }
+
+    public void setCompareToWdaqua(boolean compareToWdaqua) {
+        this.compareToWdaqua = compareToWdaqua;
+    }
+
+    public String getQaSystemName() {
+        return qaSystemName;
+    }
+
+    public void setQaSystemName(String qaSystemName) {
+        this.qaSystemName = qaSystemName;
+    }
+
+    
+    
     
     
     
