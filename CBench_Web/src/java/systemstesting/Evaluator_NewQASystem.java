@@ -34,7 +34,7 @@ import qa.dataStructures.Question;
 @SessionScoped
 public class Evaluator_NewQASystem  implements EvaluatorInterface{
 
-    static BenchmarkEval evaluatedBenchmark;
+    public static BenchmarkEval evaluatedBenchmark;
     static int currentQuestion;
 
     ArrayList<Query> qs;
@@ -135,9 +135,6 @@ public class Evaluator_NewQASystem  implements EvaluatorInterface{
         if (currentQuestion >= benchmark.questions.size()) {
             //4- Calculate parameters
             evaluatedBenchmark.calculateParameters();
-
-            //5- At the End, Print Results
-            evaluatedBenchmark.printScores();
         }
 
     }

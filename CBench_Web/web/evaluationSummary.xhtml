@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:pa="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pp="http://java.sun.com/jsf/passthrough">
+    <p:tab title="Summary">
+        <p:chart type="line" model="#{mainBean.differentThetalineChartModel}"  
+                 style="width:1200px; height:500px;
+                 display: inline-block; font-family: monospace;"
+                 />
+    </p:tab>	
+</ui:composition>

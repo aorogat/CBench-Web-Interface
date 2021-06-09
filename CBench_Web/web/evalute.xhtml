@@ -118,11 +118,13 @@
                             <ui:include src = "wdaqua.xhtml" />
                         </ui:insert>
                         
-                        
                         <ui:insert name = "QASparql" >
                             <ui:include src = "qasparql.xhtml"  rendered="#{mainBean.compareToQasparql}"/>
                         </ui:insert>
-
+                        
+                        <ui:insert name = "Summary" >
+                            <ui:include src = "evaluationSummary.xhtml"/>
+                        </ui:insert>
 
 
                     </p:tabView>

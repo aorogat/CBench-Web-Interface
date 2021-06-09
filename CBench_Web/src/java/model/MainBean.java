@@ -3,6 +3,7 @@ package model;
 import DataSet.Benchmark;
 import NLQAnalysis.NLQCategoraizer;
 import NLQAnalysis.NlqComparison;
+import ShallowAnalysis.Keyword;
 import ShallowAnalysis.Keywords;
 import ShallowAnalysis.KeywordsComparison;
 import ShallowAnalysis.NoOfTriples;
@@ -15,6 +16,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.LineChartModel;
 import systemstesting.EvaluatorInterface;
 import systemstesting.Evaluator_NewQASystem;
 import systemstesting.Evaluator_QAsparqlBean;
@@ -73,6 +79,8 @@ public class MainBean {
     boolean compareToWdaqua;
     
     String qaSystemName;
+    
+    LineChartModel differentThetalineChartModel = new LineChartModel();
 
     public MainBean() throws IOException {
         
@@ -538,6 +546,44 @@ public class MainBean {
 
     public void setQaSystemName(String qaSystemName) {
         this.qaSystemName = qaSystemName;
+    }
+
+    public LineChartModel getDifferentThetalineChartModel() {
+        differentThetalineChartModel = new LineChartModel();
+        ChartSeries mainSystem = new ChartSeries();
+        mainSystem.setLabel(qaSystemName);
+        Evaluator_NewQASystem newQASystem = (Evaluator_NewQASystem) qaSystems.get(0);
+        mainSystem.set("0.0", newQASystem.getEvaluatedBenchmark().F_G(0));
+        mainSystem.set("0.1", newQASystem.getEvaluatedBenchmark().F_G(0.1));
+        mainSystem.set("0.2", newQASystem.getEvaluatedBenchmark().F_G(0.2));
+        mainSystem.set("0.3", newQASystem.getEvaluatedBenchmark().F_G(0.3));
+        mainSystem.set("0.4", newQASystem.getEvaluatedBenchmark().F_G(0.4));
+        mainSystem.set("0.5", newQASystem.getEvaluatedBenchmark().F_G(0.5));
+        mainSystem.set("0.6", newQASystem.getEvaluatedBenchmark().F_G(0.6));
+        mainSystem.set("0.7", newQASystem.getEvaluatedBenchmark().F_G(0.7));
+        mainSystem.set("0.8", newQASystem.getEvaluatedBenchmark().F_G(0.8));
+        mainSystem.set("0.9", newQASystem.getEvaluatedBenchmark().F_G(0.9));
+        mainSystem.set("1.0", newQASystem.getEvaluatedBenchmark().F_G(1));
+        
+        
+        differentThetalineChartModel.addSeries(mainSystem);
+        
+        differentThetalineChartModel.setTitle("Different Thresholds");
+        differentThetalineChartModel.setLegendPosition("e");
+        //model2.setShowPointLabels(true);
+        differentThetalineChartModel.getAxes().put(AxisType.X, new CategoryAxis("Threshold"));
+        Axis xAxis2 = differentThetalineChartModel.getAxis(AxisType.X);
+        xAxis2.setTickAngle(-30);
+
+        Axis yAxis2 = differentThetalineChartModel.getAxis(AxisType.Y);
+        yAxis2.setMin(0);
+        yAxis2.setMax(1);
+        
+        return differentThetalineChartModel;
+    }
+
+    public void setDifferentThetalineChartModel(LineChartModel differentThetalineChartModel) {
+        this.differentThetalineChartModel = differentThetalineChartModel;
     }
 
     

@@ -333,11 +333,6 @@ public abstract class Evaluator {
         //4- Calculate parameters
         evaluatedBenchmark.calculateParameters();
 
-        //5- At the End, Print Results
-        evaluatedBenchmark.printScores();
-
-        System.out.println("\n\n\n\n\n\n\n");
-
     }
 
     public abstract ArrayList<String> answer(String question) throws IOException, JSONException;
