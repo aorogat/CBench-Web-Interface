@@ -89,10 +89,13 @@ public class MainBean {
         
         qaSystems.add(new Evaluator_NewQASystem());
         
+        EvaluatorInterface qasparql = new Evaluator_QAsparqlBean();
+        EvaluatorInterface wdaqua = new Evaluator_WDAqua();
+        
         if(compareToWdaqua)
-            qaSystems.add(new Evaluator_WDAqua());
+            qaSystems.add(wdaqua);
         if(compareToQasparql)
-            qaSystems.add(new Evaluator_QAsparqlBean());
+            qaSystems.add(qasparql);
         //EvaluatorInterface wDAqua = new Evaluator_WDAqua();
         //wDAqua.evaluate(bench);
         //Evaluator_QAsparqlBean qaSparql = new Evaluator_QAsparqlBean();

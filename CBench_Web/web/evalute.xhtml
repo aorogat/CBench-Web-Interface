@@ -114,13 +114,13 @@
                         </ui:insert>
 
 
-                        <ui:insert name = "WDAqua" >
+                        <ui:insert name = "WDAqua" rendered="#{mainBean.compareToWdaqua}" >
                             <ui:include src = "wdaqua.xhtml" />
                         </ui:insert>
                         
                         
                         <ui:insert name = "QASparql" >
-                            <ui:include src = "qasparql.xhtml" />
+                            <ui:include src = "qasparql.xhtml"  rendered="#{mainBean.compareToQasparql}"/>
                         </ui:insert>
 
 
