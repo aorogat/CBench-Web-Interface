@@ -21,6 +21,7 @@ import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
+import systemstesting.BenchmarkEval;
 import systemstesting.EvaluatorInterface;
 import systemstesting.Evaluator_NewQASystem;
 import systemstesting.Evaluator_QAsparqlBean;
@@ -547,26 +548,67 @@ public class MainBean {
     public void setQaSystemName(String qaSystemName) {
         this.qaSystemName = qaSystemName;
     }
+    
+    
+    private ChartSeries buildSeries(BenchmarkEval eval, String systemName)
+    {
+        ChartSeries mainSystem = new ChartSeries();
+        mainSystem.setLabel(systemName);
+        mainSystem.set("0.0", eval.F_G(0.0001));
+        mainSystem.set("0.1", eval.F_G(0.1));
+        mainSystem.set("0.2", eval.F_G(0.2));
+        mainSystem.set("0.3", eval.F_G(0.3));
+        mainSystem.set("0.4", eval.F_G(0.4));
+        mainSystem.set("0.5", eval.F_G(0.5));
+        mainSystem.set("0.6", eval.F_G(0.6));
+        mainSystem.set("0.7", eval.F_G(0.7));
+        mainSystem.set("0.8", eval.F_G(0.8));
+        mainSystem.set("0.9", eval.F_G(0.9));
+        mainSystem.set("1.0", eval.F_G(1));
+        
+        return mainSystem;
+    }
 
     public LineChartModel getDifferentThetalineChartModel() {
         differentThetalineChartModel = new LineChartModel();
-        ChartSeries mainSystem = new ChartSeries();
-        mainSystem.setLabel(qaSystemName);
+        
+        
+        //Main System Series
         Evaluator_NewQASystem newQASystem = (Evaluator_NewQASystem) qaSystems.get(0);
-        mainSystem.set("0.0", newQASystem.getEvaluatedBenchmark().F_G(0));
-        mainSystem.set("0.1", newQASystem.getEvaluatedBenchmark().F_G(0.1));
-        mainSystem.set("0.2", newQASystem.getEvaluatedBenchmark().F_G(0.2));
-        mainSystem.set("0.3", newQASystem.getEvaluatedBenchmark().F_G(0.3));
-        mainSystem.set("0.4", newQASystem.getEvaluatedBenchmark().F_G(0.4));
-        mainSystem.set("0.5", newQASystem.getEvaluatedBenchmark().F_G(0.5));
-        mainSystem.set("0.6", newQASystem.getEvaluatedBenchmark().F_G(0.6));
-        mainSystem.set("0.7", newQASystem.getEvaluatedBenchmark().F_G(0.7));
-        mainSystem.set("0.8", newQASystem.getEvaluatedBenchmark().F_G(0.8));
-        mainSystem.set("0.9", newQASystem.getEvaluatedBenchmark().F_G(0.9));
-        mainSystem.set("1.0", newQASystem.getEvaluatedBenchmark().F_G(1));
+        differentThetalineChartModel.addSeries(buildSeries(newQASystem.getEvaluatedBenchmark(), qaSystemName));
         
+        //QASparql and WDAqua
+        Evaluator_WDAqua wDAqua = null;
+        Evaluator_QAsparqlBean qAsparqlBean;
         
-        differentThetalineChartModel.addSeries(mainSystem);
+        if(qaSystems.size()==2)
+        {
+            if(qaSystems.get(1) instanceof Evaluator_WDAqua)
+            {
+                wDAqua = (Evaluator_WDAqua) qaSystems.get(1);
+                differentThetalineChartModel.addSeries(buildSeries(wDAqua.getEvaluatedBenchmark(), "WDAqua"));
+            }
+            else if(qaSystems.get(1) instanceof Evaluator_QAsparqlBean)
+            {
+                qAsparqlBean = (Evaluator_QAsparqlBean) qaSystems.get(1);
+                differentThetalineChartModel.addSeries(buildSeries(qAsparqlBean.getEvaluatedBenchmark(), "QASparql"));
+            }
+        }
+        
+        else if(qaSystems.size()==3)
+        {
+            if(qaSystems.get(2) instanceof Evaluator_WDAqua)
+            {
+                wDAqua = (Evaluator_WDAqua) qaSystems.get(2);
+                differentThetalineChartModel.addSeries(buildSeries(wDAqua.getEvaluatedBenchmark(), "WDAqua"));
+            }
+            else if(qaSystems.get(2) instanceof Evaluator_QAsparqlBean)
+            {
+                qAsparqlBean = (Evaluator_QAsparqlBean) qaSystems.get(2);
+                differentThetalineChartModel.addSeries(buildSeries(qAsparqlBean.getEvaluatedBenchmark(), "QASparql"));
+            }
+        }
+        
         
         differentThetalineChartModel.setTitle("Different Thresholds");
         differentThetalineChartModel.setLegendPosition("e");
