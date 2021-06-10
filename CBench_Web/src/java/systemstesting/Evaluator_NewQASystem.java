@@ -155,7 +155,7 @@ public class Evaluator_NewQASystem  implements EvaluatorInterface{
 
         result = result.replace("\\n", " ").replace("\\{", "{").replace("\\}", "}").replace("\\", "")
                 .replace("\"{", "{").replace("\"}", "}").replace("}\"", "}");
-        System.out.println(result);
+//        System.out.println(result);
 
         try {
             systemAnswersList = new ArrayList<>();
@@ -168,7 +168,7 @@ public class Evaluator_NewQASystem  implements EvaluatorInterface{
                     .getJSONObject("question").getJSONObject("answers")
                     .getJSONObject("head").getJSONArray("vars").getString(0);
 
-            System.out.println(varName);
+//            System.out.println(varName);
 
             for (int i = 0; i < bindings.length(); i++) {
                 JSONObject binding = (JSONObject) bindings.getJSONObject(i);

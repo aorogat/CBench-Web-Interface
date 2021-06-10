@@ -323,13 +323,13 @@ public abstract class Evaluator {
 
 //        }
 
-        System.out.println("+");
-        System.out.println("+");
-        System.out.println("+");
-        System.out.println("+       ++++++++++++++");
-        System.out.println("++++++> Final Report +");
-        System.out.println("        ++++++++++++++");
-        System.out.print("               . Final Scores");
+//        System.out.println("+");
+//        System.out.println("+");
+//        System.out.println("+");
+//        System.out.println("+       ++++++++++++++");
+//        System.out.println("++++++> Final Report +");
+//        System.out.println("        ++++++++++++++");
+//        System.out.print("               . Final Scores");
         //4- Calculate parameters
         evaluatedBenchmark.calculateParameters();
 

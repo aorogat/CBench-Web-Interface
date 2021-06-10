@@ -171,7 +171,7 @@ public class Evaluator_QAsparqlBean implements EvaluatorInterface{
 
                     if (currentQuestion.trim().toLowerCase().equals(question.trim().toLowerCase())) {
                         questionResponse = current;
-                        System.out.println(current.toString());
+//                        System.out.println(current.toString());
                         break;
                     }
                 }
@@ -228,7 +228,7 @@ public class Evaluator_QAsparqlBean implements EvaluatorInterface{
 
             sparqlQuery = sparqlQuery.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
 
-            System.out.println("               " + sparqlQuery);
+//            System.out.println("               " + sparqlQuery);
 
             //2- Get Answer from DBpedia
             if (!sparqlQuery.equals("")) {

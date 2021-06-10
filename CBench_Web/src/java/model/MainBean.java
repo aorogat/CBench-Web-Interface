@@ -620,6 +620,7 @@ public class MainBean {
         Axis yAxis2 = differentThetalineChartModel.getAxis(AxisType.Y);
         yAxis2.setMin(0);
         yAxis2.setMax(1);
+        yAxis2.setTickCount(11);
         
         return differentThetalineChartModel;
     }

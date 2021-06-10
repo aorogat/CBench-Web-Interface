@@ -7,10 +7,102 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pp="http://java.sun.com/jsf/passthrough">
-    <p:tab title="Summary">
+    <p:tab title="Summary" id="summary">
+        <table style="width: 50%; border-width: 2px; border-color: black;
+               border-style: solid; margin: 50px 20px;">
+            <tr>
+                <td>
+                    <b>QA System</b>
+                </td>
+
+                <td>
+                    <b>
+                        F1-Global 
+                        (&Theta; = 
+                        <h:outputText value="#{evaluator_NewQASystem.evaluatedBenchmark.threshold}">
+                            <f:convertNumber pattern="#0.0" /> 
+                        </h:outputText>)
+                    </b>
+                </td>      
+                <td>
+                    <b>F1-Micro</b>
+                </td>
+                <td>
+                    <b>F1-Macro</b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    #{mainBean.qaSystemName}
+                </td>
+
+                <td>
+                    <h:outputText value="#{evaluator_NewQASystem.evaluatedBenchmark.F_G(evaluator_NewQASystem.evaluatedBenchmark.threshold)}">
+                        <f:convertNumber pattern="#0.000" /> 
+                    </h:outputText>
+                </td>      
+                <td>
+                    <h:outputText value="#{evaluator_NewQASystem.evaluatedBenchmark.F_Mi()}">
+                        <f:convertNumber pattern="#0.000" /> 
+                    </h:outputText>
+                </td>
+                <td>
+                    <h:outputText value="#{evaluator_NewQASystem.evaluatedBenchmark.P_Ma()}">
+                        <f:convertNumber pattern="#0.000" /> 
+                    </h:outputText>
+                </td>
+            </tr>
+            <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                <tr>
+                    <td>
+                        QASparql
+                    </td>
+
+                    <td>
+                        <h:outputText value="#{evaluator_QAsparqlBean.evaluatedBenchmark.F_G(evaluator_NewQASystem.evaluatedBenchmark.threshold)}">
+                            <f:convertNumber pattern="#0.000" /> 
+                        </h:outputText>
+                    </td>      
+                    <td>
+                        <h:outputText value="#{evaluator_QAsparqlBean.evaluatedBenchmark.F_Mi()}">
+                            <f:convertNumber pattern="#0.000" /> 
+                        </h:outputText>
+                    </td>
+                    <td>
+                        <h:outputText value="#{evaluator_QAsparqlBean.evaluatedBenchmark.P_Ma()}">
+                            <f:convertNumber pattern="#0.000" /> 
+                        </h:outputText>
+                    </td>
+                </tr>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                <tr>
+                    <td>
+                        WDAqua
+                    </td>
+
+                    <td>
+                        <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.F_G(evaluator_NewQASystem.evaluatedBenchmark.threshold)}">
+                            <f:convertNumber pattern="#0.000" /> 
+                        </h:outputText>
+                    </td>      
+                    <td>
+                        <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.F_Mi()}">
+                            <f:convertNumber pattern="#0.000" /> 
+                        </h:outputText>
+                    </td>
+                    <td>
+                        <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.P_Ma()}">
+                            <f:convertNumber pattern="#0.000" /> 
+                        </h:outputText>
+                    </td>
+                </tr>
+            </h:panelGroup>
+        </table>
         <p:chart type="line" model="#{mainBean.differentThetalineChartModel}"  
                  style="width:1200px; height:500px;
                  display: inline-block; font-family: monospace;"
                  />
-    </p:tab>	
+    </p:tab>
+    <p:poll interval="5" update="summary" process="@this"/>
 </ui:composition>

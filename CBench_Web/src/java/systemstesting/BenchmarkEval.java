@@ -1,15 +1,10 @@
 package systemstesting;
 
 import ShapeAnalysis.QueryShapeType;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import model.MainBean;
 import org.primefaces.model.chart.Axis;
@@ -17,9 +12,7 @@ import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.DonutChartModel;
 import org.primefaces.model.chart.HorizontalBarChartModel;
-import java.util.stream.*;
 import java.util.*;
-import java.util.function.*;
 
 @ManagedBean
 @SessionScoped
@@ -315,28 +308,7 @@ public class BenchmarkEval {
         return flowerSetEvaluatedQuestions;
     }
 
-    private void writePropertiesToFile(String fileName, ArrayList<QuestionEval> evaluatedQuestionsType) {
-        FileWriter myWriter;
-        try {
-            myWriter = new FileWriter(fileName + ".txt");
-            for (QuestionEval q : evaluatedQuestionsType) {
-                int ans = 0;
-                if (q.F_q >= threshold) {
-                    ans = 1;
-                }
-                try {
-                    String property = "(" + q.properties.type + ", " + q.properties.keywords.trim().replace(' ', '-') + ", T=" + q.properties.triples + ")";
-                    myWriter.append(property + "\t" + ans + "\t" + (1 - ans) + "\n");
-                } catch (Exception ex) {
-                }
-            }
-            myWriter.close();
-        } catch (IOException e) {
-            System.out.println("An error occurred during writing the report.");
-            e.printStackTrace();
-        }
-    }
-
+    
     public ArrayList<QuestionEval> getEvaluatedQuestions() {
         return evaluatedQuestions;
     }
