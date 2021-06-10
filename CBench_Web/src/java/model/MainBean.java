@@ -621,6 +621,7 @@ public class MainBean {
         yAxis2.setMin(0);
         yAxis2.setMax(1);
         yAxis2.setTickCount(11);
+        yAxis2.setLabel("F1-Global");
         
         return differentThetalineChartModel;
     }
