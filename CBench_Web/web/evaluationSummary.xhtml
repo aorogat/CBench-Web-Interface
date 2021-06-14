@@ -7,7 +7,9 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pp="http://java.sun.com/jsf/passthrough">
-    <p:tab title="Summary" id="summary">
+    <p:tab title="Summary">
+        <h:form>
+            <h:panelGroup id="summary1">
         <table style="width: 50%; border-width: 2px; border-color: black;
                border-style: solid; margin: 50px 20px;">
             <tr>
@@ -103,6 +105,9 @@
                  style="width:1200px; height:500px;
                  display: inline-block; font-family: monospace;"
                  />
+        </h:panelGroup>
+        <p:poll interval="1" update="summary1" process="@this"/>
+        </h:form>
     </p:tab>
-    <p:poll interval="5" update="summary" process="@this"/>
+    
 </ui:composition>

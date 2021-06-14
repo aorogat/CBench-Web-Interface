@@ -122,7 +122,7 @@ public class Evaluator_QAsparqlBean implements EvaluatorInterface{
         }
             //2- Determine systemAnswersList
         //for (int i = 0; i < 3; i++) {
-        String q = question.getQuestionString();//.replace('?', ' ').replace(" ", "%20");
+        String q = question.getQuestionString();
 
         answer(q);
 

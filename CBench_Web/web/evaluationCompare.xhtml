@@ -7,173 +7,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:pp="http://java.sun.com/jsf/passthrough">
-    <p:tab title="#{mainBean.qaSystemName}">
-        <div style="display: inline-block; vertical-align: top;">
-
-
-        </div>
-        <div style="display: inline-block; vertical-align: top;
-             width: 100%;">
-            <h:form style="width: 100%;">
-                <p:panel id="scores" style="width: 100%;">
-                    <span style="display: inline-block;
-                          background-color: #bde5f8; 
-                          margin: 5px;
-                          padding: 5px;">
-                        All Questions: #{evaluator_NewQASystem.evaluatedBenchmark.allQuestions}
-                    </span>
-                    <span style="display: inline-block;
-                          background-color: #bde5f8; 
-                          margin: 5px;
-                          padding: 5px;">
-                        Evaluated Questions: #{evaluator_NewQASystem.evaluatedBenchmark.evaluatedQuestions.size()}
-                    </span>
-                    <span style="display: inline-block;
-                          background-color: #bde5f8; 
-                          margin: 5px;
-                          padding: 5px;">
-                        Questions with correct answers: #{evaluator_NewQASystem.evaluatedBenchmark.questionsWithCorrectAnswers}
-                    </span>
-                    <span style="display: inline-block;
-                          background-color: #bde5f8; 
-                          margin: 5px;
-                          padding: 5px;">
-                        Answered Questions (from the 
-                        #{evaluator_NewQASystem.evaluatedBenchmark.questionsWithCorrectAnswers}
-                        Questions): #{evaluator_NewQASystem.evaluatedBenchmark.answered} 
-                    </span>
-                    <span style="display: inline-block;
-                          background-color: #bde5f8; 
-                          margin: 5px;
-                          padding: 5px;">
-                        Partially Correctly Answered Questions (from the 
-                        #{evaluator_NewQASystem.evaluatedBenchmark.answered}
-                        Questions): #{evaluator_NewQASystem.evaluatedBenchmark.answeredWithThetaThreshold} 
-                    </span>
-                    <br/>
-                    <div style="display: inline-block; width: 30%; margin: 10px; padding: 10px;
-                         background-color: #e1e1ee;">
-                        <div style="font-size: 30px; margin: 10px; text-align: center;">
-                            F1-Global 
-                            (&Theta; = 
-                            <h:outputText value="#{evaluator_NewQASystem.evaluatedBenchmark.threshold}">
-                                <f:convertNumber pattern="#0.0" /> 
-                            </h:outputText>)
-                        </div>
-                        <div  style="font-size: 30px; text-align: center;
-                              color: darkviolet;">
-                            <h:outputText value="#{evaluator_NewQASystem.evaluatedBenchmark.F_G(evaluator_NewQASystem.evaluatedBenchmark.threshold)}">
-                                <f:convertNumber pattern="#0.000" /> 
-                            </h:outputText>
-                        </div>
-                        <div style="display: inline-block; width: 45%; margin: 2%; padding: 3%;
-                             background-color: #c1c1cc;">
-                            <div style="font-size: 16px; margin: 10px; text-align: center;">
-                                R-Global
-                            </div>
-                            <div  style="font-size: 16px; text-align: center;
-                                  color: darkviolet;">
-                                <h:outputText value="#{evaluator_NewQASystem.evaluatedBenchmark.R_G(evaluator_NewQASystem.evaluatedBenchmark.threshold)}">
-                                    <f:convertNumber pattern="#0.000" /> 
-                                </h:outputText>
-                            </div>
-                        </div>
-                        <div style="display: inline-block; width: 45%; margin: 2%; padding: 3%;
-                             background-color: #c1c1cc;">
-                            <div style="font-size: 16px; margin: 10px; text-align: center;">
-                                P-Global
-                            </div>
-                            <div  style="font-size: 16px; text-align: center;
-                                  color: darkviolet;">
-                                <h:outputText value="#{evaluator_NewQASystem.evaluatedBenchmark.P_G(evaluator_NewQASystem.evaluatedBenchmark.threshold)}">
-                                    <f:convertNumber pattern="#0.000" /> 
-                                </h:outputText>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="display: inline-block; width: 30%; margin: 10px; padding: 10px;
-                         background-color: #e1e1ee;">
-                        <div style="font-size: 30px; margin: 10px; text-align: center;">
-                            F1-Micro
-                        </div>
-                        <div  style="font-size: 30px; text-align: center;
-                              color: darkviolet;">
-                            <h:outputText value="#{evaluator_NewQASystem.evaluatedBenchmark.F_Mi()}">
-                                <f:convertNumber pattern="#0.000" /> 
-                            </h:outputText>
-                        </div>
-                        <div style="display: inline-block; width: 45%; margin: 2%; padding: 3%;
-                             background-color: #c1c1cc;">
-                            <div style="font-size: 16px; margin: 10px; text-align: center;">
-                                R-Micro
-                            </div>
-                            <div  style="font-size: 16px; text-align: center;
-                                  color: darkviolet;">
-                                <h:outputText value="#{evaluator_NewQASystem.evaluatedBenchmark.R_Mi()}">
-                                    <f:convertNumber pattern="#0.000" /> 
-                                </h:outputText>
-                            </div>
-                        </div>
-                        <div style="display: inline-block; width: 45%; margin: 2%; padding: 3%;
-                             background-color: #c1c1cc;">
-                            <div style="font-size: 16px; margin: 10px; text-align: center;">
-                                P-Micro
-                            </div>
-                            <div  style="font-size: 16px; text-align: center;
-                                  color: darkviolet;">
-                                <h:outputText value="#{evaluator_NewQASystem.evaluatedBenchmark.P_Mi()}">
-                                    <f:convertNumber pattern="#0.000" /> 
-                                </h:outputText>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="display: inline-block; width: 30%; margin: 10px; padding: 10px;
-                         background-color: #e1e1ee;">
-                        <div style="font-size: 30px; margin: 10px; text-align: center;">
-                            F1-Macro
-                        </div>
-                        <div  style="font-size: 30px; text-align: center;
-                              color: darkviolet;">
-                            <h:outputText value="#{evaluator_NewQASystem.evaluatedBenchmark.F_Ma()}">
-                                <f:convertNumber pattern="#0.000" /> 
-                            </h:outputText>
-                        </div>
-                        <div style="display: inline-block; width: 45%; margin: 2%; padding: 3%;
-                             background-color: #c1c1cc;">
-                            <div style="font-size: 16px; margin: 10px; text-align: center;">
-                                R-Macro
-                            </div>
-                            <div  style="font-size: 16px; text-align: center;
-                                  color: darkviolet;">
-                                <h:outputText value="#{evaluator_NewQASystem.evaluatedBenchmark.R_Ma()}">
-                                    <f:convertNumber pattern="#0.000" /> 
-                                </h:outputText>
-                            </div>
-                        </div>
-                        <div style="display: inline-block; width: 45%; margin: 2%; padding: 3%;
-                             background-color: #c1c1cc;">
-                            <div style="font-size: 16px; margin: 10px; text-align: center;">
-                                P-Macro
-                            </div>
-                            <div  style="font-size: 16px; text-align: center;
-                                  color: darkviolet;">
-                                <h:outputText value="#{evaluator_NewQASystem.evaluatedBenchmark.P_Ma()}">
-                                    <f:convertNumber pattern="#0.000" /> 
-                                </h:outputText>
-                            </div>
-                        </div>
-                    </div>
-                </p:panel>
-                <p:poll interval="3" update="scores" process="@this"/>
-                <p:progressBar widgetVar="pbAjax" ajax="true" value="#{evaluator_NewQASystem.progress}"
-                               labelTemplate="{value}%" styleClass="p-mt-3" global="false"
-                               id="progressbar" style="display: inline-block; width: 100%;">
-                    <p:ajax event="complete" listener="#{evaluator_NewQASystem.onComplete}" update="progressbar"
-                            oncomplete="PF('startButton3').enable()" />
-                </p:progressBar>
-                <p:poll interval="3" update="progressbar" process="@this"/>
-            </h:form>
-        </div>
+    <p:tab title="Comparison">
         <div>
 
             <p:tabView>
@@ -184,10 +18,16 @@
                         <p:panel id="allQuestions">
                             <table border="0">
                                 <tr>
-                                    <td width="65%">
-                                        <p:dataTable var="qs" value="#{evaluator_NewQASystem.evaluatedBenchmark.evaluatedQuestions}" 
-                                                     scrollable="true" scrollHeight="400"
-                                                     >
+                                    <td width="95%">
+                                        <p:dataTable  var="qs" value="#{evaluator_NewQASystem.evaluatedBenchmark.evaluatedQuestions}" 
+                                                      scrollable="true" scrollHeight="400"
+                                                      rowIndexVar="index">>
+
+                                            <p:column headerText="#">
+                                                <h:outputText style="font-size: 12px;"
+                                                              value="#{index + 1}" />
+                                            </p:column>
+
                                             <p:column headerText="Question" width="40%">
                                                 <h:outputText  style="font-size: 12px; font-style: italic; font-weight: bold;" 
                                                                value="#{qs.question.questionString}" escape="false"/>
@@ -209,8 +49,8 @@
                                                     <ui:repeat value="#{qs.g}" var="g">
                                                         <h:outputText style="display: inline-block;
                                                                       opacity: 0.5;
-                                                                      color: #00529b;
-                                                                      background-color: #bde5f8;
+                                                                      color: #427d31;
+                                                                      background-color: #bce8af;
                                                                       font-size: 12px;
                                                                       border: 1px solid;
                                                                       width: 90%;
@@ -221,9 +61,10 @@
                                             </p:column>
 
                                             <p:column headerText="System Answer" width="20%">
+                                                <b style="color: #00a5bb; font-size: 12px;">#{mainBean.qaSystemName}</b><br/>
                                                 <b style="font-size: 12px;">List size: </b>
                                                 <h:outputText  style="font-size: 12px;" value="#{qs.a.size()}"/>
-                                                <div style="overflow-y: scroll; max-height: 200px;">
+                                                <div style="overflow-y: scroll; max-height: 100px;">
                                                     <ui:repeat value="#{qs.a}" var="a">
                                                         <h:outputText style="display: inline-block;
                                                                       opacity: 0.5;
@@ -236,27 +77,68 @@
                                                                       padding: 2px 5px;" value="#{a}"/>
                                                     </ui:repeat>
                                                 </div>
+
+                                                <b style="color: #ef8e8e; font-size: 12px;">QASparql</b><br/>
+                                                <b style="font-size: 12px;">List size: </b>
+                                                <h:outputText  style="font-size: 12px;" value="#{evaluator_QAsparqlBean.evaluatedBenchmark.evaluatedQuestions.get(index).a.size()}"/>
+                                                <div style="overflow-y: scroll; max-height: 100px;">
+                                                    <ui:repeat value="#{evaluator_QAsparqlBean.evaluatedBenchmark.evaluatedQuestions.get(index).a}" var="a">
+                                                        <h:outputText style="display: inline-block;
+                                                                      opacity: 0.5;
+                                                                      color: #8b6363;
+                                                                      background-color: #cdb5b5;
+                                                                      font-size: 12px;
+                                                                      border: 1px solid;
+                                                                      width: 90%;
+                                                                      margin: 2px;
+                                                                      padding: 2px 5px;" value="#{a}"/>
+                                                    </ui:repeat>
+                                                </div>
                                             </p:column>
 
                                             <p:column headerText="F1">
+                                                <b style="color: #00a5bb; font-size: 12px;">#{mainBean.qaSystemName}</b><br/>
                                                 <pre style="font-size: 12px;">
                                                         <h:outputText value="#{qs.f_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                </pre>
+
+                                                <b style="color: #ef8e8e; font-size: 12px;">QASparql</b><br/>
+                                                <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{evaluator_QAsparqlBean.evaluatedBenchmark.evaluatedQuestions.get(index).f_q}" >
                                                         <f:convertNumber pattern="#0.000" />                                                        
                                                         </h:outputText>
                                                 </pre>
                                             </p:column>
 
                                             <p:column headerText="R">
+                                                <b style="color: #00a5bb; font-size: 12px;">#{mainBean.qaSystemName}</b><br/>
                                                 <pre style="font-size: 12px;">
                                                         <h:outputText value="#{qs.r_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                </pre>
+
+                                                <b style="color: #ef8e8e; font-size: 12px;">QASparql</b><br/>
+                                                <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{evaluator_QAsparqlBean.evaluatedBenchmark.evaluatedQuestions.get(index).r_q}" >
                                                         <f:convertNumber pattern="#0.000" />                                                        
                                                         </h:outputText>
                                                 </pre>
                                             </p:column>
 
                                             <p:column headerText="P">
+                                                <b style="color: #00a5bb; font-size: 12px;">#{mainBean.qaSystemName}</b><br/>
                                                 <pre style="font-size: 12px;">
                                                         <h:outputText value="#{qs.p_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                </pre>
+
+                                                <b style="color: #ef8e8e; font-size: 12px;">QASparql</b><br/>
+                                                <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{evaluator_QAsparqlBean.evaluatedBenchmark.evaluatedQuestions.get(index).p_q}" >
                                                         <f:convertNumber pattern="#0.000" />                                                        
                                                         </h:outputText>
                                                 </pre>
@@ -264,16 +146,18 @@
                                         </p:dataTable>
                                     </td>
                                     <td>
-                                        <div style="overflow-x: scroll; width:500px;">
-                                            <p:chart  type="bar" 
-                                                      style="min-width: 900px;
-                                                      min-height: 300px;
-                                                      height: #{(evaluator_NewQASystem.evaluatedBenchmark.allPropertiesSize/10)*250}px;"
-                                                      model="#{evaluator_NewQASystem.evaluatedBenchmark.all_model}"/>
-                                        </div>
+
                                     </td>
                                 </tr>
                             </table>
+
+                            <div style="overflow-x: scroll; width:500px;">
+                                <p:chart  type="bar" 
+                                          style="min-width: 900px;
+                                          min-height: 300px;
+                                          height: #{(evaluator_NewQASystem.evaluatedBenchmark.allPropertiesSize/10)*250}px;"
+                                          model="#{evaluator_NewQASystem.evaluatedBenchmark.all_model}"/>
+                            </div>
                         </p:panel>
                     </h:form>
                 </p:tab>
@@ -1071,7 +955,7 @@
                                                       height: #{(evaluator_NewQASystem.evaluatedBenchmark.allPropertiesSize/10)*250}px;"
                                                       model="#{evaluator_NewQASystem.evaluatedBenchmark.flowerSet_model}"/>
                                         </div>
-                                        
+
                                     </td>
                                 </tr>
                             </table>
