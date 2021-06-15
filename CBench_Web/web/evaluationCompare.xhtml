@@ -78,22 +78,47 @@
                                                     </ui:repeat>
                                                 </div>
 
-                                                <b style="color: #ef8e8e; font-size: 12px;">QASparql</b><br/>
-                                                <b style="font-size: 12px;">List size: </b>
-                                                <h:outputText  style="font-size: 12px;" value="#{evaluator_QAsparqlBean.evaluatedBenchmark.evaluatedQuestions.get(index).a.size()}"/>
-                                                <div style="overflow-y: scroll; max-height: 100px;">
-                                                    <ui:repeat value="#{evaluator_QAsparqlBean.evaluatedBenchmark.evaluatedQuestions.get(index).a}" var="a">
-                                                        <h:outputText style="display: inline-block;
-                                                                      opacity: 0.5;
-                                                                      color: #8b6363;
-                                                                      background-color: #cdb5b5;
-                                                                      font-size: 12px;
-                                                                      border: 1px solid;
-                                                                      width: 90%;
-                                                                      margin: 2px;
-                                                                      padding: 2px 5px;" value="#{a}"/>
-                                                    </ui:repeat>
-                                                </div>
+                                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                                    <div>
+                                                        <b style="color: #ef8e8e; font-size: 12px;">QASparql</b><br/>
+                                                        <b style="font-size: 12px;">List size: </b>
+                                                        <h:outputText  style="font-size: 12px;" value="#{evaluator_QAsparqlBean.evaluatedBenchmark.evaluatedQuestions.get(index).a.size()}"/>
+                                                        <div style="overflow-y: scroll; max-height: 100px;">
+                                                            <ui:repeat value="#{evaluator_QAsparqlBean.evaluatedBenchmark.evaluatedQuestions.get(index).a}" var="a">
+                                                                <h:outputText style="display: inline-block;
+                                                                              opacity: 0.5;
+                                                                              color: #8b6363;
+                                                                              background-color: #cdb5b5;
+                                                                              font-size: 12px;
+                                                                              border: 1px solid;
+                                                                              width: 90%;
+                                                                              margin: 2px;
+                                                                              padding: 2px 5px;" value="#{a}"/>
+                                                            </ui:repeat>
+                                                        </div>
+                                                    </div>
+                                                </h:panelGroup>    
+
+                                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                                    <div>
+                                                        <b style="color: #ef8e8e; font-size: 12px;">WDAqua</b><br/>
+                                                        <b style="font-size: 12px;">List size: </b>
+                                                        <h:outputText  style="font-size: 12px;" value="#{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions.get(index).a.size()}"/>
+                                                        <div style="overflow-y: scroll; max-height: 100px;">
+                                                            <ui:repeat value="#{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions.get(index).a}" var="a">
+                                                                <h:outputText style="display: inline-block;
+                                                                              opacity: 0.5;
+                                                                              color: #8b6363;
+                                                                              background-color: #cdb5b5;
+                                                                              font-size: 12px;
+                                                                              border: 1px solid;
+                                                                              width: 90%;
+                                                                              margin: 2px;
+                                                                              padding: 2px 5px;" value="#{a}"/>
+                                                            </ui:repeat>
+                                                        </div>
+                                                    </div>
+                                                </h:panelGroup> 
                                             </p:column>
 
                                             <p:column headerText="F1">
@@ -104,12 +129,27 @@
                                                         </h:outputText>
                                                 </pre>
 
-                                                <b style="color: #ef8e8e; font-size: 12px;">QASparql</b><br/>
-                                                <pre style="font-size: 12px;">
+                                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                                    <div>
+                                                        <b style="color: #ef8e8e; font-size: 12px;">QASparql</b><br/>
+                                                        <pre style="font-size: 12px;">
                                                         <h:outputText value="#{evaluator_QAsparqlBean.evaluatedBenchmark.evaluatedQuestions.get(index).f_q}" >
                                                         <f:convertNumber pattern="#0.000" />                                                        
                                                         </h:outputText>
-                                                </pre>
+                                                        </pre>
+                                                    </div>
+                                                </h:panelGroup>
+
+                                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                                    <div>
+                                                        <b style="color: #ef8e8e; font-size: 12px;">WDAqua</b><br/>
+                                                        <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions.get(index).f_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                        </pre>
+                                                    </div>
+                                                </h:panelGroup>
                                             </p:column>
 
                                             <p:column headerText="R">
@@ -120,12 +160,28 @@
                                                         </h:outputText>
                                                 </pre>
 
-                                                <b style="color: #ef8e8e; font-size: 12px;">QASparql</b><br/>
-                                                <pre style="font-size: 12px;">
+
+                                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                                    <div>
+                                                        <b style="color: #ef8e8e; font-size: 12px;">QASparql</b><br/>
+                                                        <pre style="font-size: 12px;">
                                                         <h:outputText value="#{evaluator_QAsparqlBean.evaluatedBenchmark.evaluatedQuestions.get(index).r_q}" >
                                                         <f:convertNumber pattern="#0.000" />                                                        
                                                         </h:outputText>
-                                                </pre>
+                                                        </pre>
+                                                    </div>
+                                                </h:panelGroup>
+
+                                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                                    <div>
+                                                        <b style="color: #ef8e8e; font-size: 12px;">WDAqua</b><br/>
+                                                        <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions.get(index).r_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                        </pre>
+                                                    </div>
+                                                </h:panelGroup>
                                             </p:column>
 
                                             <p:column headerText="P">
@@ -136,12 +192,28 @@
                                                         </h:outputText>
                                                 </pre>
 
-                                                <b style="color: #ef8e8e; font-size: 12px;">QASparql</b><br/>
-                                                <pre style="font-size: 12px;">
+
+                                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                                    <div>
+                                                        <b style="color: #ef8e8e; font-size: 12px;">QASparql</b><br/>
+                                                        <pre style="font-size: 12px;">
                                                         <h:outputText value="#{evaluator_QAsparqlBean.evaluatedBenchmark.evaluatedQuestions.get(index).p_q}" >
                                                         <f:convertNumber pattern="#0.000" />                                                        
                                                         </h:outputText>
-                                                </pre>
+                                                        </pre>
+                                                    </div>
+                                                </h:panelGroup>
+
+                                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                                    <div>
+                                                        <b style="color: #ef8e8e; font-size: 12px;">WDAqua</b><br/>
+                                                        <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions.get(index).p_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                        </pre>
+                                                    </div>
+                                                </h:panelGroup>
                                             </p:column>
                                         </p:dataTable>
                                     </td>
@@ -150,13 +222,42 @@
                                     </td>
                                 </tr>
                             </table>
+                            <br/><br/><br/>
+                            <hr/>
 
-                            <div style="overflow-x: scroll; width:500px;">
-                                <p:chart  type="bar" 
-                                          style="min-width: 900px;
-                                          min-height: 300px;
-                                          height: #{(evaluator_NewQASystem.evaluatedBenchmark.allPropertiesSize/10)*250}px;"
-                                          model="#{evaluator_NewQASystem.evaluatedBenchmark.all_model}"/>
+                            <div style="overflow-x: scroll;">
+                                <h:panelGroup>
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">#{mainBean.qaSystemName}</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_NewQASystem.evaluatedBenchmark.allPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_NewQASystem.evaluatedBenchmark.all_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">QASparql</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.allPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_QAsparqlBean.evaluatedBenchmark.all_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">WDAqua</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_WDAqua.evaluatedBenchmark.allPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_WDAqua.evaluatedBenchmark.all_model}"/>
+                                    </div>
+                                </h:panelGroup>
                             </div>
                         </p:panel>
                     </h:form>
