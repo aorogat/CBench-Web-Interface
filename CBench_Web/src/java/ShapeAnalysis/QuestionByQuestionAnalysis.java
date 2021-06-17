@@ -142,20 +142,21 @@ public class QuestionByQuestionAnalysis {
                     || q.toString().toLowerCase().contains(";")) {
                 properties.keywords += "and ";
             }
-            if (q.toString().toLowerCase().replaceAll(" ", "").
+            if (q.toString().toLowerCase().replace("\n", "").replaceAll(" ", "").
                     replace("\n", "").replace("\r", "").contains("union{")) {
                 properties.keywords += "union ";
             }
-            if (q.toString().toLowerCase().replaceAll(" ", "").
+            if (q.toString().toLowerCase().replace("\n", "").replaceAll(" ", "").
                     replace("\n", "").replace("\r", "").contains("optional{")) {
                 properties.keywords += "opt ";
             }
-            if (q.toString().toLowerCase().contains("graph")) {
+            if (q.toString().toLowerCase().replaceAll(" ", "").
+                    replace("\n", "").replace("\r", "").contains("graph{")) {
                 properties.keywords += "graph ";
             }
-            if (q.toString().toLowerCase().contains("not exists")) {
+            if (q.toString().toLowerCase().replace("\n", "").replaceAll(" ", "").contains("notexists{")) {
                 properties.keywords += "notExists ";
-            } else if (q.toString().toLowerCase().contains("exists")) {
+            } else if (q.toString().toLowerCase().replace("\n", "").replaceAll(" ", "").contains("exists{")) {
                 properties.keywords += "exists ";
             }
             if (q.toString().toLowerCase().contains("minus")) {

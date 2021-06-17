@@ -90,11 +90,14 @@ public class Evaluator_QAsparqlBean implements EvaluatorInterface{
 
     public void periodicPoll() throws IOException {
         for (int i = 0; i < 40; i++) {
+            if(progress>=100)return;
             performance(ben, MainBean.eval_benchmark, MainBean.eval_update_answers);
         }
     }
 
     public static void performance(Benchmark benchmark, String benchmarkName, boolean curated) throws IOException {
+        
+        
         ben = benchmark;
         systemAnswersList = new ArrayList<>();
         corectAnswersList = new ArrayList<>();
