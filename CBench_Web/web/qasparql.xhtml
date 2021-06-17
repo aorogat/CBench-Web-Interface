@@ -177,10 +177,10 @@
         </div>
         
         <h:form>
-            <p:poll interval="1" listener="#{evaluator_WDAqua.periodicPoll()}" 
+            <p:poll interval="1" listener="#{evaluator_QAsparqlBean.periodicPoll()}" 
                     process="@this"/>
             
-            <p:poll interval="5" 
+            <p:poll interval="1" 
                     update="allQuestionsPanel" process="@this"/>
             <h:panelGroup id="allQuestionsPanel">
         <div>

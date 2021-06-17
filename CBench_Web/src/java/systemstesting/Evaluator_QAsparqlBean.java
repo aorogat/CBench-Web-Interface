@@ -54,8 +54,22 @@ public class Evaluator_QAsparqlBean implements EvaluatorInterface{
     static Benchmark ben;
     static String answerFileString;
 
+    
+    static Object obj;
     public Evaluator_QAsparqlBean() throws IOException {
+        try {
+            JSONParser parser = new JSONParser();
+            InputStream initialStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("data/QASparql/qald_9_answer_output.json");
 
+                byte[] buffer = IOUtils.toByteArray(initialStream);
+                Reader targetReader = new CharSequenceReader(new String(buffer));
+                obj = parser.parse(targetReader);
+                //Object obj = parser.parse(new FileReader("LCQuad_All_answer_output.json"));
+                
+                answerFileString = obj.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void evaluate(Benchmark benchmark) throws IOException {
@@ -75,7 +89,9 @@ public class Evaluator_QAsparqlBean implements EvaluatorInterface{
     }
 
     public void periodicPoll() throws IOException {
-        performance(ben, MainBean.eval_benchmark, MainBean.eval_update_answers);
+        for (int i = 0; i < 10; i++) {
+            performance(ben, MainBean.eval_benchmark, MainBean.eval_update_answers);
+        }
     }
 
     public static void performance(Benchmark benchmark, String benchmarkName, boolean curated) throws IOException {
@@ -152,16 +168,9 @@ public class Evaluator_QAsparqlBean implements EvaluatorInterface{
             String target_var = "";
             int queryType = 0;
 
-            JSONParser parser = new JSONParser();
+            
             try {
-                InputStream initialStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("data/QASparql/qald_9_answer_output.json");
-
-                byte[] buffer = IOUtils.toByteArray(initialStream);
-                Reader targetReader = new CharSequenceReader(new String(buffer));
-                Object obj = parser.parse(targetReader);
-                //Object obj = parser.parse(new FileReader("LCQuad_All_answer_output.json"));
                 
-                answerFileString = obj.toString();
                 JSONArray jsonObject = new JSONArray(obj.toString());
                 JSONObject questionResponse = null;
 
