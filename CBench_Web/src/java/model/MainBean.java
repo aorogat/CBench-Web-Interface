@@ -424,6 +424,11 @@ public class MainBean {
     }
 
     public static Benchmark getBenchmarkData(String benchmarkName) {
+        //Avoid multiple call time
+//        if(benchmarkData != null)
+//            if(benchmarkData.questions.size()>0) return benchmarkData;
+        
+        
         benchmarkData = new Benchmark();
         try {
             if (benchmarkName.equals("QALD-1")) {

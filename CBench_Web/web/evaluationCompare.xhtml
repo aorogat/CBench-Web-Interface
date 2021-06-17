@@ -13,7 +13,7 @@
             <p:tabView>
                 <p:tab title="All Questions">
                     <h:form>
-                        <p:poll interval="3" listener="#{evaluator_NewQASystem.periodicPoll()}" 
+                        <p:poll interval="10" listener="#{evaluator_NewQASystem.periodicPoll()}" 
                                 update="allQuestionsCom" process="@this"/>
                         <p:panel id="allQuestionsCom">
                             <table border="0">

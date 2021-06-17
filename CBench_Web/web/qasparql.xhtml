@@ -175,13 +175,19 @@
                 <p:poll interval="1" update="progressbar2" process="@this"/>
             </h:form>
         </div>
+        
+        <h:form>
+            <p:poll interval="1" listener="#{evaluator_WDAqua.periodicPoll()}" 
+                    process="@this"/>
+            
+            <p:poll interval="5" 
+                    update="allQuestionsPanel" process="@this"/>
+            <h:panelGroup id="allQuestionsPanel">
         <div>
 
             <p:tabView>
                 <p:tab title="All Questions">
-                    <h:form>
-                        <p:poll interval="1" listener="#{evaluator_QAsparqlBean.periodicPoll()}" 
-                                update="allQuestions2" process="@this"/>
+                    
                         <p:panel id="allQuestions2">
                             <table border="0">
                                 <tr>
@@ -267,22 +273,21 @@
                                     </td>
                                     <td>
                                         <div style="overflow-x: scroll; width:500px;">
-                                            <p:chart  type="bar" model="#{evaluator_QAsparqlBean.evaluatedBenchmark.all_model}"
+                                            <p:chart  type="bar" 
                                                       style="min-width: 900px;
                                                       min-height: 300px;
-                                                      height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.allPropertiesSize/10)*250}px;"/>
+                                                      height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.allPropertiesSize/10)*250}px;"
+                                                      model="#{evaluator_QAsparqlBean.evaluatedBenchmark.all_model}"/>
                                         </div>
                                     </td>
                                 </tr>
                             </table>
                         </p:panel>
-                    </h:form>
+                    
                 </p:tab>
 
                 <p:tab title="Single-Edge">
-                    <h:form>
-                        <p:poll interval="1" listener="#{evaluator_QAsparqlBean.periodicPoll()}" 
-                                update="allQuestionsSingle2" process="@this"/>
+                    
                         <p:panel id="allQuestionsSingle2">
                             <table border="0">
                                 <tr>
@@ -365,18 +370,22 @@
                                         </p:dataTable>
                                     </td>
                                     <td>
-                                        <p:chart  type="bar" model="#{evaluator_QAsparqlBean.evaluatedBenchmark.single_model}"/>
+                                        <div style="overflow-x: scroll; width:500px;">
+                                            <p:chart  type="bar" 
+                                                      style="min-width: 900px;
+                                                      min-height: 300px;
+                                                      height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.singlePropertiesSize/10)*250}px;"
+                                                      model="#{evaluator_QAsparqlBean.evaluatedBenchmark.single_model}"/>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
                         </p:panel>
-                    </h:form>
+                    
                 </p:tab>
 
                 <p:tab title="Chain">
-                    <h:form>
-                        <p:poll interval="1" listener="#{evaluator_QAsparqlBean.periodicPoll()}" 
-                                update="allQuestionsChain2" process="@this"/>
+                    
                         <p:panel id="allQuestionsChain2">
                             <table border="0">
                                 <tr>
@@ -459,18 +468,22 @@
                                         </p:dataTable>
                                     </td>
                                     <td>
-                                        <p:chart  type="bar" model="#{evaluator_QAsparqlBean.evaluatedBenchmark.chain_model}"/>
+                                        <div style="overflow-x: scroll; width:500px;">
+                                            <p:chart  type="bar" 
+                                                      style="min-width: 900px;
+                                                      min-height: 300px;
+                                                      height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.chainPropertiesSize/10)*250}px;"
+                                                      model="#{evaluator_QAsparqlBean.evaluatedBenchmark.chain_model}"/>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
                         </p:panel>
-                    </h:form>
+                    
                 </p:tab>
 
                 <p:tab title="Chain-Set">
-                    <h:form>
-                        <p:poll interval="1" listener="#{evaluator_QAsparqlBean.periodicPoll()}" 
-                                update="allQuestionsChainSet2" process="@this"/>
+                    
                         <p:panel id="allQuestionsChainSet2">
                             <table border="0">
                                 <tr>
@@ -553,18 +566,22 @@
                                         </p:dataTable>
                                     </td>
                                     <td>
-                                        <p:chart  type="bar" model="#{evaluator_QAsparqlBean.evaluatedBenchmark.chainSet_model}"/>
+                                        <div style="overflow-x: scroll; width:500px;">
+                                            <p:chart  type="bar" 
+                                                      style="min-width: 900px;
+                                                      min-height: 300px;
+                                                      height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.chainSetPropertiesSize/10)*250}px;"
+                                                      model="#{evaluator_QAsparqlBean.evaluatedBenchmark.chainSet_model}"/>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
                         </p:panel>
-                    </h:form>
+                    
                 </p:tab>
 
                 <p:tab title="Star">
-                    <h:form>
-                        <p:poll interval="1" listener="#{evaluator_QAsparqlBean.periodicPoll()}" 
-                                update="allQuestionsStar2" process="@this"/>
+                    
                         <p:panel id="allQuestionsStar2">
                             <table border="0">
                                 <tr>
@@ -647,18 +664,22 @@
                                         </p:dataTable>
                                     </td>
                                     <td>
-                                        <p:chart  type="bar" model="#{evaluator_QAsparqlBean.evaluatedBenchmark.star_model}"/>
+                                        <div style="overflow-x: scroll; width:500px;">
+                                            <p:chart  type="bar" 
+                                                      style="min-width: 900px;
+                                                      min-height: 300px;
+                                                      height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.starPropertiesSize/10)*250}px;"
+                                                      model="#{evaluator_QAsparqlBean.evaluatedBenchmark.star_model}"/>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
                         </p:panel>
-                    </h:form>
+                    
                 </p:tab>
 
                 <p:tab title="Tree">
-                    <h:form>
-                        <p:poll interval="1" listener="#{evaluator_QAsparqlBean.periodicPoll()}" 
-                                update="allQuestionsTree2" process="@this"/>
+                    
                         <p:panel id="allQuestionsTree2">
                             <table border="0">
                                 <tr>
@@ -741,18 +762,22 @@
                                         </p:dataTable>
                                     </td>
                                     <td>
-                                        <p:chart  type="bar" model="#{evaluator_QAsparqlBean.evaluatedBenchmark.tree_model}"/>
+                                        <div style="overflow-x: scroll; width:500px;">
+                                            <p:chart  type="bar" 
+                                                      style="min-width: 900px;
+                                                      min-height: 300px;
+                                                      height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.treePropertiesSize/10)*250}px;"
+                                                      model="#{evaluator_QAsparqlBean.evaluatedBenchmark.tree_model}"/>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
                         </p:panel>
-                    </h:form>
+                    
                 </p:tab>
 
                 <p:tab title="Forest">
-                    <h:form>
-                        <p:poll interval="1" listener="#{evaluator_QAsparqlBean.periodicPoll()}" 
-                                update="allQuestionsForest2" process="@this"/>
+                    
                         <p:panel id="allQuestionsForest2">
                             <table border="0">
                                 <tr>
@@ -835,18 +860,22 @@
                                         </p:dataTable>
                                     </td>
                                     <td>
-                                        <p:chart  type="bar" model="#{evaluator_QAsparqlBean.evaluatedBenchmark.forest_model}"/>
+                                        <div style="overflow-x: scroll; width:500px;">
+                                            <p:chart  type="bar" 
+                                                      style="min-width: 900px;
+                                                      min-height: 300px;
+                                                      height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.forestPropertiesSize/10)*250}px;"
+                                                      model="#{evaluator_QAsparqlBean.evaluatedBenchmark.forest_model}"/>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
                         </p:panel>
-                    </h:form>
+                    
                 </p:tab>
 
                 <p:tab title="Flower">
-                    <h:form>
-                        <p:poll interval="1" listener="#{evaluator_QAsparqlBean.periodicPoll()}" 
-                                update="allQuestionsFlower2" process="@this"/>
+                    
                         <p:panel id="allQuestionsFlower2">
                             <table border="0">
                                 <tr>
@@ -929,18 +958,22 @@
                                         </p:dataTable>
                                     </td>
                                     <td>
-                                        <p:chart  type="bar" model="#{evaluator_QAsparqlBean.evaluatedBenchmark.flower_model}"/>
+                                        <div style="overflow-x: scroll; width:500px;">
+                                            <p:chart  type="bar" 
+                                                      style="min-width: 900px;
+                                                      min-height: 300px;
+                                                      height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.flowerPropertiesSize/10)*250}px;"
+                                                      model="#{evaluator_QAsparqlBean.evaluatedBenchmark.flower_model}"/>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
                         </p:panel>
-                    </h:form>
+                   
                 </p:tab>
 
                 <p:tab title="Flower-Set">
-                    <h:form>
-                        <p:poll interval="1" listener="#{evaluator_QAsparqlBean.periodicPoll()}" 
-                                update="allQuestionsFlowerSet2" process="@this"/>
+                    
                         <p:panel id="allQuestionsFlowerSet2">
                             <table border="0">
                                 <tr>
@@ -1023,18 +1056,22 @@
                                         </p:dataTable>
                                     </td>
                                     <td>
-                                        <p:chart  type="bar" model="#{evaluator_QAsparqlBean.evaluatedBenchmark.flowerSet_model}"/>
+                                        <div style="overflow-x: scroll; width:500px;">
+                                            <p:chart  type="bar" 
+                                                      style="min-width: 900px;
+                                                      min-height: 300px;
+                                                      height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.flowerSetPropertiesSize/10)*250}px;"
+                                                      model="#{evaluator_QAsparqlBean.evaluatedBenchmark.flowerSet_model}"/>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
                         </p:panel>
-                    </h:form>
+                    
                 </p:tab>
 
                 <p:tab title="Cycle">
-                    <h:form>
-                        <p:poll interval="1" listener="#{evaluator_QAsparqlBean.periodicPoll()}" 
-                                update="allQuestionsCycle2" process="@this"/>
+                    
                         <p:panel id="allQuestionsCycle2">
                             <table border="0">
                                 <tr>
@@ -1117,16 +1154,24 @@
                                         </p:dataTable>
                                     </td>
                                     <td>
-                                        <p:chart  type="bar" model="#{evaluator_QAsparqlBean.evaluatedBenchmark.cycle_model}"/>
+                                        <div style="overflow-x: scroll; width:500px;">
+                                            <p:chart  type="bar" 
+                                                      style="min-width: 900px;
+                                                      min-height: 300px;
+                                                      height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.cyclePropertiesSize/10)*250}px;"
+                                                      model="#{evaluator_QAsparqlBean.evaluatedBenchmark.cycle_model}"/>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
                         </p:panel>
-                    </h:form>
+                    
                 </p:tab>
 
             </p:tabView>
 
         </div>
+                </h:panelGroup>
+        </h:form>
     </p:tab>
 </ui:composition>
