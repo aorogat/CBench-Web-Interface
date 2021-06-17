@@ -89,7 +89,7 @@ public class Evaluator_QAsparqlBean implements EvaluatorInterface{
     }
 
     public void periodicPoll() throws IOException {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 40; i++) {
             performance(ben, MainBean.eval_benchmark, MainBean.eval_update_answers);
         }
     }

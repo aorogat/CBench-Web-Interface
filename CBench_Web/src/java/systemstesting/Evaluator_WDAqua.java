@@ -74,6 +74,7 @@ public class Evaluator_WDAqua  implements EvaluatorInterface{
 
     public void periodicPoll() throws IOException
     {
+        if(progress>=100) return;
         performance(ben, MainBean.eval_benchmark, MainBean.eval_update_answers);
     }
     
