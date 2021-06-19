@@ -164,7 +164,7 @@
                         </div>
                     </div>
                 </p:panel>
-                <p:poll interval="1" update="scores2" process="@this"/>
+                <p:poll interval="3" update="scores2" process="@this"/>
                 <p:progressBar widgetVar="pbAjax" ajax="true" value="#{evaluator_QAsparqlBean.progress}"
                                labelTemplate="{value}%" styleClass="p-mt-3" global="false"
                                id="progressbar2" style="display: inline-block; width: 100%;">
@@ -172,15 +172,15 @@
                             update="progressbar2"
                             oncomplete="PF('startButton3').enable()" />
                 </p:progressBar>
-                <p:poll interval="1" update="progressbar2" process="@this"/>
+                <p:poll interval="3" update="progressbar2" process="@this"/>
             </h:form>
         </div>
         
         <h:form>
-            <p:poll interval="1" listener="#{evaluator_QAsparqlBean.periodicPoll()}" 
+            <p:poll interval="3" listener="#{evaluator_QAsparqlBean.periodicPoll()}" 
                     process="@this"/>
             
-            <p:poll interval="1" 
+            <p:poll interval="3" 
                     update="allQuestionsPanel" process="@this"/>
             <h:panelGroup id="allQuestionsPanel">
         <div>

@@ -164,18 +164,18 @@
                         </div>
                     </div>
                 </p:panel>
-                <p:poll interval="1" update="scores" process="@this"/>
+                <p:poll interval="3" update="scores" process="@this"/>
                 <p:progressBar widgetVar="pbAjax" ajax="true" value="#{evaluator_WDAqua.progress}"
                                labelTemplate="{value}%" styleClass="p-mt-3" global="false"
                                id="progressbar" style="display: inline-block; width: 100%;">
                     <p:ajax event="complete" listener="#{evaluator_WDAqua.onComplete}" update="progressbar"
                             oncomplete="PF('startButton3').enable()" />
                 </p:progressBar>
-                <p:poll interval="1" update="progressbar" process="@this"/>
+                <p:poll interval="3" update="progressbar" process="@this"/>
             </h:form>
         </div>
         <h:form>
-            <p:poll interval="1" listener="#{evaluator_WDAqua.periodicPoll()}" 
+            <p:poll interval="3" listener="#{evaluator_WDAqua.periodicPoll()}" 
                     update="allQuestionsPanel" process="@this"/>
             <h:panelGroup id="allQuestionsPanel">
                 <div>
