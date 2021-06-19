@@ -32,9 +32,9 @@ import qa.dataStructures.Question;
 
 @ManagedBean
 @SessionScoped
-public class Evaluator_WDAqua  implements EvaluatorInterface{
+public class Evaluator_NewQASystem  implements EvaluatorInterface{
 
-    static BenchmarkEval evaluatedBenchmark;
+    public static BenchmarkEval evaluatedBenchmark;
     static int currentQuestion;
 
     ArrayList<Query> qs;
@@ -52,7 +52,7 @@ public class Evaluator_WDAqua  implements EvaluatorInterface{
     int progress=0;
     static Benchmark ben;
 
-    public Evaluator_WDAqua() throws IOException {
+    public Evaluator_NewQASystem() throws IOException {
 
     }
 
@@ -74,7 +74,6 @@ public class Evaluator_WDAqua  implements EvaluatorInterface{
 
     public void periodicPoll() throws IOException
     {
-        if(progress>=100) return;
         performance(ben, MainBean.eval_benchmark, MainBean.eval_update_answers);
     }
     
@@ -136,7 +135,6 @@ public class Evaluator_WDAqua  implements EvaluatorInterface{
         if (currentQuestion >= benchmark.questions.size()) {
             //4- Calculate parameters
             evaluatedBenchmark.calculateParameters();
-
         }
 
     }
@@ -234,7 +232,7 @@ public class Evaluator_WDAqua  implements EvaluatorInterface{
     }
 
     public void setEvaluatedBenchmark(BenchmarkEval evaluatedBenchmark) {
-        Evaluator_WDAqua.evaluatedBenchmark = evaluatedBenchmark;
+        Evaluator_NewQASystem.evaluatedBenchmark = evaluatedBenchmark;
     }
 
     public int getProgress() {
@@ -260,7 +258,7 @@ public class Evaluator_WDAqua  implements EvaluatorInterface{
     }
 
     public void setEvaluatedQuestions(ArrayList<QuestionEval> evaluatedQuestions) {
-        Evaluator_WDAqua.evaluatedQuestions = evaluatedQuestions;
+        Evaluator_NewQASystem.evaluatedQuestions = evaluatedQuestions;
     }
     
     

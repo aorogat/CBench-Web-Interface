@@ -27,10 +27,14 @@ public class NLQCategoraizer {
     ArrayList<Question> yes_no_Qs = new ArrayList<Question>();
     ArrayList<Question> request_Qs = new ArrayList<Question>();
     ArrayList<Question> Topical_Qs = new ArrayList<Question>();
+    NLQSummary nlqSummary = new NLQSummary();
+    int total;
+    
 
     PieChartModel pieModelSelect = new PieChartModel();
 
     public NLQCategoraizer(Benchmark benchmark) throws IOException {
+        total = benchmark.questionsWithoutDuplicates.size();
         all_Qs = benchmark.questionsWithoutDuplicates;
         what_Qs = new ArrayList<Question>();
         when_Qs = new ArrayList<Question>();
@@ -171,6 +175,27 @@ public class NLQCategoraizer {
 
     public void setPieModelSelect(PieChartModel pieModelSelect) {
         this.pieModelSelect = pieModelSelect;
+    }
+    
+    public NLQSummary getNlqSummary() {
+        nlqSummary.summarys.add(new OneNLQSummary("What", what_Qs.size(), total));
+        nlqSummary.summarys.add(new OneNLQSummary("When", when_Qs.size(), total));
+        nlqSummary.summarys.add(new OneNLQSummary("Where", where_Qs.size(), total));
+        nlqSummary.summarys.add(new OneNLQSummary("Which", which_Qs.size(), total));
+        nlqSummary.summarys.add(new OneNLQSummary("Who", who_Qs.size(), total));
+        nlqSummary.summarys.add(new OneNLQSummary("Whom", whom_Qs.size(), total));
+        nlqSummary.summarys.add(new OneNLQSummary("Whose", whose_Qs.size(), total));
+        nlqSummary.summarys.add(new OneNLQSummary("How", how_Qs.size(), total));
+        nlqSummary.summarys.add(new OneNLQSummary("Yes/No", yes_no_Qs.size(), total));
+        nlqSummary.summarys.add(new OneNLQSummary("Request", request_Qs.size(), total));
+        nlqSummary.summarys.add(new OneNLQSummary("Topical", Topical_Qs.size(), total));
+        
+                
+        return nlqSummary;
+    }
+
+    public void setNlqSummary(NLQSummary nlqsSummary) {
+        this.nlqSummary = nlqsSummary;
     }
 
 }

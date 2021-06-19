@@ -115,14 +115,14 @@ public class Keywords {
                 graph++;
             }
             if (q.toString().toLowerCase().replace("\n", "").replaceAll(" ", "").contains("notexists{")) {
-                System.out.println("not exists ==="+q.toString());
+//                System.out.println("not exists ==="+q.toString());
                 notExists++;
             } else if (q.toString().toLowerCase().replace("\n", "").replaceAll(" ", "").contains("exists{")) {
-                System.out.println("exists ==="+q.toString());
+//                System.out.println("exists ==="+q.toString());
                 exists++;
             }
             if (q.toString().toLowerCase().replace("\n", "").replaceAll(" ", "").contains("minus{")) {
-                System.out.println("minus ==="+q.toString());
+//                System.out.println("minus ==="+q.toString());
                 minus++;
             }
 

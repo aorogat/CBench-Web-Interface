@@ -20,7 +20,7 @@ import qa.dataStructures.Question;
 public abstract class Evaluator {
 
     static ArrayList<Query> qs;
-    static ArrayList<Question> questions = Benchmark.questions;
+    //static ArrayList<Question> questions = Benchmark.questions;
 
     public static String KB = "dbpedia";
     static int benchmark;
@@ -210,9 +210,11 @@ public abstract class Evaluator {
 
         //KB = "freebase";
         //qs = Benchmark.getQueriesWithoutDuplicates(benchmark);
-        qs = Benchmark.queries;
+        
+
+        ///////////qs = Benchmark.queries;
         BenchmarkEval evaluatedBenchmark = new BenchmarkEval(benchmarkName);
-        evaluatedBenchmark.allQuestions = questions.size();
+        ///////////evaluatedBenchmark.allQuestions = questions.size();
 
         int counter = 0;
         int qsWithAnswers = 0;
@@ -235,106 +237,101 @@ public abstract class Evaluator {
         System.out.println("");
         System.out.print("             Press 's' then Enter to Start ...");
         in.next();
-        for (Question question : questions) {
-            corectAnswersList = new ArrayList<>();
-            counter++;
+//        for (Question question : questions) {
+//            corectAnswersList = new ArrayList<>();
+//            counter++;
+//
+//            //1- Determine CorectAnswerList
+//            if (curated) {
+//                if (KB.equals("default")) {
+//                    KB = question.getDatabase();
+//                }
+//
+//                corectAnswersList = CuratedAnswer.upToDateAnswer(question.getQuestionQuery(), KB);
+//
+//            } else {
+//                corectAnswersList = question.getAnswers();
+//
+//                for (int i = 0; i < corectAnswersList.size(); i++) {
+//                    if (corectAnswersList.get(i) != null) {
+//                        corectAnswersList.set(i, corectAnswersList.get(i).trim().replace('_', ' ')
+//                                .replaceAll("\n", "").replaceAll("\t", "")
+//                                .replace("http://dbpedia.org/resource/", "")
+//                                .replace("https://en.wikipedia.org/wiki/", "")
+//                                .replace("http://www.wikidata.org/entity/", ""));
+//                    }
+//
+//                }
+//                try {
+//                    if (corectAnswersList != null) {
+//                        if (corectAnswersList.size() == 1
+//                                && (corectAnswersList.get(0) == null
+//                                || corectAnswersList.get(0).equals(""))) {
+//                            continue;
+//                        }
+//
+//                    } else {
+//                        continue;
+//                    }
+//                } catch (Exception e) {
+//                    continue;
+//                }
+//            }
+//
+//            if (!KB.equals(question.getDatabase())) {
+//                continue;
+//            }
+//
+//            if (corectAnswersList == null) {
+//                continue;
+//            }
+//            if (corectAnswersList.size() > 0) {
+//                qsWithAnswers++;
+//            } else {
+//                continue;
+//            }
+//            //2- Determine systemAnswersList
+//            //for (int i = 0; i < 3; i++) {
+//            String q = "";
+//            if (evaluator instanceof Evaluator_QAsparql
+//                || evaluator instanceof Evaluator_AskNow
+//                || evaluator instanceof Evaluator_File_Based) {
+//                q = question.getQuestionString();
+//            } else {
+//                q = question.getQuestionString().replace('?', ' ').replace(" ", "%20");
+//            }
+//            System.out.println();
+////            System.out.println("               Question number:  " + counter);
+//            System.out.println("              " + counter + "- Question: " + question.getQuestionString());
+//            System.out.println("               Correct Answer = " + corectAnswersList.toString());
+//
+//            //////////////////////////////////////////////////////////////////////////////////////////////////////////
+//            if (KB.equals("default")) {
+//                KB = question.getDatabase(); /////Use for multiple endpoints////////////////////dbpedia, freebase, wikidata
+//            }            //////////////////////////////////////////////////////////////////////////////////////////////////////////
+//            systemAnswersList = evaluator.answer(q);
+//            //  if(systemAnswersList.size() == 0)
+//            //    continue;
+//            //else
+//            //  break;
+//            //  }
+//            //Loading indicator
+//            System.out.println("               System Answer = " + systemAnswersList.toString());
+//
+//            //3- List of Questions and their (R, P, F1)
+//            evaluatedBenchmark.evaluatedQuestions.add(new QuestionEval(question.getQuestionString(), question, corectAnswersList, systemAnswersList));
 
-            //1- Determine CorectAnswerList
-            if (curated) {
-                if (KB.equals("default")) {
-                    KB = question.getDatabase();
-                }
+//        }
 
-                corectAnswersList = CuratedAnswer.upToDateAnswer(question.getQuestionQuery(), KB);
-
-            } else {
-                corectAnswersList = question.getAnswers();
-
-                for (int i = 0; i < corectAnswersList.size(); i++) {
-                    if (corectAnswersList.get(i) != null) {
-                        corectAnswersList.set(i, corectAnswersList.get(i).trim().replace('_', ' ')
-                                .replaceAll("\n", "").replaceAll("\t", "")
-                                .replace("http://dbpedia.org/resource/", "")
-                                .replace("https://en.wikipedia.org/wiki/", "")
-                                .replace("http://www.wikidata.org/entity/", ""));
-                    }
-
-                }
-                try {
-                    if (corectAnswersList != null) {
-                        if (corectAnswersList.size() == 1
-                                && (corectAnswersList.get(0) == null
-                                || corectAnswersList.get(0).equals(""))) {
-                            continue;
-                        }
-
-                    } else {
-                        continue;
-                    }
-                } catch (Exception e) {
-                    continue;
-                }
-            }
-
-            if (!KB.equals(question.getDatabase())) {
-                continue;
-            }
-
-            if (corectAnswersList == null) {
-                continue;
-            }
-            if (corectAnswersList.size() > 0) {
-                qsWithAnswers++;
-            } else {
-                continue;
-            }
-            //2- Determine systemAnswersList
-            //for (int i = 0; i < 3; i++) {
-            String q = "";
-            if (evaluator instanceof Evaluator_QAsparql
-                || evaluator instanceof Evaluator_AskNow
-                || evaluator instanceof Evaluator_File_Based) {
-                q = question.getQuestionString();
-            } else {
-                q = question.getQuestionString().replace('?', ' ').replace(" ", "%20");
-            }
-            System.out.println();
-//            System.out.println("               Question number:  " + counter);
-            System.out.println("              " + counter + "- Question: " + question.getQuestionString());
-            System.out.println("               Correct Answer = " + corectAnswersList.toString());
-
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////
-            if (KB.equals("default")) {
-                KB = question.getDatabase(); /////Use for multiple endpoints////////////////////dbpedia, freebase, wikidata
-            }            //////////////////////////////////////////////////////////////////////////////////////////////////////////
-            systemAnswersList = evaluator.answer(q);
-            //  if(systemAnswersList.size() == 0)
-            //    continue;
-            //else
-            //  break;
-            //  }
-            //Loading indicator
-            System.out.println("               System Answer = " + systemAnswersList.toString());
-
-            //3- List of Questions and their (R, P, F1)
-            evaluatedBenchmark.evaluatedQuestions.add(new QuestionEval(question.getQuestionString(), question, corectAnswersList, systemAnswersList));
-
-        }
-
-        System.out.println("+");
-        System.out.println("+");
-        System.out.println("+");
-        System.out.println("+       ++++++++++++++");
-        System.out.println("++++++> Final Report +");
-        System.out.println("        ++++++++++++++");
-        System.out.print("               . Final Scores");
+//        System.out.println("+");
+//        System.out.println("+");
+//        System.out.println("+");
+//        System.out.println("+       ++++++++++++++");
+//        System.out.println("++++++> Final Report +");
+//        System.out.println("        ++++++++++++++");
+//        System.out.print("               . Final Scores");
         //4- Calculate parameters
         evaluatedBenchmark.calculateParameters();
-
-        //5- At the End, Print Results
-        evaluatedBenchmark.printScores();
-
-        System.out.println("\n\n\n\n\n\n\n");
 
     }
 

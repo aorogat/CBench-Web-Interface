@@ -2,6 +2,8 @@ package model;
 
 import DataSet.Benchmark;
 import NLQAnalysis.NLQCategoraizer;
+import NLQAnalysis.NlqComparison;
+import ShallowAnalysis.Keyword;
 import ShallowAnalysis.Keywords;
 import ShallowAnalysis.KeywordsComparison;
 import ShallowAnalysis.NoOfTriples;
@@ -9,10 +11,20 @@ import ShallowAnalysis.NoOfTriplesComparison;
 import ShallowAnalysis.OperatorDistribution;
 import ShallowAnalysis.OperatorDistributionComparison;
 import ShapeAnalysis.CategorizedQuestions;
+import ShapeAnalysis.ShapesComparison;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.LineChartModel;
+import systemstesting.BenchmarkEval;
+import systemstesting.EvaluatorInterface;
+import systemstesting.Evaluator_NewQASystem;
+import systemstesting.Evaluator_QAsparqlBean;
 import systemstesting.Evaluator_WDAqua;
 
 /**
@@ -32,6 +44,8 @@ public class MainBean {
     KeywordsComparison keywordsComparison;
     NoOfTriplesComparison noOfTriplesComparison;
     OperatorDistributionComparison operatorDistributionComparison;
+    ShapesComparison shapesComparison;
+    NlqComparison nlqComparison;
 
     public static String knowledgebase = "-- Knowledgebase --";
     public static String benchmarkAnalysis = "-- Benchmark --";
@@ -60,6 +74,14 @@ public class MainBean {
 
     public static Benchmark benchmarkData;
     public ArrayList<String> selectedBenchmarks = new ArrayList();
+    ArrayList<EvaluatorInterface> qaSystems = new ArrayList<>();
+    
+    boolean compareToQasparql;
+    boolean compareToWdaqua;
+    
+    String qaSystemName;
+    
+    LineChartModel differentThetalineChartModel = new LineChartModel();
 
     public MainBean() throws IOException {
         
@@ -71,10 +93,25 @@ public class MainBean {
         }
     }
 
-    public String evaluate(Benchmark benchmark) throws IOException {
-        getBenchmarkData(this.benchmark);
-        Evaluator_WDAqua wDAqua = new Evaluator_WDAqua();
-        wDAqua.evaluate(benchmark);
+    public String evaluate() throws IOException {
+        Benchmark bench = getBenchmarkData(this.eval_benchmark);
+        
+        qaSystems.add(new Evaluator_NewQASystem());
+        
+        EvaluatorInterface qasparql = new Evaluator_QAsparqlBean();
+        EvaluatorInterface wdaqua = new Evaluator_WDAqua();
+        
+        if(compareToWdaqua)
+            qaSystems.add(wdaqua);
+        if(compareToQasparql)
+            qaSystems.add(qasparql);
+        //EvaluatorInterface wDAqua = new Evaluator_WDAqua();
+        //wDAqua.evaluate(bench);
+        //Evaluator_QAsparqlBean qaSparql = new Evaluator_QAsparqlBean();
+        //qaSparql.evaluate(bench);
+        for (EvaluatorInterface qaSystem : qaSystems) {
+            qaSystem.evaluate(bench);
+        }
         return "evalute.xhtml?faces-redirect=true";
     }
 
@@ -96,6 +133,8 @@ public class MainBean {
         keywordsComparison = new KeywordsComparison(bs);
         noOfTriplesComparison = new NoOfTriplesComparison(bs);
         operatorDistributionComparison = new OperatorDistributionComparison(bs);
+        shapesComparison = new ShapesComparison(bs);
+        nlqComparison = new NlqComparison(bs);
         return "compare.xhtml?faces-redirect=true";
     }
     
@@ -161,6 +200,7 @@ public class MainBean {
         benchmarks.add("TempQuestions");
         benchmarks.add("ComplexQuestions");
         benchmarks.add("ComQA");
+        //benchmarks.add("UserDefined");
         return benchmarks;
     }
 
@@ -384,6 +424,11 @@ public class MainBean {
     }
 
     public static Benchmark getBenchmarkData(String benchmarkName) {
+        //Avoid multiple call time
+//        if(benchmarkData != null)
+//            if(benchmarkData.questions.size()>0) return benchmarkData;
+        
+        
         benchmarkData = new Benchmark();
         try {
             if (benchmarkName.equals("QALD-1")) {
@@ -461,6 +506,137 @@ public class MainBean {
         this.operatorDistributionComparison = operatorDistributionComparison;
     }
 
+    public ShapesComparison getShapesComparison() {
+        return shapesComparison;
+    }
+
+    public void setShapesComparison(ShapesComparison shapesComparison) {
+        this.shapesComparison = shapesComparison;
+    }
+
+    public NlqComparison getNlqComparison() {
+        return nlqComparison;
+    }
+
+    public void setNlqComparison(NlqComparison nlqComparison) {
+        this.nlqComparison = nlqComparison;
+    }
+
+    public ArrayList<EvaluatorInterface> getQaSystems() {
+        return qaSystems;
+    }
+
+    public void setQaSystems(ArrayList<EvaluatorInterface> qaSystems) {
+        this.qaSystems = qaSystems;
+    }
+
+    public boolean isCompareToQasparql() {
+        return compareToQasparql;
+    }
+
+    public void setCompareToQasparql(boolean compareToQasparql) {
+        this.compareToQasparql = compareToQasparql;
+    }
+
+    public boolean isCompareToWdaqua() {
+        return compareToWdaqua;
+    }
+
+    public void setCompareToWdaqua(boolean compareToWdaqua) {
+        this.compareToWdaqua = compareToWdaqua;
+    }
+
+    public String getQaSystemName() {
+        return qaSystemName;
+    }
+
+    public void setQaSystemName(String qaSystemName) {
+        this.qaSystemName = qaSystemName;
+    }
+    
+    
+    private ChartSeries buildSeries(BenchmarkEval eval, String systemName)
+    {
+        ChartSeries mainSystem = new ChartSeries();
+        mainSystem.setLabel(systemName);
+        mainSystem.set("0.0", eval.F_G(0.0001));
+        mainSystem.set("0.1", eval.F_G(0.1));
+        mainSystem.set("0.2", eval.F_G(0.2));
+        mainSystem.set("0.3", eval.F_G(0.3));
+        mainSystem.set("0.4", eval.F_G(0.4));
+        mainSystem.set("0.5", eval.F_G(0.5));
+        mainSystem.set("0.6", eval.F_G(0.6));
+        mainSystem.set("0.7", eval.F_G(0.7));
+        mainSystem.set("0.8", eval.F_G(0.8));
+        mainSystem.set("0.9", eval.F_G(0.9));
+        mainSystem.set("1.0", eval.F_G(1));
+        
+        return mainSystem;
+    }
+
+    public LineChartModel getDifferentThetalineChartModel() {
+        differentThetalineChartModel = new LineChartModel();
+        
+        
+        //Main System Series
+        Evaluator_NewQASystem newQASystem = (Evaluator_NewQASystem) qaSystems.get(0);
+        differentThetalineChartModel.addSeries(buildSeries(newQASystem.getEvaluatedBenchmark(), qaSystemName));
+        
+        //QASparql and WDAqua
+        Evaluator_WDAqua wDAqua = null;
+        Evaluator_QAsparqlBean qAsparqlBean;
+        
+        if(qaSystems.size()==2)
+        {
+            if(qaSystems.get(1) instanceof Evaluator_WDAqua)
+            {
+                wDAqua = (Evaluator_WDAqua) qaSystems.get(1);
+                differentThetalineChartModel.addSeries(buildSeries(wDAqua.getEvaluatedBenchmark(), "WDAqua"));
+            }
+            else if(qaSystems.get(1) instanceof Evaluator_QAsparqlBean)
+            {
+                qAsparqlBean = (Evaluator_QAsparqlBean) qaSystems.get(1);
+                differentThetalineChartModel.addSeries(buildSeries(qAsparqlBean.getEvaluatedBenchmark(), "QASparql"));
+            }
+        }
+        
+        else if(qaSystems.size()==3)
+        {
+            if(qaSystems.get(2) instanceof Evaluator_WDAqua)
+            {
+                wDAqua = (Evaluator_WDAqua) qaSystems.get(2);
+                differentThetalineChartModel.addSeries(buildSeries(wDAqua.getEvaluatedBenchmark(), "WDAqua"));
+            }
+            else if(qaSystems.get(2) instanceof Evaluator_QAsparqlBean)
+            {
+                qAsparqlBean = (Evaluator_QAsparqlBean) qaSystems.get(2);
+                differentThetalineChartModel.addSeries(buildSeries(qAsparqlBean.getEvaluatedBenchmark(), "QASparql"));
+            }
+        }
+        
+        
+        differentThetalineChartModel.setTitle("Different Thresholds");
+        differentThetalineChartModel.setLegendPosition("e");
+        //model2.setShowPointLabels(true);
+        differentThetalineChartModel.getAxes().put(AxisType.X, new CategoryAxis("Threshold"));
+        Axis xAxis2 = differentThetalineChartModel.getAxis(AxisType.X);
+        xAxis2.setTickAngle(-30);
+
+        Axis yAxis2 = differentThetalineChartModel.getAxis(AxisType.Y);
+        yAxis2.setMin(0);
+        yAxis2.setMax(1);
+        yAxis2.setTickCount(11);
+        yAxis2.setLabel("F1-Global");
+        
+        return differentThetalineChartModel;
+    }
+
+    public void setDifferentThetalineChartModel(LineChartModel differentThetalineChartModel) {
+        this.differentThetalineChartModel = differentThetalineChartModel;
+    }
+
+    
+    
     
     
     

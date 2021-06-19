@@ -1,27 +1,18 @@
 package systemstesting;
 
 import ShapeAnalysis.QueryShapeType;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import visualization.FineGrained;
 import model.MainBean;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.DonutChartModel;
 import org.primefaces.model.chart.HorizontalBarChartModel;
-import static systemstesting.Evaluator_WDAqua.evaluatedBenchmark;
-import java.util.stream.*;
 import java.util.*;
-import java.util.function.*;
 
 @ManagedBean
 @SessionScoped
@@ -50,6 +41,19 @@ public class BenchmarkEval {
     private ArrayList<QuestionEval> flowerSetEvaluatedQuestions = new ArrayList<>();
 
     private DonutChartModel donutModel;
+    private Set<String> propertiesSet;
+    
+    int allPropertiesSize = 0;
+    int singlePropertiesSize = 0;
+    int chainPropertiesSize = 0;
+    int chainSetPropertiesSize = 0;
+    int cyclePropertiesSize = 0;
+    int starPropertiesSize = 0;
+    int treePropertiesSize = 0;
+    int forestPropertiesSize = 0;
+    int flowerPropertiesSize = 0;
+    int flowerSetPropertiesSize = 0;
+    
 
     public BenchmarkEval() {
         benchmarkName = MainBean.eval_benchmark;
@@ -59,146 +63,10 @@ public class BenchmarkEval {
         this.benchmarkName = benchmarkName;
     }
 
-    public void printScores() throws IOException {
-
-        if (threshold <= 0) {
-            threshold = 0.00000001;
-        }
-
-        Scanner in = new Scanner(System.in);
-        System.out.println("       +");
-        System.out.println("       +");
-        System.out.println("       +");
-        System.out.println("       +");
-        System.out.println("       ++++> Would you like to see the individual questions evaluation (y/n)?");
-        System.out.print("               Enter  [y/n]: ");
-        String update = in.next().toLowerCase().trim();
-        switch (update.charAt(0)) {
-            case 'y':
-                System.out.println("\n============== " + benchmarkName + " All Questions ====================");
-                for (QuestionEval q : evaluatedQuestions) {
-                    System.out.println(q.toString());
-                }
-                break;
-            case 'n':
-                break;
-            default:
-                break;
-        }
-
-        System.out.println("       +");
-        System.out.println("       +");
-        System.out.println("       +");
-        System.out.println("       +");
-        System.out.println("       ++++> Would you like to see the individual questions evaluation");
-        System.out.println("       ++++> categorized by their shape (y/n)?");
-        System.out.print("               Enter  [y/n]: ");
-        update = in.next().toLowerCase().trim();
-        switch (update.charAt(0)) {
-            case 'y':
-                System.out.println("\n\n\n\n============== " + benchmarkName + " SingleEdge Questions ====================");
-                getSingleEdgeEvaluatedQuestions();
-                for (QuestionEval q : singleEdgeEvaluatedQuestions) {
-                    System.out.println(q.toString());
-                    int ans = 0;
-                    if (q.F_q >= threshold) {
-                        ans = 1;
-                    }
-                }
-
-                System.out.println("\n\n\n\n============== " + benchmarkName + " Chain Questions ====================");
-                getChainEvaluatedQuestions();
-                for (QuestionEval q : chainEvaluatedQuestions) {
-                    System.out.println(q.toString());
-                }
-
-                System.out.println("\n\n\n\n============== " + benchmarkName + " Chain Set Questions ====================");
-                getChainSetEvaluatedQuestions();
-                for (QuestionEval q : chainSetEvaluatedQuestions) {
-                    System.out.println(q.toString());
-                }
-
-                System.out.println("\n\n\n\n============== " + benchmarkName + " Star Questions ====================");
-                getStarEvaluatedQuestions();
-                for (QuestionEval q : starEvaluatedQuestions) {
-                    System.out.println(q.toString());
-                }
-
-                System.out.println("\n\n\n\n============== " + benchmarkName + " Tree Questions ====================");
-                getTreeEvaluatedQuestions();
-                for (QuestionEval q : treeEvaluatedQuestions) {
-                    System.out.println(q.toString());
-                }
-
-                System.out.println("\n\n\n\n============== " + benchmarkName + " Forest Questions ====================");
-                getForestEvaluatedQuestions();
-                for (QuestionEval q : forestEvaluatedQuestions) {
-                    System.out.println(q.toString());
-                }
-
-                System.out.println("\n\n\n\n============== " + benchmarkName + " Flower Questions ====================");
-                getFlowerEvaluatedQuestions();
-                for (QuestionEval q : flowerEvaluatedQuestions) {
-                    System.out.println(q.toString());
-                }
-
-                System.out.println("\n\n\n\n============== " + benchmarkName + " Flower Set Questions ====================");
-                getFlowerSetEvaluatedQuestions();
-                for (QuestionEval q : flowerSetEvaluatedQuestions) {
-                    System.out.println(q.toString());
-                }
-
-                break;
-            case 'n':
-                break;
-            default:
-                break;
-        }
-
-        System.out.println("       +");
-        System.out.println("       +");
-        System.out.println("       +");
-        System.out.println("       +");
-        System.out.println("       ++++> Final Scores, Press 's' then Enter to show");
-        update = in.next();
-
-        System.out.println("\n================================ " + benchmarkName + " ================================");
-        System.out.println("All Questions: " + allQuestions);
-        System.out.println("System Answered: " + answered);
-        System.out.println("Questions With Correct Answers: " + questionsWithCorrectAnswers);
-        System.out.println("================================ " + benchmarkName + " Scores =========================");
-        System.out.println("Micro Scores");
-        System.out.println("\tR_Mi : " + R_Mi() + "\t" + "P_Mi : " + P_Mi() + "\t" + "F_Mi : " + F_Mi());
-        System.out.println("Macro Scores");
-        System.out.println("\tF_Ma : " + F_Ma());
-        System.out.println("Global Scores (threshold = 1)");
-        System.out.println("\tR_G : " + R_G() + "\t" + "P_MG : " + P_G() + "\t" + "F_MG : " + F_G());
-        System.out.println("\tQuestions Partially Correct Answered With Theta Threshold = 1: " + answeredWithThetaThreshold);
-        double s = threshold == 0.00000001 ? 0 : threshold;
-        System.out.println("Global Scores (threshold = " + s + ")");
-        System.out.println("\tR_G(" + s + ") : " + R_G(threshold) + "\t" + "P_MG(" + s + ") : " + P_G(threshold) + "\t" + "F_MG(" + s + ") : " + F_G(threshold));
-        System.out.println("\tQuestions Partially Correct Answered With Theta Threshold = " + s + "): " + answeredWithThetaThreshold);
-        System.out.println("=========================================================================================");
-
-        //Evaluation Visualization using Python
-        writePropertiesToFile("singleEdge", singleEdgeEvaluatedQuestions);
-        writePropertiesToFile("chain", chainEvaluatedQuestions);
-        writePropertiesToFile("chainSet", chainSetEvaluatedQuestions);
-        writePropertiesToFile("tree", treeEvaluatedQuestions);
-        writePropertiesToFile("star", starEvaluatedQuestions);
-        writePropertiesToFile("forest", forestEvaluatedQuestions);
-        writePropertiesToFile("flower", flowerEvaluatedQuestions);
-        writePropertiesToFile("flowerSet", flowerSetEvaluatedQuestions);
-        writePropertiesToFile("cycle", cycleEvaluatedQuestions);
-        try {
-            FineGrained.visualize();
-        } catch (Exception e) {
-            System.out.println("CBench cannot viualize the results due to missed configuration.");
-            System.out.println("You can do it yourself by running the visualize.py file.");
-        }
-    }
 
     public void calculateParameters() {
+        answered = 0;
+        questionsWithCorrectAnswers = 0;
         for (QuestionEval evaluatedQuestion : evaluatedQuestions) {
             if (evaluatedQuestion.G.size() > 0) {
                 questionsWithCorrectAnswers++;
@@ -283,7 +151,7 @@ public class BenchmarkEval {
     }
 
     public double F_G() {
-        evaluatedBenchmark.calculateParameters();
+        calculateParameters();
         return F_G(1);
     }
 
@@ -313,7 +181,7 @@ public class BenchmarkEval {
     }
 
     public double F_G(double theta) {
-        evaluatedBenchmark.calculateParameters();
+        calculateParameters();
         double R = R_G(theta);
         double P = P_G(theta);
         if(R+P<=0)
@@ -440,28 +308,7 @@ public class BenchmarkEval {
         return flowerSetEvaluatedQuestions;
     }
 
-    private void writePropertiesToFile(String fileName, ArrayList<QuestionEval> evaluatedQuestionsType) {
-        FileWriter myWriter;
-        try {
-            myWriter = new FileWriter(fileName + ".txt");
-            for (QuestionEval q : evaluatedQuestionsType) {
-                int ans = 0;
-                if (q.F_q >= threshold) {
-                    ans = 1;
-                }
-                try {
-                    String property = "(" + q.properties.type + ", " + q.properties.keywords.trim().replace(' ', '-') + ", T=" + q.properties.triples + ")";
-                    myWriter.append(property + "\t" + ans + "\t" + (1 - ans) + "\n");
-                } catch (Exception ex) {
-                }
-            }
-            myWriter.close();
-        } catch (IOException e) {
-            System.out.println("An error occurred during writing the report.");
-            e.printStackTrace();
-        }
-    }
-
+    
     public ArrayList<QuestionEval> getEvaluatedQuestions() {
         return evaluatedQuestions;
     }
@@ -541,43 +388,63 @@ public class BenchmarkEval {
     private HorizontalBarChartModel all_model;
 
     public HorizontalBarChartModel getSingle_model() {
-        return generateModel(singleEdgeEvaluatedQuestions, "Single-Edge");
+        HorizontalBarChartModel m = generateModel(singleEdgeEvaluatedQuestions, "Single-Edge");
+        singlePropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getChain_model() {
-        return generateModel(chainEvaluatedQuestions, "Chain");
+        HorizontalBarChartModel m = generateModel(chainEvaluatedQuestions, "Chain");
+        chainPropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getChainSet_model() {
-        return generateModel(chainSetEvaluatedQuestions, "Chain-Set");
+        HorizontalBarChartModel m = generateModel(chainSetEvaluatedQuestions, "Chain-Set");
+        chainSetPropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getStar_model() {
-        return generateModel(starEvaluatedQuestions, "Star");
+        HorizontalBarChartModel m = generateModel(starEvaluatedQuestions, "Star");
+        starPropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getTree_model() {
-        return generateModel(treeEvaluatedQuestions, "Tree");
+        HorizontalBarChartModel m = generateModel(treeEvaluatedQuestions, "Tree");
+        treePropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getFlower_model() {
-        return generateModel(flowerEvaluatedQuestions, "Flower");
+        HorizontalBarChartModel m = generateModel(flowerEvaluatedQuestions, "Flower");
+        flowerPropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getFlowerSet_model() {
-        return generateModel(flowerSetEvaluatedQuestions, "Flower-Set");
+        HorizontalBarChartModel m = generateModel(flowerSetEvaluatedQuestions, "Flower-Set");
+        flowerSetPropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getCycle_model() {
-        return generateModel(cycleEvaluatedQuestions, "Cycle");
+        HorizontalBarChartModel m = generateModel(cycleEvaluatedQuestions, "Cycle");
+        cyclePropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getForest_model() {
-        return generateModel(forestEvaluatedQuestions, "Forest");
+        HorizontalBarChartModel m = generateModel(forestEvaluatedQuestions, "Forest");
+        forestPropertiesSize = propertiesSet.size();
+        return m;
     }
 
     public HorizontalBarChartModel getAll_model() {
-        return generateModel(evaluatedQuestions, "All");
+        HorizontalBarChartModel m = generateModel(evaluatedQuestions, "All");
+        allPropertiesSize = propertiesSet.size();
+        return m;
     }
     
     
@@ -596,7 +463,7 @@ public class BenchmarkEval {
                 incorr.add(prop);
             }
         }
-        Set<String> propertiesSet = new HashSet<>(corr);
+        propertiesSet = new HashSet<>(corr);
         propertiesSet.addAll(incorr);
 
         
@@ -646,4 +513,94 @@ public class BenchmarkEval {
         return c;
     }
 
+    public Set<String> getPropertiesSet() {
+        return propertiesSet;
+    }
+
+    public void setPropertiesSet(Set<String> propertiesSet) {
+        this.propertiesSet = propertiesSet;
+    }
+
+    public int getAllPropertiesSize() {
+        return allPropertiesSize;
+    }
+
+    public void setAllPropertiesSize(int allPropertiesSize) {
+        this.allPropertiesSize = allPropertiesSize;
+    }
+
+    public int getSinglePropertiesSize() {
+        return singlePropertiesSize;
+    }
+
+    public void setSinglePropertiesSize(int singlePropertiesSize) {
+        this.singlePropertiesSize = singlePropertiesSize;
+    }
+
+    public int getChainPropertiesSize() {
+        return chainPropertiesSize;
+    }
+
+    public void setChainPropertiesSize(int chainPropertiesSize) {
+        this.chainPropertiesSize = chainPropertiesSize;
+    }
+
+    public int getChainSetPropertiesSize() {
+        return chainSetPropertiesSize;
+    }
+
+    public void setChainSetPropertiesSize(int chainSetPropertiesSize) {
+        this.chainSetPropertiesSize = chainSetPropertiesSize;
+    }
+
+    public int getCyclePropertiesSize() {
+        return cyclePropertiesSize;
+    }
+
+    public void setCyclePropertiesSize(int cyclePropertiesSize) {
+        this.cyclePropertiesSize = cyclePropertiesSize;
+    }
+
+    public int getStarPropertiesSize() {
+        return starPropertiesSize;
+    }
+
+    public void setStarPropertiesSize(int starPropertiesSize) {
+        this.starPropertiesSize = starPropertiesSize;
+    }
+
+    public int getTreePropertiesSize() {
+        return treePropertiesSize;
+    }
+
+    public void setTreePropertiesSize(int treePropertiesSize) {
+        this.treePropertiesSize = treePropertiesSize;
+    }
+
+    public int getForestPropertiesSize() {
+        return forestPropertiesSize;
+    }
+
+    public void setForestPropertiesSize(int forestPropertiesSize) {
+        this.forestPropertiesSize = forestPropertiesSize;
+    }
+
+    public int getFlowerPropertiesSize() {
+        return flowerPropertiesSize;
+    }
+
+    public void setFlowerPropertiesSize(int flowerPropertiesSize) {
+        this.flowerPropertiesSize = flowerPropertiesSize;
+    }
+
+    public int getFlowerSetPropertiesSize() {
+        return flowerSetPropertiesSize;
+    }
+
+    public void setFlowerSetPropertiesSize(int flowerSetPropertiesSize) {
+        this.flowerSetPropertiesSize = flowerSetPropertiesSize;
+    }
+
+    
+    
 }

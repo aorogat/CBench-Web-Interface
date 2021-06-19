@@ -1,6 +1,7 @@
 package systemstesting;
 
 import ShapeAnalysis.QueryProperties;
+import ShapeAnalysis.QueryShapeType;
 import ShapeAnalysis.QuestionByQuestionAnalysis;
 import java.util.ArrayList;
 import qa.dataStructures.Question;
@@ -10,6 +11,7 @@ public class QuestionEval {
     QueryProperties properties ;
     ArrayList<String> G; //Gold(Correct) Answers
     ArrayList<String> A; //System Answers
+    ArrayList<String> shapes = new ArrayList<>();
     int A_intersect_G_length;
     double P_q = 0;
     double R_q = 0;
@@ -99,6 +101,34 @@ public class QuestionEval {
 
     public double getF_q() {
         return F_q;
+    }
+
+    public ArrayList<String> getShapes() {
+        shapes = new ArrayList<>();
+        if(QueryShapeType.isSingleEdge(question.getQuestionQuery()))
+            shapes.add("Single-Edge");
+        else if(QueryShapeType.isChain(question.getQuestionQuery()))
+            shapes.add("Chain");
+        else if(QueryShapeType.isChainSet(question.getQuestionQuery()))
+            shapes.add("Chain Set");
+        else if(QueryShapeType.isStar(question.getQuestionQuery()))
+            shapes.add("Star");
+        else if(QueryShapeType.isTree(question.getQuestionQuery()))
+            shapes.add("Tree");
+        else if(QueryShapeType.isForest(question.getQuestionQuery()))
+            shapes.add("Forest");
+        else if(QueryShapeType.isCycle(question.getQuestionQuery()))
+            shapes.add("Cycle");
+        else if(QueryShapeType.isFlower(question.getQuestionQuery()))
+            shapes.add("Flower");
+        else if(QueryShapeType.isFlowerSet(question.getQuestionQuery()))
+            shapes.add("Flower Set");
+        
+        return shapes;
+    }
+
+    public void setShapes(ArrayList<String> shapes) {
+        this.shapes = shapes;
     }
     
     

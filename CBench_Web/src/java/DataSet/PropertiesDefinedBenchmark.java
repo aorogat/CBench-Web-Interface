@@ -6,7 +6,6 @@ import ShapeAnalysis.QuestionByQuestionAnalysis;
 import java.util.ArrayList;
 import java.util.Scanner;
 import qa.dataStructures.Question;
-import systemstesting.Evaluator_WebServiceBased;
 
 public class PropertiesDefinedBenchmark {
 
@@ -105,16 +104,16 @@ public class PropertiesDefinedBenchmark {
             Question question = questions.get(i);
 
             //Remove unsupported KG
-            if (Evaluator_WebServiceBased.KB.toLowerCase().equals("dbpedia")
-                    && !question.getDatabase().toLowerCase().startsWith("dbpedia")) {
-                unwantedQuestions.add(question);
-                continue;
-            }
-            if (Evaluator_WebServiceBased.KB.toLowerCase().equals("freebase")
-                    && !question.getDatabase().toLowerCase().startsWith("freebase")) {
-                unwantedQuestions.add(question);
-                continue;
-            }
+//            if (Evaluator_WebServiceBased.KB.toLowerCase().equals("dbpedia")
+//                    && !question.getDatabase().toLowerCase().startsWith("dbpedia")) {
+//                unwantedQuestions.add(question);
+//                continue;
+//            }
+//            if (Evaluator_WebServiceBased.KB.toLowerCase().equals("freebase")
+//                    && !question.getDatabase().toLowerCase().startsWith("freebase")) {
+//                unwantedQuestions.add(question);
+//                continue;
+//            }
 
             //Remove unsupported query shapes
             boolean required = false;

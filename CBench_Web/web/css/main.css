@@ -965,7 +965,8 @@ legend {
 
 .s009 form .inner-form .advance-search .row {
   display: -ms-flexbox;
-  display: flex;
+  //display: flex;
+  display: -webkit-box;
   -ms-flex-pack: justify;
       justify-content: space-between;
   -ms-flex-align: center;
@@ -974,7 +975,7 @@ legend {
 }
 
 .s009 form .inner-form .advance-search .row.second {
-  margin-bottom: 46px;
+  margin-bottom: 26px;
 }
 
 .s009 form .inner-form .advance-search .row.third {

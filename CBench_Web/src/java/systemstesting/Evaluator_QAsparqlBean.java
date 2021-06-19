@@ -1,17 +1,16 @@
 package systemstesting;
 
 import DataSet.Benchmark;
-import DataSet.Benchmark;
 import UptodatAnswers.CuratedAnswer;
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
 import javax.faces.application.FacesMessage;
@@ -20,19 +19,21 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import model.MainBean;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.CharSequenceReader;
 import org.apache.jena.query.Query;
-import org.apache.jena.query.QueryFactory;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import org.json.simple.parser.JSONParser;
 import qa.dataStructures.Question;
 
 @ManagedBean
 @SessionScoped
-public class Evaluator_WDAqua  implements EvaluatorInterface{
+public class Evaluator_QAsparqlBean implements EvaluatorInterface{
+    
+    public static final int ASK_QUERY = 1;
+    public static final int COUNT_QUERY = 2;
+    public static final int OTHER_QUERY = 0;
 
     static BenchmarkEval evaluatedBenchmark;
     static int currentQuestion;
@@ -48,19 +49,34 @@ public class Evaluator_WDAqua  implements EvaluatorInterface{
 
     static int counter = 0;
     static int qsWithAnswers = 0;
-    
-    int progress=0;
+
+    int progress = 0;
     static Benchmark ben;
+    static String answerFileString;
 
-    public Evaluator_WDAqua() throws IOException {
+    
+    static Object obj;
+    public Evaluator_QAsparqlBean() throws IOException {
+        try {
+            JSONParser parser = new JSONParser();
+            InputStream initialStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("data/QASparql/qald_9_answer_output.json");
 
+                byte[] buffer = IOUtils.toByteArray(initialStream);
+                Reader targetReader = new CharSequenceReader(new String(buffer));
+                obj = parser.parse(targetReader);
+                //Object obj = parser.parse(new FileReader("LCQuad_All_answer_output.json"));
+                
+                answerFileString = obj.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void evaluate(Benchmark benchmark) throws IOException {
         KB = MainBean.eval_knowledgebase;
         evaluatedBenchmark = new BenchmarkEval(MainBean.eval_benchmark);
         currentQuestion = 0;
-        
+
         evaluatedQuestions = new ArrayList<>();
 
         qs = benchmark.queries;
@@ -72,13 +88,16 @@ public class Evaluator_WDAqua  implements EvaluatorInterface{
         performance(benchmark, MainBean.eval_benchmark, MainBean.eval_update_answers);
     }
 
-    public void periodicPoll() throws IOException
-    {
-        if(progress>=100) return;
-        performance(ben, MainBean.eval_benchmark, MainBean.eval_update_answers);
+    public void periodicPoll() throws IOException {
+        for (int i = 0; i < 10; i++) {
+            if(progress>=100)return;
+            performance(ben, MainBean.eval_benchmark, MainBean.eval_update_answers);
+        }
     }
-    
+
     public static void performance(Benchmark benchmark, String benchmarkName, boolean curated) throws IOException {
+        
+        
         ben = benchmark;
         systemAnswersList = new ArrayList<>();
         corectAnswersList = new ArrayList<>();
@@ -122,7 +141,7 @@ public class Evaluator_WDAqua  implements EvaluatorInterface{
         }
             //2- Determine systemAnswersList
         //for (int i = 0; i < 3; i++) {
-        String q = question.getQuestionString().replace('?', ' ').replace(" ", "%20");
+        String q = question.getQuestionString();
 
         answer(q);
 
@@ -133,79 +152,107 @@ public class Evaluator_WDAqua  implements EvaluatorInterface{
         evaluatedBenchmark.evaluatedQuestions.add(new QuestionEval(question.getQuestionString(), question, corectAnswersList, systemAnswersList));
 
         //}
-        if (currentQuestion >= benchmark.questions.size()) {
+        //if (currentQuestion >= benchmark.questions.size()) {
             //4- Calculate parameters
             evaluatedBenchmark.calculateParameters();
 
-        }
+            //5- At the End, Print Results
+            //evaluatedBenchmark.printScores();
+        //}
 
     }
 
-    static void answer(String question) throws IOException, JSONException {
-
-        JSONObject json = null;
-
-        //////////////////
-        String command
-                = "curl -X POST http://qanswer-core1.univ-st-etienne.fr/api/gerbil?"
-                + "query=" + question;// + "&kb=" + KB;
-        ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
-        Process process = processBuilder.start();
-        InputStream inputStream = process.getInputStream();
-        String result = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
-        /////////////////
-
-        result = result.replace("\\n", " ").replace("\\{", "{").replace("\\}", "}").replace("\\", "")
-                .replace("\"{", "{").replace("\"}", "}").replace("}\"", "}");
-//        System.out.println(result);
-
+    public static ArrayList<String> answer(String question) throws IOException, JSONException {
         try {
             systemAnswersList = new ArrayList<>();
-            json = new JSONObject(result);
-            JSONArray bindings = json.getJSONArray("questions").getJSONObject(0)
-                    .getJSONObject("question").getJSONObject("answers")
-                    .getJSONObject("results").getJSONArray("bindings");
 
-            String varName = json.getJSONArray("questions").getJSONObject(0)
-                    .getJSONObject("question").getJSONObject("answers")
-                    .getJSONObject("head").getJSONArray("vars").getString(0);
+            //1- Get SPARQL Query data from File
+            String queryGraph = "";
+            String target_var = "";
+            int queryType = 0;
 
-//            System.out.println(varName);
-
-            for (int i = 0; i < bindings.length(); i++) {
-                JSONObject binding = (JSONObject) bindings.getJSONObject(i);
-                JSONObject o1 = (JSONObject) binding.getJSONObject(varName);
-                String value = (String) o1.get("value");
-
-                //For wikidata with Freebase benchmarks
-                if (value.startsWith("http")) {
-                    org.jsoup.nodes.Document doc = Jsoup.connect(value).get();
-                    Elements div = doc.select(".wikibase-title-label");
-                    Element e = div.get(0);
-                    value = e.text();
-                    systemAnswersList.add(value.replace('_', ' '));
-                }
-                systemAnswersList.add(value.replace('_', ' ')
-                        .replace("http://dbpedia.org/resource/", "")
-                        .replace("https://en.wikipedia.org/wiki/", "")
-                        .replace("http://www.wikidata.org/entity/", ""));
-            }
-        } catch (Exception e) {
+            
             try {
-                boolean b = json.getJSONArray("questions").getJSONObject(0)
-                        .getJSONObject("question").getJSONObject("answers")
-                        .getBoolean("boolean");
-                systemAnswersList = new ArrayList<>();
-                if (b) {
-                    systemAnswersList.add("Yes");
-                } else {
-                    systemAnswersList.add("No");
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
+                
+                JSONArray jsonObject = new JSONArray(obj.toString());
+                JSONObject questionResponse = null;
 
+                for (Object c : jsonObject) {
+                    JSONObject current = (JSONObject) c;
+                    String currentQuestion = current.getString("question");
+
+                    if (currentQuestion.trim().toLowerCase().equals(question.trim().toLowerCase())) {
+                        questionResponse = current;
+//                        System.out.println(current.toString());
+                        break;
+                    }
+                }
+
+                try {
+                    JSONArray generated_queries = questionResponse.getJSONArray("generated_queries");
+
+                    for (Object o : generated_queries) {
+                        JSONObject generated_query = (JSONObject) o;
+                        if (generated_query.getBoolean("correct")) {
+                            queryGraph = generated_query.getString("query");
+                            target_var = generated_query.getString("target_var");
+                        }
+                    }
+
+                    try {
+                        JSONArray query_type = questionResponse.getJSONArray("question_type");
+                        queryType = query_type.getInt(0);
+                    } catch (Exception ex) {
+                        try {
+                            queryType = questionResponse.getInt("question_type");
+                        } catch (Exception e) {
+                            queryType = -1;
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String sparqlQuery = "";
+            if (!(queryGraph.equals(""))) {
+                switch (queryType) {
+                    case ASK_QUERY:
+                        sparqlQuery = "ASK WHERE{ " + queryGraph + "}";
+                    case COUNT_QUERY:
+                        sparqlQuery = "SELECT (COUNT(DISTINCT " + target_var + ") as ?c) WHERE{ " + queryGraph + "}";
+                    case OTHER_QUERY:
+                        sparqlQuery = "SELECT DISTINCT " + target_var + " WHERE{ " + queryGraph + "}";
+                }
+            }
+
+            try {
+
+            } catch (Exception e) {
+                sparqlQuery = "";
+            }
+            if (sparqlQuery == null) {
+                sparqlQuery = "";
+            }
+
+            sparqlQuery = sparqlQuery.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
+
+//            System.out.println("               " + sparqlQuery);
+
+            //2- Get Answer from DBpedia
+            if (!sparqlQuery.equals("")) {
+                systemAnswersList = CuratedAnswer.upToDateAnswerDBpedia(sparqlQuery, "dbpedia");
+            } else {
+                systemAnswersList = new ArrayList<>();
+            }
+
+        } catch (Exception eex) {
+            eex.printStackTrace();
+        }
+        return systemAnswersList;
     }
 
     private static String readAll(Reader rd) throws IOException {
@@ -234,23 +281,22 @@ public class Evaluator_WDAqua  implements EvaluatorInterface{
     }
 
     public void setEvaluatedBenchmark(BenchmarkEval evaluatedBenchmark) {
-        Evaluator_WDAqua.evaluatedBenchmark = evaluatedBenchmark;
+        Evaluator_QAsparqlBean.evaluatedBenchmark = evaluatedBenchmark;
     }
 
     public int getProgress() {
-        progress = (int)(100*((double)currentQuestion/ben.questions.size()));
+        progress = (int) (100 * ((double) currentQuestion / ben.questions.size()));
         if (currentQuestion >= ben.questions.size()) {
-            progress=100;
+            progress = 100;
         }
-        
+
         return progress;
     }
 
     public void setProgress(int progress) {
         this.progress = progress;
     }
-    
-    
+
     public void onComplete() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("CBench Collected All System Answers."));
     }
@@ -260,9 +306,17 @@ public class Evaluator_WDAqua  implements EvaluatorInterface{
     }
 
     public void setEvaluatedQuestions(ArrayList<QuestionEval> evaluatedQuestions) {
-        Evaluator_WDAqua.evaluatedQuestions = evaluatedQuestions;
+        Evaluator_QAsparqlBean.evaluatedQuestions = evaluatedQuestions;
     }
-    
+
+    public String getAnswerFileString() {
+        return answerFileString;
+    }
+
+    public void setAnswerFileString(String answerFileString) {
+        Evaluator_QAsparqlBean.answerFileString = answerFileString;
+    }
+
     
     
 }

@@ -1,0 +1,568 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:pa="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pp="http://java.sun.com/jsf/passthrough">
+    <p:tab title="Comparison">
+        <div>
+
+            <p:tabView>
+                <p:tab title="All Questions">
+                    <h:form>
+                        <p:poll interval="10" listener="#{evaluator_NewQASystem.periodicPoll()}" 
+                                update="allQuestionsCom" process="@this"/>
+                        <p:panel id="allQuestionsCom">
+                            <table border="0">
+                                <tr>
+                                    <td width="95%">
+                                        <p:dataTable  var="qs" value="#{evaluator_NewQASystem.evaluatedBenchmark.evaluatedQuestions}" 
+                                                      scrollable="true" scrollHeight="400"
+                                                      rowIndexVar="index">>
+
+                                            <p:column headerText="#">
+                                                <h:outputText style="font-size: 12px;"
+                                                              value="#{index + 1}" />
+                                            </p:column>
+
+                                            <p:column headerText="Question" width="30%">
+                                                <h:outputText  style="font-size: 12px; font-style: italic; font-weight: bold;" 
+                                                               value="#{qs.question.questionString}" escape="false"/>
+                                                <pre style="font-size: 10px;"><h:outputText value="#{qs.question.questionQuery}" /></pre>
+
+                                                <span style="font-size: 12px; color: #008fa1;" >
+                                                    <b>Properties: </b>
+                                                    (<h:outputText value="#{qs.properties.type}" /> - 
+                                                    <h:outputText value="#{qs.properties.keywords}" /> - 
+                                                    T=<h:outputText value="#{qs.properties.triples}" />  
+                                                    )
+                                                </span>
+                                            </p:column>
+                                            
+                                            <p:column headerText="Shape" width="10%">
+                                                <div style="overflow-y: scroll; max-height: 100px;">
+                                                    <ui:repeat value="#{qs.shapes}" var="a">
+                                                        <h:outputText style="display: inline-block;
+                                                                      opacity: 0.8;
+                                                                      color: #00529b;
+                                                                      background-color: #bde5f8;
+                                                                      font-size: 12px;
+                                                                      border: 1px solid;
+                                                                      width: 90%;
+                                                                      margin: 2px;
+                                                                      padding: 2px 5px;" value="#{a}"/>
+                                                    </ui:repeat>
+                                                </div>
+                                            </p:column>
+
+                                            <p:column headerText="Correct  Answer" width="20%">
+                                                <b style="font-size: 12px;">List size: </b>
+                                                <h:outputText  style="font-size: 12px;" value="#{qs.g.size()}"/>
+                                                <div style="overflow-y: scroll; max-height: 200px;">
+                                                    <ui:repeat value="#{qs.g}" var="g">
+                                                        <h:outputText style="display: inline-block;
+                                                                      opacity: 0.5;
+                                                                      color: #427d31;
+                                                                      background-color: #bce8af;
+                                                                      font-size: 12px;
+                                                                      border: 1px solid;
+                                                                      width: 90%;
+                                                                      margin: 2px;
+                                                                      padding: 2px 5px;" value="#{g}"/>
+                                                    </ui:repeat>
+                                                </div>
+                                            </p:column>
+
+                                            <p:column headerText="System Answer" width="20%">
+                                                <b style="color: #00a5bb; font-size: 12px;">#{mainBean.qaSystemName}</b><br/>
+                                                <b style="font-size: 12px;">List size: </b>
+                                                <h:outputText  style="font-size: 12px;" value="#{qs.a.size()}"/>
+                                                <div style="overflow-y: scroll; max-height: 100px;">
+                                                    <ui:repeat value="#{qs.a}" var="a">
+                                                        <h:outputText style="display: inline-block;
+                                                                      opacity: 0.5;
+                                                                      color: #00529b;
+                                                                      background-color: #bde5f8;
+                                                                      font-size: 12px;
+                                                                      border: 1px solid;
+                                                                      width: 90%;
+                                                                      margin: 2px;
+                                                                      padding: 2px 5px;" value="#{a}"/>
+                                                    </ui:repeat>
+                                                </div>
+
+                                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                                    <div>
+                                                        <b style="color: #ef8e8e; font-size: 12px;">QASparql</b><br/>
+                                                        <b style="font-size: 12px;">List size: </b>
+                                                        <h:outputText  style="font-size: 12px;" value="#{evaluator_QAsparqlBean.evaluatedBenchmark.evaluatedQuestions.get(index).a.size()}"/>
+                                                        <div style="overflow-y: scroll; max-height: 100px;">
+                                                            <ui:repeat value="#{evaluator_QAsparqlBean.evaluatedBenchmark.evaluatedQuestions.get(index).a}" var="a">
+                                                                <h:outputText style="display: inline-block;
+                                                                              opacity: 0.5;
+                                                                              color: #8b6363;
+                                                                              background-color: #cdb5b5;
+                                                                              font-size: 12px;
+                                                                              border: 1px solid;
+                                                                              width: 90%;
+                                                                              margin: 2px;
+                                                                              padding: 2px 5px;" value="#{a}"/>
+                                                            </ui:repeat>
+                                                        </div>
+                                                    </div>
+                                                </h:panelGroup>    
+
+                                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                                    <div>
+                                                        <b style="color: #ef8e8e; font-size: 12px;">WDAqua</b><br/>
+                                                        <b style="font-size: 12px;">List size: </b>
+                                                        <h:outputText  style="font-size: 12px;" value="#{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions.get(index).a.size()}"/>
+                                                        <div style="overflow-y: scroll; max-height: 100px;">
+                                                            <ui:repeat value="#{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions.get(index).a}" var="a">
+                                                                <h:outputText style="display: inline-block;
+                                                                              opacity: 0.5;
+                                                                              color: #8b6363;
+                                                                              background-color: #cdb5b5;
+                                                                              font-size: 12px;
+                                                                              border: 1px solid;
+                                                                              width: 90%;
+                                                                              margin: 2px;
+                                                                              padding: 2px 5px;" value="#{a}"/>
+                                                            </ui:repeat>
+                                                        </div>
+                                                    </div>
+                                                </h:panelGroup> 
+                                            </p:column>
+
+                                            <p:column headerText="F1">
+                                                <b style="color: #00a5bb; font-size: 12px;">#{mainBean.qaSystemName}</b><br/>
+                                                <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.f_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                </pre>
+
+                                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                                    <div>
+                                                        <b style="color: #ef8e8e; font-size: 12px;">QASparql</b><br/>
+                                                        <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{evaluator_QAsparqlBean.evaluatedBenchmark.evaluatedQuestions.get(index).f_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                        </pre>
+                                                    </div>
+                                                </h:panelGroup>
+
+                                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                                    <div>
+                                                        <b style="color: #ef8e8e; font-size: 12px;">WDAqua</b><br/>
+                                                        <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions.get(index).f_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                        </pre>
+                                                    </div>
+                                                </h:panelGroup>
+                                            </p:column>
+
+                                            <p:column headerText="R">
+                                                <b style="color: #00a5bb; font-size: 12px;">#{mainBean.qaSystemName}</b><br/>
+                                                <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.r_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                </pre>
+
+
+                                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                                    <div>
+                                                        <b style="color: #ef8e8e; font-size: 12px;">QASparql</b><br/>
+                                                        <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{evaluator_QAsparqlBean.evaluatedBenchmark.evaluatedQuestions.get(index).r_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                        </pre>
+                                                    </div>
+                                                </h:panelGroup>
+
+                                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                                    <div>
+                                                        <b style="color: #ef8e8e; font-size: 12px;">WDAqua</b><br/>
+                                                        <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions.get(index).r_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                        </pre>
+                                                    </div>
+                                                </h:panelGroup>
+                                            </p:column>
+
+                                            <p:column headerText="P">
+                                                <b style="color: #00a5bb; font-size: 12px;">#{mainBean.qaSystemName}</b><br/>
+                                                <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{qs.p_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                </pre>
+
+
+                                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                                    <div>
+                                                        <b style="color: #ef8e8e; font-size: 12px;">QASparql</b><br/>
+                                                        <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{evaluator_QAsparqlBean.evaluatedBenchmark.evaluatedQuestions.get(index).p_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                        </pre>
+                                                    </div>
+                                                </h:panelGroup>
+
+                                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                                    <div>
+                                                        <b style="color: #ef8e8e; font-size: 12px;">WDAqua</b><br/>
+                                                        <pre style="font-size: 12px;">
+                                                        <h:outputText value="#{evaluator_WDAqua.evaluatedBenchmark.evaluatedQuestions.get(index).p_q}" >
+                                                        <f:convertNumber pattern="#0.000" />                                                        
+                                                        </h:outputText>
+                                                        </pre>
+                                                    </div>
+                                                </h:panelGroup>
+                                            </p:column>
+                                            
+                                        </p:dataTable>
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/><br/><br/>
+                            <hr/>
+
+                            <div style="overflow-x: scroll;">
+                                <h:panelGroup>
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">#{mainBean.qaSystemName}</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_NewQASystem.evaluatedBenchmark.allPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_NewQASystem.evaluatedBenchmark.all_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">QASparql</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.allPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_QAsparqlBean.evaluatedBenchmark.all_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">WDAqua</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_WDAqua.evaluatedBenchmark.allPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_WDAqua.evaluatedBenchmark.all_model}"/>
+                                    </div>
+                                </h:panelGroup>
+                            </div>
+                            
+                            <div style="overflow-x: scroll;">
+                                <h:panelGroup>
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">#{mainBean.qaSystemName}</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_NewQASystem.evaluatedBenchmark.singlePropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_NewQASystem.evaluatedBenchmark.single_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">QASparql</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.singlePropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_QAsparqlBean.evaluatedBenchmark.single_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">WDAqua</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_WDAqua.evaluatedBenchmark.singlePropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_WDAqua.evaluatedBenchmark.single_model}"/>
+                                    </div>
+                                </h:panelGroup>
+                            </div>
+                            
+                            <div style="overflow-x: scroll;">
+                                <h:panelGroup>
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">#{mainBean.qaSystemName}</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_NewQASystem.evaluatedBenchmark.chainPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_NewQASystem.evaluatedBenchmark.chain_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">QASparql</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.chainPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_QAsparqlBean.evaluatedBenchmark.chain_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">WDAqua</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_WDAqua.evaluatedBenchmark.chainPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_WDAqua.evaluatedBenchmark.chain_model}"/>
+                                    </div>
+                                </h:panelGroup>
+                            </div>
+                            
+                            <div style="overflow-x: scroll;">
+                                <h:panelGroup>
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">#{mainBean.qaSystemName}</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_NewQASystem.evaluatedBenchmark.chainSetPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_NewQASystem.evaluatedBenchmark.chainSet_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">QASparql</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.chainSetPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_QAsparqlBean.evaluatedBenchmark.chainSet_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">WDAqua</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_WDAqua.evaluatedBenchmark.chainSetPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_WDAqua.evaluatedBenchmark.chainSet_model}"/>
+                                    </div>
+                                </h:panelGroup>
+                            </div>
+                            
+                            <div style="overflow-x: scroll;">
+                                <h:panelGroup>
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">#{mainBean.qaSystemName}</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_NewQASystem.evaluatedBenchmark.starPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_NewQASystem.evaluatedBenchmark.star_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">QASparql</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.starPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_QAsparqlBean.evaluatedBenchmark.star_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">WDAqua</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_WDAqua.evaluatedBenchmark.starPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_WDAqua.evaluatedBenchmark.star_model}"/>
+                                    </div>
+                                </h:panelGroup>
+                            </div>
+                            
+                            <div style="overflow-x: scroll;">
+                                <h:panelGroup>
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">#{mainBean.qaSystemName}</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_NewQASystem.evaluatedBenchmark.treePropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_NewQASystem.evaluatedBenchmark.tree_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">QASparql</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.treePropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_QAsparqlBean.evaluatedBenchmark.tree_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">WDAqua</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_WDAqua.evaluatedBenchmark.treePropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_WDAqua.evaluatedBenchmark.tree_model}"/>
+                                    </div>
+                                </h:panelGroup>
+                            </div>
+                            
+                            <div style="overflow-x: scroll;">
+                                <h:panelGroup>
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">#{mainBean.qaSystemName}</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_NewQASystem.evaluatedBenchmark.forestPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_NewQASystem.evaluatedBenchmark.forest_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">QASparql</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.forestPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_QAsparqlBean.evaluatedBenchmark.forest_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">WDAqua</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_WDAqua.evaluatedBenchmark.forestPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_WDAqua.evaluatedBenchmark.forest_model}"/>
+                                    </div>
+                                </h:panelGroup>
+                            </div>
+                            
+                            <div style="overflow-x: scroll;">
+                                <h:panelGroup>
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">#{mainBean.qaSystemName}</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_NewQASystem.evaluatedBenchmark.flowerPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_NewQASystem.evaluatedBenchmark.flower_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">QASparql</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.flowerPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_QAsparqlBean.evaluatedBenchmark.flower_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">WDAqua</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_WDAqua.evaluatedBenchmark.flowerPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_WDAqua.evaluatedBenchmark.flower_model}"/>
+                                    </div>
+                                </h:panelGroup>
+                            </div>
+                            
+                            <div style="overflow-x: scroll;">
+                                <h:panelGroup>
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">#{mainBean.qaSystemName}</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_NewQASystem.evaluatedBenchmark.flowerSetPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_NewQASystem.evaluatedBenchmark.flowerSet_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToQasparql}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">QASparql</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_QAsparqlBean.evaluatedBenchmark.flowerSetPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_QAsparqlBean.evaluatedBenchmark.flowerSet_model}"/>
+                                    </div>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{mainBean.compareToWdaqua}">
+                                    <div style="overflow-x: scroll; width:48%; display: inline-block;">
+                                        <b style="font-size: 14px;">WDAqua</b><br/>
+                                        <p:chart  type="bar" 
+                                                  style="min-width: 900px;
+                                                  min-height: 300px;
+                                                  height: #{(evaluator_WDAqua.evaluatedBenchmark.flowerSetPropertiesSize/10)*250}px;"
+                                                  model="#{evaluator_WDAqua.evaluatedBenchmark.flowerSet_model}"/>
+                                    </div>
+                                </h:panelGroup>
+                            </div>
+                        </p:panel>
+                    </h:form>
+                </p:tab>
+
+
+            </p:tabView>
+
+        </div>
+    </p:tab>	
+</ui:composition>
